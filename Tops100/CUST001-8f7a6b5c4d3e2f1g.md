@@ -1,7 +1,7 @@
 **Customer:** Restaurant_1
-**Tops Supermarket Wholesale Price List**
-**Effective Date:** May 8, 2025  
-
+<br>**Tops Supermarket Wholesale Price List**
+<br>**Effective Date:** May 8, 2025  
+<br>
   
   
 | No. | Image                                                                                       | Product                                                 | Size   | Retail  | Discount | SKU       |

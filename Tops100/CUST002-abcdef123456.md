@@ -1,6 +1,7 @@
 Customer: **Restaurant_1**  
-**Title:** Tops Supermarket Wholesale Price List  
-**Effective Date:** From May 8, 2025  
+<br>**Title:** Tops Supermarket Wholesale Price List  
+<br>**Effective Date:** From May 8, 2025  
+<br>
 
 <table style="width:100%; border-collapse:separate; border-spacing:0; font-family:'Segoe UI',sans-serif; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
   <thead>
