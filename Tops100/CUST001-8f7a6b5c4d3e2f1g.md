@@ -3,10 +3,9 @@
 <br>Effective Date: **From May 8, 2025**
 
 
-<p style="text-align:right; font-size:0.9em; margin-bottom:8px;">
+<br><p style="text-align:right; font-size:0.9em; margin-bottom:8px;">
   Scroll right 向右滑动 →→
 </p>
-<br>
   
 | No. | Image                                                                                       | Product                                                 | Size   | Retail  | Discount | SKU       |
 | --- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------ | ------- | -------- | --------- |
