@@ -4,6 +4,9 @@ Title: Tops Supermarket Wholesale Price List
 Effective Date: From May 8, 2025
 ---
 
+Customer: Restaurant_2
+Title: Tops Supermarket Wholesale Price List
+Effective Date: From May 8, 2025
 | Image                                                                                                                         | Product_EN           | Product_CN   | Size      | Retail   | Discount   | SKU      |
 |:------------------------------------------------------------------------------------------------------------------------------|:---------------------|:-------------|:----------|:---------|:-----------|:---------|
 | <img src="https://afodltd.com/wp-content/uploads/2024/07/50-613-300x225.jpg" alt="(SD)pea_sproutgood_10" style="max-width:100px; max-height:100px;" />             | Pea Sprout-Good      | 觀豆苗王     | 10lbs     | $91.00   | 8%         | SKU-3001 |
