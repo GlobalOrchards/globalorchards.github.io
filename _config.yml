@@ -1,0 +1,2 @@
+# Tell Jekyll to process .md files and use “pretty” URLs by default
+permalink: pretty
