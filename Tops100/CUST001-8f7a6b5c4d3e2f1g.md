@@ -1,8 +1,12 @@
-**Customer:** Restaurant_1
-<br>**Tops Supermarket Wholesale Price List**
-<br>**Effective Date:** May 8, 2025  
+**Tops Supermarket Wholesale Price List**
+<br>Customer 客户: **Restaurant_1**
+<br>Effective Date: **From May 8, 2025**
+
+
+<p style="text-align:right; font-size:0.9em; margin-bottom:8px;">
+  Scroll right 向右滑动 →→
+</p>
 <br>
-  
   
 | No. | Image                                                                                       | Product                                                 | Size   | Retail  | Discount | SKU       |
 | --- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------ | ------- | -------- | --------- |
