@@ -1,2 +1,10 @@
-# Tell Jekyll to process .md files and use “pretty” URLs by default
-permalink: pretty
+lsi: false
+safe: true
+source: [your repo's top level directory]
+incremental: false
+highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
