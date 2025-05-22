@@ -1,5 +1,4 @@
-**Global Orchards - Price List**
-<br>Customer 客户: **Wholesale**
+**Price List**
 <br>Effective Date: **From May 21, 2025**
 
 
@@ -18,3 +17,6 @@
 | 松花     | Pine Mushroom         |    80 |           $17.00  |
 | 真空马蹄 | Water Chestnuts       |    50 |           $28.00  |
 | 贝贝南瓜 | Kobocha Pumpkin       |   400 |           $10.00  |
+
+
+<br>Call: **604-537-1999**
