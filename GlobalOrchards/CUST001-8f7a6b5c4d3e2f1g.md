@@ -4,8 +4,8 @@
 
 | Name     | Description           | # Box | Price |
 |----------|-----------------------|------:|------------------:|
-| 大娃娃   | Baby Bok Choy         |    40 |           $18  |
-| 菠菜     | Spinach               |   360 |           $16  |
+| 大娃娃   | Baby Bok Choy         |    40 |           $18.00  |
+| 菠菜     | Spinach               |   360 |           $16.00  |
 | 油麦     | A Choy                |   360 |           $12.50  |
 | 小茴香   | Fennel                |     9 |           $10.50  |
 | 甜豆     | Sugar Snap Peas       |   640 |           $12.00  |
@@ -19,4 +19,4 @@
 | 贝贝南瓜 | Kobocha Pumpkin       |   400 |           $10.00  |
 
 
-<br>Call: **604-537-1999**
+<br>Call: **Cindy Liu - 604-537-1999**
