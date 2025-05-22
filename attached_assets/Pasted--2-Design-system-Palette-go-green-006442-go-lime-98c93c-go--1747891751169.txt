@@ -1,0 +1,46 @@
+### 2. Design system  
+* **Palette**  
+  * --go-green: #006442  
+  * --go-lime:  #98c93c  
+  * --go-cream: #faf7f0  
+  * --go-char:  #222  
+* **Type** – use Google Font **“Inter”**, weight 300-700.  
+* **Icons** – Font Awesome 6 free CDN (for produce, logistics, sustainability symbols).  
+* **Layout** – CSS Grid + Flexbox, 1140 px max-width container, 1.5 rem rhythm.  
+* **Components**  
+  * Sticky transparent nav that blurs on scroll, smooth-scroll anchors.  
+  * Hero with **animated headline** (typewriter effect cycling through “B.C. Berries”, “Okanagan Apples”, “Citrus & Tropical”) and a subtle **SVG wave divider**.  
+  * “Who We Are” section—two-column, left text, right **CSS shape-divided** colour block (no photos).  
+  * Product carousel (**pure CSS scroll-snap**) featuring 6 sample SKUs (Envy Apples, Lotus Root, Blue Jay Oranges, etc.).  
+  * “Logistics Footprint” map—inline SVG of Canada with three pulse dots (Vancouver, Calgary, Toronto) and small tool-tips powered by JS (no external tiles).  
+  * Animated **counter** row (years in produce, tonnes delivered, happy retail partners) triggered via Intersection Observer.  
+  * Testimonial slider (CSS scroll-snap, cards with quotes).  
+  * Accordion FAQ (vanilla JS).  
+  * Call-to-Action strip with gradient, “Let’s Talk” button.  
+  * Footer with quick links, social icons, and copyright © 2025.  
+* **Accessibility** – semantic landmarks, `aria-*` on interactive widgets, colour-contrast AA compliant.  
+* **Performance** – zero external images besides logo; light SVG + CSS effects only.  
+
+### 3. Behaviour (script.js)  
+1.  Add **smooth scrolling** for anchor links (`scroll-behavior`).  
+2.  Implement **header shrink / blur** on scroll.  
+3.  Intersection Observer to:  
+    * count-up numbers when `.stat` enters viewport;  
+    * add `.reveal` class to elements with `data-animate`, sliding them in.  
+4.  Carousel buttons (`prev`/`next`) scroll the product strip by `scrollWidth / itemCount`.  
+5.  FAQ accordion toggles `aria-expanded`.  
+
+### 4. HTML structure (index.html)  
+* Use BEM class naming.  
+* Embed essential SEO/meta: title, description, canonical, Open Graph.  
+* Include links to pacin.ca & vanwhole-produce.com in a discrete “Our Heritage” note.  
+* Each major section gets an `id` & nav anchor.  
+
+### 5. styles.css  
+* Reset with `:where(*){margin:0;padding:0;box-sizing:border-box}`.  
+* Declare CSS variables for palette and spacing at `:root`.  
+* Use `@media (prefers-reduced-motion: reduce)` to disable animations.  
+* Fancy touches: `backdrop-filter: blur(8px)` on nav, keyframe for wave, `clip-path` for angled dividers, subtle `box-shadow` on cards.  
+
+### 6. README.md  
+Brief launch instructions:  
