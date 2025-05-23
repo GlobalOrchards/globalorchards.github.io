@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Price List - Effective May 21, 2025</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fc;
+            --card-bg-color: #ffffff;
+            --text-color-primary: #1a202c;
+            --text-color-secondary: #4a5568;
+            --header-bg-color: #3c366b;
+            --header-text-color: #ffffff;
+            --accent-color: #4f46e5;
+            --border-color: #e2e8f0;
+            --input-focus-border: var(--accent-color);
+            --input-focus-shadow: rgba(79, 70, 229, 0.25);
+            --footer-bg-color: #f3f4f6;
+            --footer-border-color: #e5e7eb;
+            --footer-text-color: #374151;
+            --swipe-msg-bg: #eef2ff;
+            --swipe-msg-text: #312e81;
+            --button-bg-color: var(--accent-color);
+            --button-hover-bg-color: #4338ca;
+            --button-text-color: #ffffff;
+            --form-section-bg: #f9fafb;
+            --calc-btn-bg: #e9ecef;
+            --calc-btn-hover-bg: #ced4da;
+            --calc-operator-bg: #ffc107;
+            --calc-operator-hover-bg: #e0a800;
+            /* Added from your previous version, ensure these are defined if used for tabs */
+            --tab-active-border: var(--accent-color);
+            --tab-text-color: var(--text-color-secondary);
+            --tab-active-text-color: var(--accent-color);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.45; /* Reduced line-height */
+            background-color: var(--bg-color);
+            color: var(--text-color-primary);
+            margin: 0;
+            padding: 10px; /* Reduced body padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .swipe-indicator {
+            width: 90%;
+            max-width: 920px;
+            text-align: center;
+            padding: 8px 12px; /* Reduced padding */
+            background-color: var(--swipe-msg-bg);
+            color: var(--swipe-msg-text);
+            font-weight: 500;
+            font-size: 0.9em; /* Slightly smaller font */
+            border-radius: 8px;
+            margin-bottom: 15px; /* Reduced margin */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .swipe-indicator svg {
+            width: 20px; height: 20px; /* Slightly smaller icon */
+            margin-right: 8px; /* Reduced margin */
+            flex-shrink: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 920px;
+            background-color: var(--card-bg-color);
+            padding: 20px 25px 25px 25px; /* Reduced padding */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        .main-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px; /* Increased margin-bottom slightly for the larger logo */
+        }
+
+        .store-logo { /* New style for the logo */
+            width: 250px;
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 20px; /* Space between logo and title */
+        }
+
+        h1 {
+            color: var(--text-color-primary);
+            text-align: left; /* Align title to the left if next to a large logo */
+            font-size: 2.0em; /* Adjusted font size to fit next to logo */
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-top: 0; 
+            margin-bottom: 0; 
+        }
+
+        .pickup-address-details { 
+            margin-bottom: 25px; 
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--form-section-bg);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .pickup-address-details h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.15em;
+            color: var(--text-color-primary);
+        }
+        .pickup-address-details strong {
+            font-weight: 600;
+        }
+
+        .effective-date {
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 15px; 
+            color: var(--text-color-secondary);
+            font-size: 1em; 
+            font-weight: 500;
+        }
+
+        /* Tab Styles */
+        .tabs-container {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--form-section-bg);
+            padding: 10px;
+        }
+        .tab-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+        .tab-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--tab-text-color); 
+            border-bottom: 3px solid transparent;
+            margin-right: 5px;
+            margin-bottom: -2px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .tab-button.active {
+            color: var(--tab-active-text-color); 
+            border-bottom-color: var(--tab-active-border); 
+        }
+        .tab-button:hover {
+            color: var(--tab-active-text-color);
+        }
+        .tab-content .tab-pane {
+            display: none;
+        }
+        .tab-content .tab-pane.active {
+            display: block;
+        }
+
+        .table-wrapper { 
+            overflow-x: auto;
+            width: 100%;
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            -webkit-overflow-scrolling: touch;
+            margin-top: 10px; 
+        }
+        .tab-pane > .table-wrapper {
+             margin-bottom: 0; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 6px 14px; 
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: 1.1em; 
+            font-weight: 700; 
+            line-height: 1.2; 
+        }
+        
+        th {
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+            font-size: 0.85em; 
+            text-align: center;
+        }
+
+        td.name { text-align: left; }
+        td.description { text-align: left; min-width: 180px; } 
+        td.num-box { text-align: right; }
+        td.price { text-align: right; }
+        td.qty-cell { text-align: center; }
+
+        tbody tr:nth-child(even) td {
+            background-color: #f9fafb; 
+        }
+        tbody tr:hover td {
+            background-color: #f0f2f5;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .qty-input {
+            width: 65px; padding: 8px 6px; border: 1px solid #cbd5e1; border-radius: 6px; 
+            box-sizing: border-box; text-align: center; font-size: 0.9em; 
+            color: var(--text-color-primary); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .qty-input:focus { border-color: var(--input-focus-border); outline: 0; box-shadow: 0 0 0 0.2rem var(--input-focus-shadow); }
+        .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qty-input[type=number] { -moz-appearance: textfield; }
+        
+        #visibleOrderSummaryContainer {
+            background-color: var(--form-section-bg); 
+            padding: 20px; border-radius: 10px; margin-top: 25px; margin-bottom: 15px; 
+            border: 1px solid var(--border-color);
+        }
+        #visibleOrderSummaryContainer h2 {
+            font-size: 1.3em; color: var(--text-color-primary); margin-top: 0; margin-bottom: 15px;
+            text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
+        }
+        #lineItemsDisplay ul { list-style-type: none; padding-left: 0; margin: 0; }
+        #lineItemsDisplay li { padding: 5px 0; border-bottom: 1px dotted var(--border-color); font-size: 0.95em; }
+        #lineItemsDisplay li:last-child { border-bottom: none; }
+        #lineItemsDisplay p { font-style: italic; color: var(--text-color-secondary); text-align: center; }
+
+        .customer-info-section {
+            background-color: var(--form-section-bg); padding: 20px; border-radius: 10px;
+            margin-top: 15px; border: 1px solid var(--border-color);
+        }
+        .customer-info-section h2 {
+            font-size: 1.3em; color: var(--text-color-primary); margin-top: 0; margin-bottom: 15px;
+            text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; 
+        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; color: var(--text-color-secondary); font-size: 0.9em; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group input[type="date"], .form-group select {            
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 0.95em; 
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; background-color: #fff; 
+        }
+        .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="tel"]:focus, .form-group input[type="date"]:focus, .form-group select:focus {            
+            border-color: var(--input-focus-border); outline: 0; box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
+        }
+        
+        .calculator-section { margin-top: 15px; margin-bottom: 15px; padding: 15px; border: 1px solid var(--border-color); border-radius: 10px; background-color: var(--form-section-bg); }
+        .calculator-toggle-button { background-color: var(--calc-btn-bg); color: var(--text-color-primary); border: 1px solid #cbd5e1; padding: 8px 15px; font-size: 0.9em; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background-color 0.15s ease-in-out; display: block; width: 100%; margin-bottom: 10px; }
+        .calculator-toggle-button:hover { background-color: var(--calc-btn-hover-bg); }
+        .calculator-container { border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .calculator-display { width: 100%; padding: 8px; font-size: 1.2em; text-align: right; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 10px; box-sizing: border-box; background-color: #f8f9fa; }
+        .calculator-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        .calc-btn { padding: 10px; font-size: 1em; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--calc-btn-bg); cursor: pointer; transition: background-color 0.1s ease; }
+        .calc-btn:hover { background-color: var(--calc-btn-hover-bg); }
+        .calc-btn.operator { background-color: var(--calc-operator-bg); color: #fff; }
+        .calc-btn.operator:hover { background-color: var(--calc-operator-hover-bg); }
+        .calc-btn.wide { grid-column: span 2; }
+        
+        .form-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
+        .submit-button { background-color: var(--button-bg-color); color: var(--button-text-color); border: none; padding: 10px 20px; font-size: 1em; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15); }
+        .submit-button:hover { background-color: var(--button-hover-bg-color); transform: translateY(-1px); }
+        .submit-button:active { transform: translateY(0px); }
+        .submit-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
+
+        .footer-contact { text-align: center; font-weight: 500; color: var(--footer-text-color); margin-top: 20px; font-size: 1.05em; padding: 15px; background-color: var(--footer-bg-color); border-radius: 12px; border: 1px solid var(--footer-border-color); }
+        .success-message, .error-message { padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: 500; display: none; }
+        .success-message { background-color: #d4edda; color: #155724; }
+        .error-message { background-color: #f8d7da; color: #721c24; }
+
+    </style>
+</head>
+<body>
+    <div class="swipe-indicator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="m12.299 5.701-1.414 1.414 3.585 3.585H4V12.7h10.47l-3.586 3.586 1.414 1.414L19.414 12l-7.115-6.299Z"/>
+        </svg>
+        Table may require horizontal scrolling &nbsp;<strong>&gt;&gt;&gt;</strong>&nbsp; Swipe or use scrollbar
+    </div>
+
+    <div class="container">
+        <div class="main-title-container">
+            <img src="images/TopsLogoCrop.png" alt="Tops Supermarket Logo" class="store-logo"> <h1>Price List</h1>
+        </div>
+        <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
+        <div class="pickup-address-details"> <h3>Pickup address:</h3>
+            <strong>Tops Supermarket</strong>
+            <br>1623 Centre St NW
+            <br>Calgary, AB  T2E 2S3
+            <br>Phone: 403-276-8889
+            <br>Hours: 9:00am - 4:00pm
+            <br>    ---
+        </div>
+
+        <form id="orderForm" action="https://formspree.io/f/mnndygrk" method="POST">
+            
+            <div class="tabs-container">
+            <div class="tab-navigation">
+                    <button type="button" class="tab-button active" data-tab="fruits">Fruits</button>
+                    <button type="button" class="tab-button" data-tab="featured-veggies">Featured Veggies</button>
+                    <button type="button" class="tab-button" data-tab="leafy-greens">Leafy Greens</button>
+                </div>
+            <div class="tab-content">
+                    <div id="fruits" class="tab-pane active">
+                        <div class="table-wrapper"><table><thead><tr>
+                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
+                        </tr></thead><tbody>
+                        <tr>
+                            <td class="name">__</td>
+                            <td class="description">Tomato</td>
+                            <td class="num-box">20 lbs</td>
+                            <td class="price">$20.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="12342312_qty" placeholder="0" aria-label="Quantity for Tomato"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">lkasdjf</td>
+                            <td class="description">Banana</td>
+                            <td class="num-box">15 kg</td>
+                            <td class="price">$43.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232342_qty" placeholder="0" aria-label="Quantity for Banana"></td>
+                        </tr>
+                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                    <div id="featured-veggies" class="tab-pane">
+                        <div class="table-wrapper"><table><thead><tr>
+                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
+                        </tr></thead><tbody>
+                        <tr>
+                            <td class="name">__</td>
+                            <td class="description">Cucumber</td>
+                            <td class="num-box">15 lbs</td>
+                            <td class="price">$15.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="2342342_qty" placeholder="0" aria-label="Quantity for Cucumber"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">Eklj</td>
+                            <td class="description">Envy Apple</td>
+                            <td class="num-box">40 lbs</td>
+                            <td class="price">$50.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232332_qty" placeholder="0" aria-label="Quantity for Envy Apple"></td>
+                        </tr>
+                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                    <div id="leafy-greens" class="tab-pane">
+                        <div class="table-wrapper"><table><thead><tr>
+                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
+                        </tr></thead><tbody>
+                        <tr>
+                            <td class="name">___</td>
+                            <td class="description">Baby Bok Choy</td>
+                            <td class="num-box">15 kg</td>
+                            <td class="price">$33.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="5535344_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">lkj</td>
+                            <td class="description">Cabbage</td>
+                            <td class="num-box">10 lbs</td>
+                            <td class="price">$23.40</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="sadfasdf_qty" placeholder="0" aria-label="Quantity for Cabbage"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">adsf</td>
+                            <td class="description">Lettuce</td>
+                            <td class="num-box">10 lbs</td>
+                            <td class="price">$22.20</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="dasfsdf_qty" placeholder="0" aria-label="Quantity for Lettuce"></td>
+                        </tr>
+                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                </div>
+            <div class="table-wrapper" id="total-qty-footer-wrapper" style="border-top: 2px solid var(--header-bg-color); margin-top: 10px; border-bottom: none; border-left:none; border-right:none; border-radius:0;">
+                <table>
+                    <tfoot>
+                        <tr>
+                            <td class="name" style="border-bottom: none; visibility: hidden;"></td>
+                            <td class="description" style="border-bottom: none; visibility: hidden;"></td>
+                            <td class="num-box" style="border-bottom: none; visibility: hidden;"></td>
+                            <td class="price" style="border-bottom: none; font-weight: 700; text-align: right;">TOTAL QTY:</td>
+                            <td class="qty-cell" style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em;" id="table-total-qty">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+            <div id="visibleOrderSummaryContainer">
+                <h2>Order Summary</h2>
+                <div id="lineItemsDisplay">
+                    <p>No items selected yet.</p>
+                </div>
+            </div>
+
+            <input type="hidden" name="order_summary" id="order_summary">
+            <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+
+            <div class="customer-info-section">
+                <h2>Your Information</h2>
+                <div class="form-group">
+                    <label for="customerName">Name <span style="color: red;">*</span></label>
+                    <input type="text" id="customerName" name="customer_name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email (Optional)</label>
+                    <input type="email" id="customerEmail" name="customer_email" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone <span style="color: red;">*</span></label>
+                    <input type="tel" id="customerPhone" name="customer_phone" placeholder="e.g., 604-555-1234" required>
+                </div>
+                <div class="form-group">
+                    <label for="pickupDate">Requested Pickup Date <span style="color: red;">*</span></label>
+                    <input type="date" id="pickupDate" name="pickup_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="pickupTime">Preferred Pickup Time <span style="color: red;">*</span></label>
+                    <select id="pickupTime" name="pickup_time_slot" required>
+                        <option value="">-- Select a time slot --</option>
+                        <option value="9am-12pm">9:00am - 12:00pm</option>
+                        <option value="12pm-4pm">12:00pm - 4:00pm</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calculator-section">
+                <button type="button" id="toggleCalculatorBtn" class="calculator-toggle-button">Show/Hide Calculator</button>
+                <div id="calculator" class="calculator-container" style="display: none;">
+                    <input type="text" id="calcDisplay" readonly class="calculator-display">
+                    <div class="calculator-keys">
+                        <button type="button" class="calc-btn operator" data-value="clear">AC</button>
+                        <button type="button" class="calc-btn operator" data-value="del">DEL</button>
+                        <button type="button" class="calc-btn operator" data-value="%">%</button>
+                        <button type="button" class="calc-btn operator" data-value="/">÷</button>
+
+                        <button type="button" class="calc-btn" data-value="7">7</button>
+                        <button type="button" class="calc-btn" data-value="8">8</button>
+                        <button type="button" class="calc-btn" data-value="9">9</button>
+                        <button type="button" class="calc-btn operator" data-value="*">×</button>
+
+                        <button type="button" class="calc-btn" data-value="4">4</button>
+                        <button type="button" class="calc-btn" data-value="5">5</button>
+                        <button type="button" class="calc-btn" data-value="6">6</button>
+                        <button type="button" class="calc-btn operator" data-value="-">-</button>
+
+                        <button type="button" class="calc-btn" data-value="1">1</button>
+                        <button type="button" class="calc-btn" data-value="2">2</button>
+                        <button type="button" class="calc-btn" data-value="3">3</button>
+                        <button type="button" class="calc-btn operator" data-value="+">+</button>
+
+                        <button type="button" class="calc-btn wide" data-value="0">0</button>
+                        <button type="button" class="calc-btn" data-value=".">.</button>
+                        <button type="button" class="calc-btn operator" data-value="=">=</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-summary">
+                <button type="submit" class="submit-button">Place Order</button>
+            </div>
+
+            <div class="success-message" id="success-message">
+                Thank you! Your order has been submitted successfully. We will contact you soon.
+            </div>
+
+            <div class="error-message" id="error-message">
+                Sorry, there was an error submitting your order. Please try again or call us directly.
+            </div>
+        </form>
+
+        <div class="footer-contact">
+            Call: <strong>Tops Supermarket - 403-276-8889</strong>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productsData = [
+                {
+                    name: "__ (Tomato)",
+                    price: "$20.00",
+                    box: "20 lbs",
+                    originalName: "__",
+                    description: "Tomato",
+                    category: "Fruits"
+                }
+,
+                {
+                    name: "__ (Cucumber)",
+                    price: "$15.00",
+                    box: "15 lbs",
+                    originalName: "__",
+                    description: "Cucumber",
+                    category: "Featured Veggies"
+                }
+,
+                {
+                    name: "___ (Baby Bok Choy)",
+                    price: "$33.50",
+                    box: "15 kg",
+                    originalName: "___",
+                    description: "Baby Bok Choy",
+                    category: "Leafy Greens"
+                }
+,
+                {
+                    name: "lkasdjf (Banana)",
+                    price: "$43.00",
+                    box: "15 kg",
+                    originalName: "lkasdjf",
+                    description: "Banana",
+                    category: "Fruits"
+                }
+,
+                {
+                    name: "Eklj (Envy Apple)",
+                    price: "$50.00",
+                    box: "40 lbs",
+                    originalName: "Eklj",
+                    description: "Envy Apple",
+                    category: "Featured Veggies"
+                }
+,
+                {
+                    name: "lkj (Cabbage)",
+                    price: "$23.40",
+                    box: "10 lbs",
+                    originalName: "lkj",
+                    description: "Cabbage",
+                    category: "Leafy Greens"
+                }
+,
+                {
+                    name: "adsf (Lettuce)",
+                    price: "$22.20",
+                    box: "10 lbs",
+                    originalName: "adsf",
+                    description: "Lettuce",
+                    category: "Leafy Greens"
+                }
+            ];
+
+            const qtyInputs = document.querySelectorAll('.qty-input'); // Will select all after VBA generation
+            const tableTotalQtyElement = document.getElementById('table-total-qty');
+            const orderForm = document.getElementById('orderForm');
+            const submitButton = document.querySelector('.submit-button');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const lineItemsDisplay = document.getElementById('lineItemsDisplay');
+            const orderSummaryInput = document.getElementById('order_summary');
+            const totalQuantityHiddenInput = document.getElementById('total_quantity_hidden');
+            const pickupDateInput = document.getElementById('pickupDate');
+
+            if (pickupDateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                pickupDateInput.setAttribute('min', today);
+            }
+            
+            // Note: The 'products' array from your original static HTML is removed.
+            // The VBA macro will inject 'productsData' above this script.
+            // All functions below need to use 'productsData' which is now globally available in this scope.
+
+            function updateTotalQuantity() {
+                let currentTotal = 0;
+                // Re-query qtyInputs inside function if they could be added/removed dynamically by other means,
+                // but since VBA generates them once on load, the initial querySelectorAll should be fine.
+                document.querySelectorAll('.qty-input').forEach(input => { 
+                    currentTotal += parseInt(input.value, 10) || 0;
+                });
+                
+                if(tableTotalQtyElement) tableTotalQtyElement.textContent = currentTotal;
+                
+                // If you had a separate #total-qty-value display outside the table:
+                const totalQtyValueElement = document.getElementById('total-qty-value');
+                if(totalQtyValueElement) totalQtyValueElement.textContent = currentTotal;
+
+                if(totalQuantityHiddenInput) totalQuantityHiddenInput.value = currentTotal;
+                
+                generateOrderSummary();
+            }
+
+            function generateOrderSummary() {
+                let orderSummaryTextItems = []; 
+                let visibleSummaryHTML = '<ul>';
+                let hasItems = false;
+                const currentQtyInputs = document.querySelectorAll('.qty-input');
+
+                currentQtyInputs.forEach((input, index) => {
+                    const qty = parseInt(input.value, 10) || 0;
+                    // IMPORTANT: productsData array (injected by VBA) must have the same length
+                    // and order as the '.qty-input' elements found in the DOM.
+                    if (qty > 0 && typeof productsData !== 'undefined' && productsData[index]) { 
+                        hasItems = true;
+                        const product = productsData[index];
+                        orderSummaryTextItems.push(`${product.name}: ${qty} boxes (${product.price} each, #${product.box}/box)`);
+                        visibleSummaryHTML += `<li>${product.description || product.name}: ${qty} x ${product.price}</li>`;
+                    }
+                });
+                visibleSummaryHTML += '</ul>';
+
+                if(orderSummaryInput) orderSummaryInput.value = orderSummaryTextItems.join('\n');
+                
+                if (lineItemsDisplay) {
+                    if (hasItems) {
+                        lineItemsDisplay.innerHTML = visibleSummaryHTML;
+                    } else {
+                        lineItemsDisplay.innerHTML = '<p>No items selected yet.</p>';
+                    }
+                }
+            }
+            
+            // Attach listeners to qty inputs after VBA has rendered them
+             document.querySelectorAll('.qty-input').forEach(input => {
+                input.addEventListener('input', updateTotalQuantity);
+            });
+
+            // Tab switching logic
+            const tabButtons = document.querySelectorAll('.tab-navigation .tab-button'); // Selects buttons generated by VBA
+            const tabPanes = document.querySelectorAll('.tab-content .tab-pane'); // Selects panes generated by VBA
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const targetTab = button.dataset.tab;
+                    tabPanes.forEach(pane => {
+                        pane.id === targetTab ? pane.classList.add('active') : pane.classList.remove('active');
+                    });
+                });
+            });
+
+            // Call once on load to initialize summary if any default quantities are set (currently not)
+            // and to ensure qtyInputs listeners are active if any inputs were already there.
+            // However, since VBA generates inputs, updateTotalQuantity will be called correctly
+            // after this setup. The first call if no inputs are filled will show "No items selected".
+            updateTotalQuantity(); 
+
+
+            // Formspree Submission Logic (from your original HTML)
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    const customerName = document.getElementById('customerName').value.trim();
+                    const customerPhone = document.getElementById('customerPhone').value.trim();
+                    const pickupDateVal = document.getElementById('pickupDate').value;
+                    const pickupTimeVal = document.getElementById('pickupTime').value;
+                    const totalQty = parseInt(totalQuantityHiddenInput.value, 10) || 0;
+
+                    if(successMessage) successMessage.style.display = 'none';
+                    if(errorMessage) errorMessage.style.display = 'none';
+
+                    if (!customerName || !customerPhone || !pickupDateVal || !pickupTimeVal) {
+                        alert('Please fill in all required fields (Name, Phone, Pickup Date, and Pickup Time).');
+                        return;
+                    }
+
+                    if (totalQty === 0) {
+                        alert('Please select at least one item to order.');
+                        return;
+                    }
+
+                    if(submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Submitting...';
+                    }
+
+                    const formData = new FormData(orderForm);
+
+                    fetch(orderForm.action, { 
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    }).then(response => {
+                        if (response.ok) {
+                            if(successMessage) successMessage.style.display = 'block';
+                            orderForm.reset(); // Reset form fields
+                            updateTotalQuantity(); // Update summaries and totals to 0
+                            if (pickupDateInput) { // Set min date again after reset
+                               const today = new Date().toISOString().split('T')[0];
+                               pickupDateInput.setAttribute('min', today);
+                            }
+                            if(successMessage) successMessage.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            response.json().then(data => {
+                                if (data.errors && errorMessage) {
+                                    errorMessage.textContent = data.errors.map(error => error.message).join(", ");
+                                } else if (errorMessage) {
+                                    errorMessage.textContent = 'Form submission failed. Please try again.';
+                                }
+                            }).catch(() => { 
+                                 if (errorMessage) errorMessage.textContent = 'Form submission failed. Status: ' + response.status;
+                            });
+                            throw new Error('Form submission failed'); // Ensure it goes to outer catch
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        if(errorMessage && errorMessage.style.display !== 'block') {
+                           errorMessage.textContent = 'Sorry, there was an error submitting your order. Please try again or call us directly.';
+                           errorMessage.style.display = 'block';
+                        }
+                        if(errorMessage) errorMessage.scrollIntoView({ behavior: 'smooth' });
+                    }).finally(() => {
+                        if(submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Place Order';
+                        }
+                    });
+                });
+            }
+
+
+            // Calculator Logic (from your original HTML)
+            const toggleCalculatorBtn = document.getElementById('toggleCalculatorBtn');
+            const calculatorDiv = document.getElementById('calculator');
+            
+            if (toggleCalculatorBtn && calculatorDiv) {
+                const calcDisplay = document.getElementById('calcDisplay');
+                const calcKeys = document.querySelector('.calculator-keys');
+                let currentCalcInput = '';
+                let previousCalcInput = '';
+                let calcOperation = null;
+                let resetDisplay = false;
+
+                toggleCalculatorBtn.addEventListener('click', () => {
+                    calculatorDiv.style.display = calculatorDiv.style.display === 'none' ? 'block' : 'none';
+                    toggleCalculatorBtn.textContent = calculatorDiv.style.display === 'none' ? 'Show Calculator' : 'Hide Calculator';
+                });
+                
+                function updateDisplay() {
+                    if(calcDisplay) calcDisplay.value = currentCalcInput || '0';
+                }
+                if(calcDisplay) updateDisplay();
+
+                if(calcKeys) {
+                    calcKeys.addEventListener('click', (event) => {
+                        if (!event.target.matches('.calc-btn')) return;
+                        const key = event.target;
+                        const keyValue = key.dataset.value;
+
+                        if (!isNaN(parseFloat(keyValue)) || keyValue === '.') { 
+                            if (keyValue === '.' && currentCalcInput.includes('.')) return;
+                            if (resetDisplay) { currentCalcInput = ''; resetDisplay = false; }
+                            currentCalcInput += keyValue;
+                        } else if (['+', '-', '*', '/'].includes(keyValue)) { 
+                            if (currentCalcInput === '' && previousCalcInput === '') return;
+                            if (currentCalcInput !== '' && previousCalcInput !== '' && calcOperation) { performCalculation(); }
+                            calcOperation = keyValue;
+                            if (currentCalcInput !== '') { previousCalcInput = currentCalcInput; currentCalcInput = ''; }
+                            resetDisplay = false; 
+                        } else if (keyValue === '=') {
+                            if (calcOperation && previousCalcInput !== '' && currentCalcInput !== '') { performCalculation(); calcOperation = null; resetDisplay = true; }
+                        } else if (keyValue === 'clear') { 
+                            currentCalcInput = ''; previousCalcInput = ''; calcOperation = null; resetDisplay = false;
+                        } else if (keyValue === 'del') { 
+                             currentCalcInput = currentCalcInput.slice(0, -1);
+                        }  else if (keyValue === '%') {
+                            if (currentCalcInput !== '') { currentCalcInput = (parseFloat(currentCalcInput) / 100).toString(); resetDisplay = true; }
+                        }
+                        updateDisplay();
+                    });
+                }
+
+                function performCalculation() {
+                    const prev = parseFloat(previousCalcInput); const current = parseFloat(currentCalcInput);
+                    if (isNaN(prev) || isNaN(current)) { currentCalcInput = 'Error'; resetDisplay = true; calcOperation = null; previousCalcInput = ''; return; }
+                    let result;
+                    switch (calcOperation) {
+                        case '+': result = prev + current; break;
+                        case '-': result = prev - current; break;
+                        case '*': result = prev * current; break;
+                        case '/': 
+                            if (current === 0) { result = 'Error'; resetDisplay = true; calcOperation = null; previousCalcInput = '';} 
+                            else { result = prev / current; }
+                            break;
+                        default: return;
+                    }
+                    currentCalcInput = result.toString(); previousCalcInput = ''; 
+                }
+            } 
+        });
+    </script>
+</body>
+</html>
