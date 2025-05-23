@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Price List - Effective May 21, 2025</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fc;
+            --card-bg-color: #ffffff;
+            --text-color-primary: #1a202c;
+            --text-color-secondary: #4a5568;
+            --header-bg-color: #3c366b;
+            --header-text-color: #ffffff;
+            --accent-color: #4f46e5;
+            --border-color: #e2e8f0;
+            --input-focus-border: var(--accent-color);
+            --input-focus-shadow: rgba(79, 70, 229, 0.25);
+            --footer-bg-color: #f3f4f6;
+            --footer-border-color: #e5e7eb;
+            --footer-text-color: #374151;
+            --swipe-msg-bg: #eef2ff;
+            --swipe-msg-text: #312e81;
+            --button-bg-color: var(--accent-color);
+            --button-hover-bg-color: #4338ca;
+            --button-text-color: #ffffff;
+            --form-section-bg: #f9fafb;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.45; /* Reduced line-height */
+            background-color: var(--bg-color);
+            color: var(--text-color-primary);
+            margin: 0;
+            padding: 10px; /* Reduced body padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .swipe-indicator {
+            width: 90%;
+            max-width: 920px;
+            text-align: center;
+            padding: 8px 12px; /* Reduced padding */
+            background-color: var(--swipe-msg-bg);
+            color: var(--swipe-msg-text);
+            font-weight: 500;
+            font-size: 0.9em; /* Slightly smaller font */
+            border-radius: 8px;
+            margin-bottom: 15px; /* Reduced margin */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .swipe-indicator svg {
+            width: 20px; height: 20px; /* Slightly smaller icon */
+            margin-right: 8px; /* Reduced margin */
+            flex-shrink: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 920px;
+            background-color: var(--card-bg-color);
+            padding: 20px 25px 25px 25px; /* Reduced padding */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        .main-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px; /* Reduced margin */
+        }
+
+        .main-title-container svg {
+            width: 32px; height: 32px; /* Smaller icon */
+            margin-right: 10px; /* Reduced margin */
+            color: var(--accent-color);
+        }
+
+        h1 {
+            color: var(--text-color-primary);
+            text-align: center;
+            font-size: 2.2em; /* Slightly reduced font size */
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-top: 0; margin-bottom: 0; /* Tightened h1 margins */
+        }
+
+        .effective-date {
+            text-align: center;
+            margin-top: 5px; /* Added small top margin */
+            margin-bottom: 25px; /* Reduced margin */
+            color: var(--text-color-secondary);
+            font-size: 1em; /* Slightly reduced font size */
+            font-weight: 500;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            margin-bottom: 25px; /* Reduced margin */
+            border: 1px solid var(--border-color);
+            border-radius: 10px; /* Slightly smaller radius */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 6px 14px; /* Further reduced cell padding for tighter spacing */
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: 1.1em; /* Increased font size */
+            font-weight: 700; /* Made text much bolder */
+            line-height: 1.2; /* Reduced line height for less spacing */
+        }
+        
+        th {
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            font-weight: 700; /* Made header text bolder too */
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+            font-size: 0.85em; /* Slightly adjusted for uppercase with new sizing */
+            text-align: center;
+        }
+
+        td.name { text-align: left; }
+        td.description { text-align: left; min-width: 180px; } /* Adjusted min-width if needed */
+        td.num-box { text-align: right; }
+        td.price { text-align: right; }
+        td.qty-cell { text-align: center; }
+
+
+        tbody tr:nth-child(even) td {
+            background-color: #f9fafb;
+        }
+
+        tbody tr:hover td {
+            background-color: #f0f2f5;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .qty-input {
+            width: 65px; /* Reduced width */
+            padding: 8px 6px; /* Reduced padding */
+            border: 1px solid #cbd5e1;
+            border-radius: 6px; /* Smaller radius */
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 0.9em; /* Slightly smaller font */
+            color: var(--text-color-primary);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .qty-input:focus {
+            border-color: var(--input-focus-border);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow); /* Adjusted shadow size */
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qty-input[type=number] { -moz-appearance: textfield; }
+
+        .customer-info-section {
+            background-color: var(--form-section-bg);
+            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            margin-top: 15px; /* Reduced margin */
+            border: 1px solid var(--border-color);
+        }
+        
+        .customer-info-section h2 {
+            font-size: 1.3em; /* Reduced font size */
+            color: var(--text-color-primary);
+            margin-top: 0;
+            margin-bottom: 15px; /* Reduced margin */
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px; /* Reduced padding */
+        }
+
+        .form-group {
+            margin-bottom: 12px; /* Reduced margin */
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px; /* Reduced margin */
+            color: var(--text-color-secondary);
+            font-size: 0.9em; /* Slightly reduced font size */
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 0.95em; /* Slightly reduced font size */
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus {
+            border-color: var(--input-focus-border);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
+        }
+        
+        .form-summary {
+            margin-top: 20px; /* Reduced margin */
+            padding-top: 15px; /* Reduced padding */
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px; /* Reduced gap */
+        }
+
+        #total-qty-display {
+            font-size: 1.1em; /* Reduced font size */
+            font-weight: 600;
+            color: var(--text-color-primary);
+        }
+        
+        #total-qty-display #total-qty-value {
+            color: var(--accent-color);
+            font-size: 1.2em; /* Adjusted relative size */
+        }
+
+        .submit-button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 10px 20px; /* Reduced padding */
+            font-size: 1em; /* Reduced font size */
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, transform 0.1s ease;
+            box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15); /* Adjusted shadow */
+        }
+
+        .submit-button:hover {
+            background-color: var(--button-hover-bg-color);
+            transform: translateY(-1px);
+        }
+        .submit-button:active {
+            transform: translateY(0px);
+        }
+
+        .submit-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-contact {
+            text-align: center;
+            font-weight: 500;
+            color: var(--footer-text-color);
+            margin-top: 20px; /* Reduced margin */
+            font-size: 1.05em; /* Reduced font size */
+            padding: 15px; /* Reduced padding */
+            background-color: var(--footer-bg-color);
+            border-radius: 12px;
+            border: 1px solid var(--footer-border-color);
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="swipe-indicator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="m12.299 5.701-1.414 1.414 3.585 3.585H4V12.7h10.47l-3.586 3.586 1.414 1.414L19.414 12l-7.115-6.299Z"/>
+        </svg>
+        Table may require horizontal scrolling &nbsp;<strong>&gt;&gt;&gt;</strong>&nbsp; Swipe or use scrollbar
+    </div>
+
+    <div class="container">
+        <div class="main-title-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <h1>Global Orchards Price List</h1>
+        </div>
+        <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
+
+        <form id="orderForm" action="https://formspree.io/f/mnndygrk" method="POST">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="name">Name</th>
+                            <th class="description">Description</th>
+                            <th class="num-box"># Box</th>
+                            <th class="price">Price</th>
+                            <th class="qty">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="name">大娃娃</td>
+                            <td class="description">Baby Bok Choy</td>
+                            <td class="num-box">40</td>
+                            <td class="price">$18.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="baby_bok_choy_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">菠菜</td>
+                            <td class="description">Spinach</td>
+                            <td class="num-box">360</td>
+                            <td class="price">$16.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="spinach_qty" placeholder="0" aria-label="Quantity for Spinach"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">油麦</td>
+                            <td class="description">A Choy</td>
+                            <td class="num-box">360</td>
+                            <td class="price">$12.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="a_choy_qty" placeholder="0" aria-label="Quantity for A Choy"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">小茴香</td>
+                            <td class="description">Fennel</td>
+                            <td class="num-box">9</td>
+                            <td class="price">$10.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="fennel_qty" placeholder="0" aria-label="Quantity for Fennel"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">甜豆</td>
+                            <td class="description">Sugar Snap Peas</td>
+                            <td class="num-box">640</td>
+                            <td class="price">$12.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="sugar_snap_peas_qty" placeholder="0" aria-label="Quantity for Sugar Snap Peas"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">荷兰豆</td>
+                            <td class="description">Snow Peas</td>
+                            <td class="num-box">180</td>
+                            <td class="price">$13.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="snow_peas_qty" placeholder="0" aria-label="Quantity for Snow Peas"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">蒜苗</td>
+                            <td class="description">Garlic Leek</td>
+                            <td class="num-box">50</td>
+                            <td class="price">$17.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="garlic_leek_qty" placeholder="0" aria-label="Quantity for Garlic Leek"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">莴笋</td>
+                            <td class="description">Lettuce Stem)</td>
+                            <td class="num-box">50</td>
+                            <td class="price">$17.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="lettuce_stem_qty" placeholder="0" aria-label="Quantity for Lettuce Stem"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">线椒</td>
+                            <td class="description">Chinese Chili Peppers</td>
+                            <td class="num-box">15</td>
+                            <td class="price">$18.50</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="thin_chili_peppers_qty" placeholder="0" aria-label="Quantity for Thin Chili Peppers"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">长白菜</td>
+                            <td class="description">Napa Cabbage</td>
+                            <td class="num-box">10</td>
+                            <td class="price">$25.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="napa_cabbage_qty" placeholder="0" aria-label="Quantity for Napa Cabbage"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">松花</td>
+                            <td class="description">Pine Mushroom</td>
+                            <td class="num-box">80</td>
+                            <td class="price">$17.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="pine_mushroom_qty" placeholder="0" aria-label="Quantity for Pine Mushroom"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">真空马蹄</td>
+                            <td class="description">Water Chestnuts</td>
+                            <td class="num-box">50</td>
+                            <td class="price">$28.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="water_chestnuts_qty" placeholder="0" aria-label="Quantity for Water Chestnuts"></td>
+                        </tr>
+                        <tr>
+                            <td class="name">贝贝南瓜</td>
+                            <td class="description">Kabocha Squash</td>
+                            <td class="num-box">400</td>
+                            <td class="price">$10.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="kabocha_squash_qty" placeholder="0" aria-label="Quantity for Kobocha Pumpkin"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="name" style="border-bottom: none;"></td>
+                            <td class="description" style="border-bottom: none;"></td>
+                            <td class="num-box" style="border-bottom: none;"></td>
+                            <td class="price" style="border-bottom: none; font-weight: 700; text-align: right;">TOTAL QTY:</td>
+                            <td class="qty-cell" style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em;" id="table-total-qty">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Hidden field to capture order summary -->
+            <input type="hidden" name="order_summary" id="order_summary">
+            <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+
+            <div class="customer-info-section">
+                <h2>Your Information</h2>
+                <div class="form-group">
+                    <label for="customerName">Name <span style="color: red;">*</span></label>
+                    <input type="text" id="customerName" name="customer_name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email (Optional)</label>
+                    <input type="email" id="customerEmail" name="customer_email" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone <span style="color: red;">*</span></label>
+                    <input type="tel" id="customerPhone" name="customer_phone" placeholder="e.g., 604-555-1234" required>
+                </div>
+            </div>
+
+            <div class="form-summary">
+                <div id="total-qty-display">Total Quantity: <span id="total-qty-value">0</span></div>
+                <button type="submit" class="submit-button">Place Order</button>
+            </div>
+
+            <div class="success-message" id="success-message">
+                Thank you! Your order has been submitted successfully. We will contact you soon.
+            </div>
+
+            <div class="error-message" id="error-message">
+                Sorry, there was an error submitting your order. Please try again or call us directly.
+            </div>
+        </form>
+
+        <div class="footer-contact">
+            Call: <strong>Cindy Liu - 604-537-1999</strong>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const qtyInputs = document.querySelectorAll('.qty-input');
+            const totalQtyValueElement = document.getElementById('total-qty-value');
+            const orderForm = document.getElementById('orderForm');
+            const submitButton = document.querySelector('.submit-button');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            // Product data for order summary
+            const products = [
+                { name: '大娃娃 (Baby Bok Choy)', price: '$18.00', box: '40' },
+                { name: '菠菜 (Spinach)', price: '$16.00', box: '360' },
+                { name: '油麦 (A Choy/Yau Mak)', price: '$12.50', box: '360' },
+                { name: '小茴香 (Fennel)', price: '$10.50', box: '9' },
+                { name: '甜豆 (Sugar Snap Peas)', price: '$12.00', box: '640' },
+                { name: '荷兰豆 (Snow Peas)', price: '$13.50', box: '180' },
+                { name: '蒜苗 (Garlic Leek/Sprouts)', price: '$17.50', box: '50' },
+                { name: '莴笋 (Lettuce Stem/Celtuce)', price: '$17.50', box: '50' },
+                { name: '线椒 (Thin Chili Peppers)', price: '$18.50', box: '15' },
+                { name: '长白菜 (Napa Cabbage)', price: '$25.00', box: '10' },
+                { name: '松花 (Pine Mushroom/Matsutake)', price: '$17.00', box: '80' },
+                { name: '真空马蹄 (Water Chestnuts)', price: '$28.00', box: '50' },
+                { name: '贝贝南瓜 (Kabocha Squash)', price: '$10.00', box: '400' }
+            ];
+
+            function updateTotalQuantity() {
+                let currentTotal = 0;
+                qtyInputs.forEach(input => {
+                    currentTotal += parseInt(input.value, 10) || 0;
+                });
+                totalQtyValueElement.textContent = currentTotal;
+                
+                // Update table footer total as well
+                document.getElementById('table-total-qty').textContent = currentTotal;
+                
+                // Update hidden field
+                document.getElementById('total_quantity_hidden').value = currentTotal;
+                
+                // Generate order summary
+                generateOrderSummary();
+            }
+
+            function generateOrderSummary() {
+                let orderSummary = [];
+                qtyInputs.forEach((input, index) => {
+                    const qty = parseInt(input.value, 10) || 0;
+                    if (qty > 0) {
+                        orderSummary.push(`${products[index].name}: ${qty} boxes (${products[index].price} each, #${products[index].box}/box)`);
+                    }
+                });
+                
+                document.getElementById('order_summary').value = orderSummary.join('\n');
+            }
+
+            qtyInputs.forEach(input => {
+                input.addEventListener('input', updateTotalQuantity);
+            });
+
+            updateTotalQuantity(); // Initial calculation
+
+            orderForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const customerName = document.getElementById('customerName').value.trim();
+                const customerPhone = document.getElementById('customerPhone').value.trim();
+                const totalQty = parseInt(totalQtyValueElement.textContent) || 0;
+
+                // Hide previous messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                // Basic validation
+                if (!customerName || !customerPhone) {
+                    alert('Please fill in all required fields (Name and Phone).');
+                    return;
+                }
+
+                if (totalQty === 0) {
+                    alert('Please select at least one item to order.');
+                    return;
+                }
+
+                // Disable submit button and show loading state
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+
+                // Create FormData object
+                const formData = new FormData(orderForm);
+
+                // Submit to Formspree
+                fetch('https://formspree.io/f/mnndygrk', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        successMessage.style.display = 'block';
+                        orderForm.reset();
+                        updateTotalQuantity(); // Reset the total display
+                        successMessage.scrollIntoView({ behavior: 'smooth' });
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                    errorMessage.style.display = 'block';
+                    errorMessage.scrollIntoView({ behavior: 'smooth' });
+                }).finally(() => {
+                    // Re-enable submit button
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Place Order';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
