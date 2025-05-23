@@ -408,9 +408,18 @@
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
-            <h1>Global Orchards Price List</h1>
+            <h1>Tops Supermarket Price List</h1>
+            
         </div>
         <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
+        <h3>Pickup address:</h3>
+        <strong>Tops Supermarket</strong>
+        <br>1623 Centre St NW
+        <br>Calgary, AB  T2E 2S3
+        <br>Phone: 403-276-8889
+        <br>Hours: 9:00am - 4:00pm
+
+    
 
         <form id="orderForm" action="https://formspree.io/f/mnndygrk" method="POST">
             <div class="table-wrapper">
@@ -555,8 +564,7 @@
                     <select id="pickupTime" name="pickup_time_slot" required>
                         <option value="">-- Select a time slot --</option>
                         <option value="9am-12pm">9:00am - 12:00pm</option>
-                        <option value="12pm-3pm">12:00pm - 3:00pm</option>
-                        <option value="3pm-6pm">3:00pm - 6:00pm</option>
+                        <option value="12pm-4pm">12:00pm - 4:00pm</option>
                     </select>
                 </div>
             </div>
@@ -668,7 +676,7 @@
                 qtyInputs.forEach((input, index) => {
                     const qty = parseInt(input.value, 10) || 0;
                     if (qty > 0 && products[index]) { // Check products[index] exists
-                        orderSummaryItems.push(`${products[index].name}: ${qty} boxes (${products[index].price} each, #${products[index].box}/box)`);
+                        orderSummaryItems.push(`${products[index].name}: ${qty} boxes (${products[index].price} each)`);
                     }
                 });
                 
