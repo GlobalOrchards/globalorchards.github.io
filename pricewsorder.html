@@ -80,39 +80,62 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px; /* Reduced margin */
+            margin-bottom: 15px; /* Increased margin-bottom slightly for the larger logo */
         }
 
-        .main-title-container svg {
-            width: 32px; height: 32px; /* Smaller icon */
-            margin-right: 10px; /* Reduced margin */
-            color: var(--accent-color);
+        .store-logo { /* New style for the logo */
+            width: 250px;
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 20px; /* Space between logo and title */
         }
+
+        /* Removed .main-title-container svg style as SVG is replaced */
 
         h1 {
             color: var(--text-color-primary);
-            text-align: center;
-            font-size: 2.2em; /* Slightly reduced font size */
+            text-align: left; /* Align title to the left if next to a large logo */
+            font-size: 2.0em; /* Adjusted font size to fit next to logo */
             font-weight: 700;
             letter-spacing: -0.5px;
-            margin-top: 0; margin-bottom: 0; /* Tightened h1 margins */
+            margin-top: 0; 
+            margin-bottom: 0; 
+        }
+
+        .pickup-address-details { 
+            margin-bottom: 25px; 
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--form-section-bg);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .pickup-address-details h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.15em;
+            color: var(--text-color-primary);
+        }
+        .pickup-address-details strong {
+            font-weight: 600;
         }
 
         .effective-date {
             text-align: center;
-            margin-top: 5px; /* Added small top margin */
-            margin-bottom: 25px; /* Reduced margin */
+            margin-top: 5px; 
+            margin-bottom: 15px; 
             color: var(--text-color-secondary);
-            font-size: 1em; /* Slightly reduced font size */
+            font-size: 1em; 
             font-weight: 500;
         }
 
         .table-wrapper {
             overflow-x: auto;
             width: 100%;
-            margin-bottom: 25px; /* Reduced margin */
+            margin-bottom: 25px; 
             border: 1px solid var(--border-color);
-            border-radius: 10px; /* Slightly smaller radius */
+            border-radius: 10px; 
             -webkit-overflow-scrolling: touch;
         }
 
@@ -123,26 +146,26 @@
 
         th, td {
             border-bottom: 1px solid var(--border-color);
-            padding: 6px 14px; /* Further reduced cell padding for tighter spacing */
+            padding: 6px 14px; 
             vertical-align: middle;
             white-space: nowrap;
-            font-size: 1.1em; /* Increased font size */
-            font-weight: 700; /* Made text much bolder */
-            line-height: 1.2; /* Reduced line height for less spacing */
+            font-size: 1.1em; 
+            font-weight: 700; 
+            line-height: 1.2; 
         }
         
         th {
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
-            font-weight: 700; /* Made header text bolder too */
+            font-weight: 700; 
             text-transform: uppercase;
             letter-spacing: 0.75px;
-            font-size: 0.85em; /* Slightly adjusted for uppercase with new sizing */
+            font-size: 0.85em; 
             text-align: center;
         }
 
         td.name { text-align: left; }
-        td.description { text-align: left; min-width: 180px; } /* Adjusted min-width if needed */
+        td.description { text-align: left; min-width: 180px; } 
         td.num-box { text-align: right; }
         td.price { text-align: right; }
         td.qty-cell { text-align: center; }
@@ -158,13 +181,13 @@
         }
 
         .qty-input {
-            width: 65px; /* Reduced width */
-            padding: 8px 6px; /* Reduced padding */
+            width: 65px; 
+            padding: 8px 6px; 
             border: 1px solid #cbd5e1;
-            border-radius: 6px; /* Smaller radius */
+            border-radius: 6px; 
             box-sizing: border-box;
             text-align: center;
-            font-size: 0.9em; /* Slightly smaller font */
+            font-size: 0.9em; 
             color: var(--text-color-primary);
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
@@ -172,7 +195,7 @@
         .qty-input:focus {
             border-color: var(--input-focus-border);
             outline: 0;
-            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow); /* Adjusted shadow size */
+            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow); 
         }
 
         .qty-input::-webkit-outer-spin-button,
@@ -181,54 +204,54 @@
 
         .customer-info-section {
             background-color: var(--form-section-bg);
-            padding: 20px; /* Reduced padding */
+            padding: 20px; 
             border-radius: 10px;
-            margin-top: 15px; /* Reduced margin */
+            margin-top: 15px; 
             border: 1px solid var(--border-color);
         }
         
         .customer-info-section h2 {
-            font-size: 1.3em; /* Reduced font size */
+            font-size: 1.3em; 
             color: var(--text-color-primary);
             margin-top: 0;
-            margin-bottom: 15px; /* Reduced margin */
+            margin-bottom: 15px; 
             text-align: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px; /* Reduced padding */
+            padding-bottom: 10px; 
         }
 
         .form-group {
-            margin-bottom: 12px; /* Reduced margin */
+            margin-bottom: 12px; 
         }
 
         .form-group label {
             display: block;
             font-weight: 600;
-            margin-bottom: 5px; /* Reduced margin */
+            margin-bottom: 5px; 
             color: var(--text-color-secondary);
-            font-size: 0.9em; /* Slightly reduced font size */
+            font-size: 0.9em; 
         }
 
         .form-group input[type="text"],
         .form-group input[type="email"],
         .form-group input[type="tel"],
-        .form-group input[type="date"], /* Added date */
-        .form-group select {             /* Added select */
+        .form-group input[type="date"], 
+        .form-group select {            
             width: 100%;
-            padding: 10px; /* Reduced padding */
+            padding: 10px; 
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             box-sizing: border-box;
-            font-size: 0.95em; /* Slightly reduced font size */
+            font-size: 0.95em; 
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            background-color: #fff; /* Ensure background for select */
+            background-color: #fff; 
         }
 
         .form-group input[type="text"]:focus,
         .form-group input[type="email"]:focus,
         .form-group input[type="tel"]:focus,
-        .form-group input[type="date"]:focus, /* Added date */
-        .form-group select:focus {             /* Added select */
+        .form-group input[type="date"]:focus, 
+        .form-group select:focus {            
             border-color: var(--input-focus-border);
             outline: 0;
             box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
@@ -310,37 +333,37 @@
         }
         
         .form-summary {
-            margin-top: 20px; /* Reduced margin */
-            padding-top: 15px; /* Reduced padding */
+            margin-top: 20px; 
+            padding-top: 15px; 
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 15px; /* Reduced gap */
+            gap: 15px; 
         }
 
         #total-qty-display {
-            font-size: 1.1em; /* Reduced font size */
+            font-size: 1.1em; 
             font-weight: 600;
             color: var(--text-color-primary);
         }
         
         #total-qty-display #total-qty-value {
             color: var(--accent-color);
-            font-size: 1.2em; /* Adjusted relative size */
+            font-size: 1.2em; 
         }
 
         .submit-button {
             background-color: var(--button-bg-color);
             color: var(--button-text-color);
             border: none;
-            padding: 10px 20px; /* Reduced padding */
-            font-size: 1em; /* Reduced font size */
+            padding: 10px 20px; 
+            font-size: 1em; 
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.15s ease-in-out, transform 0.1s ease;
-            box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15); /* Adjusted shadow */
+            box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15); 
         }
 
         .submit-button:hover {
@@ -361,9 +384,9 @@
             text-align: center;
             font-weight: 500;
             color: var(--footer-text-color);
-            margin-top: 20px; /* Reduced margin */
-            font-size: 1.05em; /* Reduced font size */
-            padding: 15px; /* Reduced padding */
+            margin-top: 20px; 
+            font-size: 1.05em; 
+            padding: 15px; 
             background-color: var(--footer-bg-color);
             border-radius: 12px;
             border: 1px solid var(--footer-border-color);
@@ -403,12 +426,8 @@
 
     <div class="container">
         <div class="main-title-container">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-            </svg>
-            <h1>Tops Supermarket Price List</h1>
+            <img src="images/TopsLogoCrop.png" alt="Tops Supermarket Logo" class="store-logo">
+            <h1>Price List</h1>
             
         </div>
         <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
@@ -572,6 +591,37 @@
                 </div>
             </div>
 
+            <div class="calculator-section">
+                <button type="button" id="toggleCalculatorBtn" class="calculator-toggle-button">Show/Hide Calculator</button>
+                <div id="calculator" class="calculator-container" style="display: none;">
+                    <input type="text" id="calcDisplay" readonly class="calculator-display">
+                    <div class="calculator-keys">
+                        <button type="button" class="calc-btn operator" data-value="clear">AC</button>
+                        <button type="button" class="calc-btn operator" data-value="del">DEL</button>
+                        <button type="button" class="calc-btn operator" data-value="%">%</button>
+                        <button type="button" class="calc-btn operator" data-value="/">÷</button>
+
+                        <button type="button" class="calc-btn" data-value="7">7</button>
+                        <button type="button" class="calc-btn" data-value="8">8</button>
+                        <button type="button" class="calc-btn" data-value="9">9</button>
+                        <button type="button" class="calc-btn operator" data-value="*">×</button>
+
+                        <button type="button" class="calc-btn" data-value="4">4</button>
+                        <button type="button" class="calc-btn" data-value="5">5</button>
+                        <button type="button" class="calc-btn" data-value="6">6</button>
+                        <button type="button" class="calc-btn operator" data-value="-">-</button>
+
+                        <button type="button" class="calc-btn" data-value="1">1</button>
+                        <button type="button" class="calc-btn" data-value="2">2</button>
+                        <button type="button" class="calc-btn" data-value="3">3</button>
+                        <button type="button" class="calc-btn operator" data-value="+">+</button>
+
+                        <button type="button" class="calc-btn wide" data-value="0">0</button>
+                        <button type="button" class="calc-btn" data-value=".">.</button>
+                        <button type="button" class="calc-btn operator" data-value="=">=</button>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="form-summary">
@@ -589,7 +639,7 @@
         </form>
 
         <div class="footer-contact">
-            Call: <strong>Cindy Liu - 604-537-1999</strong>
+            Call: <strong>Tops Supermarket - 403-276-8889</strong>
         </div>
     </div>
 
@@ -611,7 +661,7 @@
 
             // Product data for order summary
             const products = [
-                { name: '大娃娃 (Baby Bok Choy)', price: '$18.00', box: '40' },
+                { name: '大娃娃 (Baby Bok Choy)', price: '$18.00', box: '40' }, // Note: Price/Box data here seems different from table content in previous steps
                 { name: '菠菜 (Spinach)', price: '$16.00', box: '360' },
                 { name: '油麦 (A Choy/Yau Mak)', price: '$12.50', box: '360' },
                 { name: '小茴香 (Fennel)', price: '$10.50', box: '9' },
@@ -621,7 +671,7 @@
                 { name: '莴笋 (Lettuce Stem/Celtuce)', price: '$17.50', box: '50' },
                 { name: '线椒 (Thin Chili Peppers)', price: '$18.50', box: '15' },
                 { name: '长白菜 (Napa Cabbage)', price: '$25.00', box: '10' },
-                { name: '松花 (Pine Mushroom/Matsutake)', price: '$17.00', box: '80' },
+                { name: '松花 (Pine Mushroom/Matsutake)', price: '$17.00', box: '80' }, // Name in table is Taiwan Cauliflower, but JS product name differs. I'll use the JS one for summary.
                 { name: '真空马蹄 (Water Chestnuts)', price: '$28.00', box: '50' },
                 { name: '贝贝南瓜 (Kabocha Squash)', price: '$10.00', box: '400' }
             ];
@@ -633,13 +683,8 @@
                 });
                 totalQtyValueElement.textContent = currentTotal;
                 
-                // Update table footer total as well
                 document.getElementById('table-total-qty').textContent = currentTotal;
-                
-                // Update hidden field
                 document.getElementById('total_quantity_hidden').value = currentTotal;
-                
-                // Generate order summary
                 generateOrderSummary();
             }
 
@@ -647,8 +692,8 @@
                 let orderSummaryItems = [];
                 qtyInputs.forEach((input, index) => {
                     const qty = parseInt(input.value, 10) || 0;
-                    if (qty > 0 && products[index]) { // Check products[index] exists
-                        orderSummaryItems.push(`${products[index].name}: ${qty} boxes (${products[index].price} each)`);
+                    if (qty > 0 && products[index]) { 
+                        orderSummaryItems.push(`${products[index].name}: <span class="math-inline">\{qty\} boxes \(</span>{products[index].price} each)`);
                     }
                 });
                 
@@ -659,7 +704,7 @@
                 input.addEventListener('input', updateTotalQuantity);
             });
 
-            updateTotalQuantity(); // Initial calculation
+            updateTotalQuantity(); 
 
             orderForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -688,7 +733,7 @@
 
                 const formData = new FormData(orderForm);
 
-                fetch(orderForm.action, { // Use form.action
+                fetch(orderForm.action, { 
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -699,7 +744,6 @@
                         successMessage.style.display = 'block';
                         orderForm.reset();
                         updateTotalQuantity(); 
-                        // Set min date again after reset
                         const pickupDateInputAfterReset = document.getElementById('pickupDate');
                         if (pickupDateInputAfterReset) {
                             pickupDateInputAfterReset.setAttribute('min', today);
@@ -743,14 +787,14 @@
                 const key = event.target;
                 const keyValue = key.dataset.value;
 
-                if (!isNaN(parseFloat(keyValue)) || keyValue === '.') { // Number or decimal
+                if (!isNaN(parseFloat(keyValue)) || keyValue === '.') { 
                     if (keyValue === '.' && currentCalcInput.includes('.')) return;
                     if (resetDisplay) {
                         currentCalcInput = '';
                         resetDisplay = false;
                     }
                     currentCalcInput += keyValue;
-                } else if (['+', '-', '*', '/'].includes(keyValue)) { // Operator
+                } else if (['+', '-', '*', '/'].includes(keyValue)) { 
                     if (currentCalcInput === '' && previousCalcInput === '') return;
                     if (currentCalcInput !== '' && previousCalcInput !== '' && calcOperation) {
                         performCalculation();
@@ -760,48 +804,17 @@
                          previousCalcInput = currentCalcInput;
                          currentCalcInput = '';
                     }
-                    resetDisplay = false; // Allow chaining operations
+                    resetDisplay = false; 
                 } else if (keyValue === '=') {
                     if (calcOperation && previousCalcInput !== '' && currentCalcInput !== '') {
                         performCalculation();
-                        calcOperation = null; // Reset operation after equals
+                        calcOperation = null; 
                         resetDisplay = true; 
                     }
-                } else if (keyValue === 'clear') { // AC
+                } else if (keyValue === 'clear') { 
                     currentCalcInput = '';
                     previousCalcInput = '';
                     calcOperation = null;
                     resetDisplay = false;
-                } else if (keyValue === 'del') { // DEL
+                } else if (keyValue === 'del') { 
                      currentCalcInput = currentCalcInput.slice(0, -1);
-                } else if (keyValue === '%') {
-                    if (currentCalcInput !== '') {
-                        currentCalcInput = (parseFloat(currentCalcInput) / 100).toString();
-                         resetDisplay = true;
-                    }
-                }
-                updateDisplay();
-            });
-
-            function performCalculation() {
-                const prev = parseFloat(previousCalcInput);
-                const current = parseFloat(currentCalcInput);
-                if (isNaN(prev) || isNaN(current)) return;
-                let result;
-                switch (calcOperation) {
-                    case '+': result = prev + current; break;
-                    case '-': result = prev - current; break;
-                    case '*': result = prev * current; break;
-                    case '/': result = current === 0 ? 'Error' : prev / current; break;
-                    default: return;
-                }
-                currentCalcInput = result.toString();
-                previousCalcInput = ''; // Clear previous after calculation for simple chain
-                // calcOperation = null; // Keep operation for chaining or clear for strict single op
-            }
-
-
-        });
-    </script>
-</body>
-</html>
