@@ -35,7 +35,13 @@
             --tab-active-text-color: var(--accent-color);
         }
 
-        body {
+        .strike-red {
+            color: red;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+        
+            body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
             line-height: 1.45; /* Reduced line-height */
             background-color: var(--bg-color);
@@ -211,7 +217,7 @@
         }
 
         td.name { text-align: left; }
-        td.description { text-align: left; min-width: 180px; } 
+        td.description { text-align: left; min-width: 100; } 
         td.num-box { text-align: right; }
         td.price { text-align: right; }
         td.qty-cell { text-align: center; }
@@ -287,6 +293,24 @@
         .success-message, .error-message { padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: 500; display: none; }
         .success-message { background-color: #d4edda; color: #155724; }
         .error-message { background-color: #f8d7da; color: #721c24; }
+        
+        /* Order Summary Table Styling */
+        #orderSummaryTable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2em;            /* Larger font */
+            margin-bottom: 10px;
+        }
+        #orderSummaryTable th,
+        #orderSummaryTable td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        #orderSummaryTable tfoot td {
+            border-top: 2px solid var(--border-color);
+            font-weight: 700;
+        }
 
     </style>
 </head>
@@ -317,173 +341,173 @@
             <div class="tabs-container">
             <div class="tab-navigation">
                     <button type="button" class="tab-button active" data-tab="fruits">Fruits</button>
-                    <button type="button" class="tab-button" data-tab="featured-veggies">Featured Veggies</button>
-                    <button type="button" class="tab-button" data-tab="leafy-greens">Leafy Greens</button>
+                    <button type="button" class="tab-button" data-tab="veggies">Veggies</button>
+                    <button type="button" class="tab-button" data-tab="leafy">Leafy</button>
                     <button type="button" class="tab-button" data-tab="cindy">Cindy</button>
                 </div>
             <div class="tab-content">
                     <div id="fruits" class="tab-pane active">
                         <div class="table-wrapper"><table><thead><tr>
-                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$26.00</td>
                             <td class="description">Tomato</td>
                             <td class="num-box">20 lbs</td>
                             <td class="price">$20.00</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="12342312_qty" placeholder="0" aria-label="Quantity for Tomato"></td>
                         </tr>
                         <tr>
-                            <td class="name">lkasdjf</td>
+                            <td class="retail strike-red">$55.90</td>
                             <td class="description">Banana</td>
                             <td class="num-box">15 kg</td>
                             <td class="price">$43.00</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232342_qty" placeholder="0" aria-label="Quantity for Banana"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$32.50</td>
                             <td class="description">Lettuce Stem1</td>
-                            <td class="num-box">10</td>
+                            <td class="num-box">10 kg</td>
                             <td class="price">$25.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="221053.436284107_qty" placeholder="0" aria-label="Quantity for Lettuce Stem1"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4092822.81464383_qty" placeholder="0" aria-label="Quantity for Lettuce Stem1"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$39.00</td>
                             <td class="description">Thin Chili Peppers</td>
-                            <td class="num-box">6</td>
+                            <td class="num-box">6 kg</td>
                             <td class="price">$30.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4469470.2777497_qty" placeholder="0" aria-label="Quantity for Thin Chili Peppers"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="428686.657250172_qty" placeholder="0" aria-label="Quantity for Thin Chili Peppers"></td>
                         </tr>
                         <tr>
-                            <td class="name">___</td>
+                            <td class="retail strike-red">$33.80</td>
                             <td class="description">Napa Cabbage</td>
-                            <td class="num-box">10</td>
+                            <td class="num-box">10 kg</td>
                             <td class="price">$26.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6075830.27069542_qty" placeholder="0" aria-label="Quantity for Napa Cabbage"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8810810.19323174_qty" placeholder="0" aria-label="Quantity for Napa Cabbage"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$65.00</td>
                             <td class="description">Taiwan Cauliflower</td>
-                            <td class="num-box">10</td>
+                            <td class="num-box">10 kg</td>
                             <td class="price">$50.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6462184.04464769_qty" placeholder="0" aria-label="Quantity for Taiwan Cauliflower"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6370162.29273092_qty" placeholder="0" aria-label="Quantity for Taiwan Cauliflower"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
-                    <div id="featured-veggies" class="tab-pane">
+                    <div id="veggies" class="tab-pane">
                         <div class="table-wrapper"><table><thead><tr>
-                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$19.50</td>
                             <td class="description">Cucumber</td>
                             <td class="num-box">15 lbs</td>
                             <td class="price">$15.00</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="2342342_qty" placeholder="0" aria-label="Quantity for Cucumber"></td>
                         </tr>
                         <tr>
-                            <td class="name">Eklj</td>
+                            <td class="retail strike-red">$65.00</td>
                             <td class="description">Envy Apple</td>
                             <td class="num-box">40 lbs</td>
                             <td class="price">$50.00</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232332_qty" placeholder="0" aria-label="Quantity for Envy Apple"></td>
                         </tr>
                         <tr>
-                            <td class="name">___</td>
+                            <td class="retail strike-red">$26.00</td>
                             <td class="description">Fennel</td>
-                            <td class="num-box">5</td>
+                            <td class="num-box">5 kg</td>
                             <td class="price">$20.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="855173.760231475_qty" placeholder="0" aria-label="Quantity for Fennel"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4863163.02054017_qty" placeholder="0" aria-label="Quantity for Fennel"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$20.80</td>
                             <td class="description">Sugar Snap Peas</td>
-                            <td class="num-box">4.5</td>
+                            <td class="num-box">4.5 kg</td>
                             <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4864917.3843264_qty" placeholder="0" aria-label="Quantity for Sugar Snap Peas"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="357856.408655375_qty" placeholder="0" aria-label="Quantity for Sugar Snap Peas"></td>
                         </tr>
                         <tr>
-                            <td class="name">___</td>
+                            <td class="retail strike-red">$20.80</td>
                             <td class="description">Snow Peas</td>
-                            <td class="num-box">4.5</td>
+                            <td class="num-box">4.5 kg</td>
                             <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="3289056.41922881_qty" placeholder="0" aria-label="Quantity for Snow Peas"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="3633133.26855952_qty" placeholder="0" aria-label="Quantity for Snow Peas"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$32.50</td>
                             <td class="description">Garlic Leek</td>
-                            <td class="num-box">10</td>
+                            <td class="num-box">10 kg</td>
                             <td class="price">$25.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8443317.21383301_qty" placeholder="0" aria-label="Quantity for Garlic Leek"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8966611.99765101_qty" placeholder="0" aria-label="Quantity for Garlic Leek"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
-                    <div id="leafy-greens" class="tab-pane">
+                    <div id="leafy" class="tab-pane">
                         <div class="table-wrapper"><table><thead><tr>
-                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="name">___</td>
+                            <td class="retail strike-red">$43.55</td>
                             <td class="description">Baby Bok Choy</td>
                             <td class="num-box">15 kg</td>
                             <td class="price">$33.50</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="5535344_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
                         </tr>
                         <tr>
-                            <td class="name">lkj</td>
+                            <td class="retail strike-red">$30.42</td>
                             <td class="description">Cabbage</td>
                             <td class="num-box">10 lbs</td>
                             <td class="price">$23.40</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="sadfasdf_qty" placeholder="0" aria-label="Quantity for Cabbage"></td>
                         </tr>
                         <tr>
-                            <td class="name">adsf</td>
+                            <td class="retail strike-red">$28.86</td>
                             <td class="description">Lettuce</td>
                             <td class="num-box">10 lbs</td>
                             <td class="price">$22.20</td>
                             <td class="qty-cell"><input type="number" min="0" class="qty-input" name="dasfsdf_qty" placeholder="0" aria-label="Quantity for Lettuce"></td>
                         </tr>
                         <tr>
-                            <td class="name">___</td>
+                            <td class="retail strike-red">$39.00</td>
                             <td class="description">Baby Bok Choy</td>
-                            <td class="num-box">15</td>
+                            <td class="num-box">15 kg</td>
                             <td class="price">$30.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="833182.334398993_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4124856.02125503_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$20.80</td>
                             <td class="description">Spinach1</td>
-                            <td class="num-box">4</td>
+                            <td class="num-box">4 kg</td>
                             <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6800894.57867012_qty" placeholder="0" aria-label="Quantity for Spinach1"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6568915.22487705_qty" placeholder="0" aria-label="Quantity for Spinach1"></td>
                         </tr>
                         <tr>
-                            <td class="name">__</td>
+                            <td class="retail strike-red">$16.90</td>
                             <td class="description">A Choy</td>
-                            <td class="num-box">4</td>
+                            <td class="num-box">4 kg</td>
                             <td class="price">$13.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="3319366.57445738_qty" placeholder="0" aria-label="Quantity for A Choy"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8103788.03793428_qty" placeholder="0" aria-label="Quantity for A Choy"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
                     <div id="cindy" class="tab-pane">
                         <div class="table-wrapper"><table><thead><tr>
-                            <th class="name">Name</th><th class="description">Description</th>
+                            <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="name">____</td>
+                            <td class="retail strike-red">$45.50</td>
                             <td class="description">Water Chestnuts</td>
-                            <td class="num-box">10</td>
+                            <td class="num-box">10 kg</td>
                             <td class="price">$35.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="1703758.31458457_qty" placeholder="0" aria-label="Quantity for Water Chestnuts"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="7846911.7058129_qty" placeholder="0" aria-label="Quantity for Water Chestnuts"></td>
                         </tr>
                         <tr>
-                            <td class="name">____</td>
+                            <td class="retail strike-red">$16.90</td>
                             <td class="description">Kobocha Pumpkin</td>
-                            <td class="num-box">2.1</td>
+                            <td class="num-box">2.1 kg</td>
                             <td class="price">$13.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="2633358.8775001_qty" placeholder="0" aria-label="Quantity for Kobocha Pumpkin"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6309085.44498875_qty" placeholder="0" aria-label="Quantity for Kobocha Pumpkin"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
                 </div>
@@ -503,15 +527,36 @@
         </div>
 
             <div id="visibleOrderSummaryContainer">
-                <h2>Order Summary</h2>
-                <div id="lineItemsDisplay">
-                    <p>No items selected yet.</p>
-                </div>
+            <h2>Order Summary</h2>
+            <div id="lineItemsDisplay">
+                <table id="orderSummaryTable">
+                <thead>
+                    <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td colspan="3" style="text-align:center; color: var(--text-color-secondary);">
+                        No items selected yet.
+                    </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                    <td colspan="2" style="text-align:right;">Subtotal:</td>
+                    <td id="summarySubtotal">$0.00</td>
+                    </tr>
+                </tfoot>
+                </table>
             </div>
+            </div>
+        
 
             <input type="hidden" name="order_summary" id="order_summary">
             <input type="hidden" name="total_quantity" id="total_quantity_hidden">
-
             <div class="customer-info-section">
                 <h2>Your Information</h2>
                 <div class="form-group">
@@ -594,181 +639,181 @@
         document.addEventListener('DOMContentLoaded', function() {
             const productsData = [
                 {
-                    name: "__ (Tomato)",
+                    retail: "26.00 (Tomato)",
                     price: "$20.00",
                     box: "20 lbs",
-                    originalName: "__",
+                    originalName: "26.00",
                     description: "Tomato",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "__ (Cucumber)",
+                    retail: "19.50 (Cucumber)",
                     price: "$15.00",
                     box: "15 lbs",
-                    originalName: "__",
+                    originalName: "19.50",
                     description: "Cucumber",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "___ (Baby Bok Choy)",
+                    retail: "43.55 (Baby Bok Choy)",
                     price: "$33.50",
                     box: "15 kg",
-                    originalName: "___",
+                    originalName: "43.55",
                     description: "Baby Bok Choy",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "lkasdjf (Banana)",
+                    retail: "55.90 (Banana)",
                     price: "$43.00",
                     box: "15 kg",
-                    originalName: "lkasdjf",
+                    originalName: "55.90",
                     description: "Banana",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "Eklj (Envy Apple)",
+                    retail: "65.00 (Envy Apple)",
                     price: "$50.00",
                     box: "40 lbs",
-                    originalName: "Eklj",
+                    originalName: "65.00",
                     description: "Envy Apple",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "lkj (Cabbage)",
+                    retail: "30.42 (Cabbage)",
                     price: "$23.40",
                     box: "10 lbs",
-                    originalName: "lkj",
+                    originalName: "30.42",
                     description: "Cabbage",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "adsf (Lettuce)",
+                    retail: "28.86 (Lettuce)",
                     price: "$22.20",
                     box: "10 lbs",
-                    originalName: "adsf",
+                    originalName: "28.86",
                     description: "Lettuce",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "___ (Baby Bok Choy)",
+                    retail: "39.00 (Baby Bok Choy)",
                     price: "$30.00",
-                    box: "15",
-                    originalName: "___",
+                    box: "15 kg",
+                    originalName: "39.00",
                     description: "Baby Bok Choy",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "__ (Spinach1)",
+                    retail: "20.80 (Spinach1)",
                     price: "$16.00",
-                    box: "4",
-                    originalName: "__",
+                    box: "4 kg",
+                    originalName: "20.80",
                     description: "Spinach1",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "__ (A Choy)",
+                    retail: "16.90 (A Choy)",
                     price: "$13.00",
-                    box: "4",
-                    originalName: "__",
+                    box: "4 kg",
+                    originalName: "16.90",
                     description: "A Choy",
-                    category: "Leafy Greens"
+                    category: "Leafy"
                 }
 ,
                 {
-                    name: "___ (Fennel)",
+                    retail: "26.00 (Fennel)",
                     price: "$20.00",
-                    box: "5",
-                    originalName: "___",
+                    box: "5 kg",
+                    originalName: "26.00",
                     description: "Fennel",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "__ (Sugar Snap Peas)",
+                    retail: "20.80 (Sugar Snap Peas)",
                     price: "$16.00",
-                    box: "4.5",
-                    originalName: "__",
+                    box: "4.5 kg",
+                    originalName: "20.80",
                     description: "Sugar Snap Peas",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "___ (Snow Peas)",
+                    retail: "20.80 (Snow Peas)",
                     price: "$16.00",
-                    box: "4.5",
-                    originalName: "___",
+                    box: "4.5 kg",
+                    originalName: "20.80",
                     description: "Snow Peas",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "__ (Garlic Leek)",
+                    retail: "32.50 (Garlic Leek)",
                     price: "$25.00",
-                    box: "10",
-                    originalName: "__",
+                    box: "10 kg",
+                    originalName: "32.50",
                     description: "Garlic Leek",
-                    category: "Featured Veggies"
+                    category: "Veggies"
                 }
 ,
                 {
-                    name: "__ (Lettuce Stem1)",
+                    retail: "32.50 (Lettuce Stem1)",
                     price: "$25.00",
-                    box: "10",
-                    originalName: "__",
+                    box: "10 kg",
+                    originalName: "32.50",
                     description: "Lettuce Stem1",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "__ (Thin Chili Peppers)",
+                    retail: "39.00 (Thin Chili Peppers)",
                     price: "$30.00",
-                    box: "6",
-                    originalName: "__",
+                    box: "6 kg",
+                    originalName: "39.00",
                     description: "Thin Chili Peppers",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "___ (Napa Cabbage)",
+                    retail: "33.80 (Napa Cabbage)",
                     price: "$26.00",
-                    box: "10",
-                    originalName: "___",
+                    box: "10 kg",
+                    originalName: "33.80",
                     description: "Napa Cabbage",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "__ (Taiwan Cauliflower)",
+                    retail: "65.00 (Taiwan Cauliflower)",
                     price: "$50.00",
-                    box: "10",
-                    originalName: "__",
+                    box: "10 kg",
+                    originalName: "65.00",
                     description: "Taiwan Cauliflower",
                     category: "Fruits"
                 }
 ,
                 {
-                    name: "____ (Water Chestnuts)",
+                    retail: "45.50 (Water Chestnuts)",
                     price: "$35.00",
-                    box: "10",
-                    originalName: "____",
+                    box: "10 kg",
+                    originalName: "45.50",
                     description: "Water Chestnuts",
                     category: "Cindy"
                 }
 ,
                 {
-                    name: "____ (Kobocha Pumpkin)",
+                    retail: "16.90 (Kobocha Pumpkin)",
                     price: "$13.00",
-                    box: "2.1",
-                    originalName: "____",
+                    box: "2.1 kg",
+                    originalName: "16.90",
                     description: "Kobocha Pumpkin",
                     category: "Cindy"
                 }
@@ -814,34 +859,69 @@
             }
 
             function generateOrderSummary() {
-                let orderSummaryTextItems = []; 
-                let visibleSummaryHTML = '<ul>';
-                let hasItems = false;
-                const currentQtyInputs = document.querySelectorAll('.qty-input');
+            const tbody = document.querySelector('#orderSummaryTable tbody');
+            tbody.innerHTML = '';              // wipe old rows
+            let subtotal = 0;
 
-                currentQtyInputs.forEach((input, index) => {
-                    const qty = parseInt(input.value, 10) || 0;
-                    // IMPORTANT: productsData array (injected by VBA) must have the same length
-                    // and order as the '.qty-input' elements found in the DOM.
-                    if (qty > 0 && typeof productsData !== 'undefined' && productsData[index]) { 
-                        hasItems = true;
-                        const product = productsData[index];
-                        orderSummaryTextItems.push(`${product.name}: ${qty} X (${product.price})`);
-                        visibleSummaryHTML += `<li>${product.description || product.name}: ${qty} x ${product.price}</li>`;
-                    }
-                });
-                visibleSummaryHTML += '</ul>';
+            document.querySelectorAll('.qty-input').forEach((input, i) => {
+                const qty = parseInt(input.value, 10) || 0;
+                const prod = productsData[i];
+                if (qty > 0 && prod) {
+                // parse out just the numeric part of price, e.g. "$12.30" → 12.30
+                const priceNum = parseFloat(prod.price.replace(/[^0-9.\-]+/g, ''));
+                const amount  = qty * priceNum;
+                subtotal += amount;
 
-                if(orderSummaryInput) orderSummaryInput.value = orderSummaryTextItems.join('\n');
-                
-                if (lineItemsDisplay) {
-                    if (hasItems) {
-                        lineItemsDisplay.innerHTML = visibleSummaryHTML;
-                    } else {
-                        lineItemsDisplay.innerHTML = '<p>No items selected yet.</p>';
-                    }
+                // build a <tr>
+                const tr = document.createElement('tr');
+                const tdName = document.createElement('td');
+                tdName.textContent = prod.description || prod.name;
+                const tdQty  = document.createElement('td');
+                tdQty.textContent = qty;
+                const tdAmt  = document.createElement('td');
+                tdAmt.textContent = '$' + amount.toFixed(2);
+
+                tr.append(tdName, tdQty, tdAmt);
+                tbody.appendChild(tr);
                 }
+            });
+
+            // If nothing was added, show the “no items” row again
+            if (tbody.children.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td>';
+                tbody.appendChild(tr);
             }
+
+            // write subtotal
+            document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+
+            // also update your hidden textarea/input for Formspree
+            const summaryInput = document.getElementById('order_summary');
+            if (summaryInput) {
+                const lines = [];
+                tbody.querySelectorAll('tr').forEach(tr => {
+                const [item, qty, amt] = tr.querySelectorAll('td');
+                if (qty && parseInt(qty.textContent, 10) > 0) {
+                    lines.push(`${item.textContent}: ${qty.textContent} x ${amt.textContent}`);
+                }
+                });
+                summaryInput.value = lines.join('\n');
+            }
+            }
+
+            // And make sure your updateTotalQuantity still calls it:
+            function updateTotalQuantity() {
+            let total = 0;
+            document.querySelectorAll('.qty-input').forEach(i => total += parseInt(i.value,10) || 0);
+            document.getElementById('table-total-qty').textContent = total;
+            generateOrderSummary();
+            }
+
+            // …and that you attach listeners once on page load:
+            document.querySelectorAll('.qty-input').forEach(input => {
+            input.addEventListener('input', updateTotalQuantity);
+            });
             
             // Attach listeners to qty inputs after VBA has rendered them
              document.querySelectorAll('.qty-input').forEach(input => {
@@ -943,75 +1023,6 @@
                 });
             }
 
-
-            // Calculator Logic (from your original HTML)
-            const toggleCalculatorBtn = document.getElementById('toggleCalculatorBtn');
-            const calculatorDiv = document.getElementById('calculator');
-            
-            if (toggleCalculatorBtn && calculatorDiv) {
-                const calcDisplay = document.getElementById('calcDisplay');
-                const calcKeys = document.querySelector('.calculator-keys');
-                let currentCalcInput = '';
-                let previousCalcInput = '';
-                let calcOperation = null;
-                let resetDisplay = false;
-
-                toggleCalculatorBtn.addEventListener('click', () => {
-                    calculatorDiv.style.display = calculatorDiv.style.display === 'none' ? 'block' : 'none';
-                    toggleCalculatorBtn.textContent = calculatorDiv.style.display === 'none' ? 'Show Calculator' : 'Hide Calculator';
-                });
-                
-                function updateDisplay() {
-                    if(calcDisplay) calcDisplay.value = currentCalcInput || '0';
-                }
-                if(calcDisplay) updateDisplay();
-
-                if(calcKeys) {
-                    calcKeys.addEventListener('click', (event) => {
-                        if (!event.target.matches('.calc-btn')) return;
-                        const key = event.target;
-                        const keyValue = key.dataset.value;
-
-                        if (!isNaN(parseFloat(keyValue)) || keyValue === '.') { 
-                            if (keyValue === '.' && currentCalcInput.includes('.')) return;
-                            if (resetDisplay) { currentCalcInput = ''; resetDisplay = false; }
-                            currentCalcInput += keyValue;
-                        } else if (['+', '-', '*', '/'].includes(keyValue)) { 
-                            if (currentCalcInput === '' && previousCalcInput === '') return;
-                            if (currentCalcInput !== '' && previousCalcInput !== '' && calcOperation) { performCalculation(); }
-                            calcOperation = keyValue;
-                            if (currentCalcInput !== '') { previousCalcInput = currentCalcInput; currentCalcInput = ''; }
-                            resetDisplay = false; 
-                        } else if (keyValue === '=') {
-                            if (calcOperation && previousCalcInput !== '' && currentCalcInput !== '') { performCalculation(); calcOperation = null; resetDisplay = true; }
-                        } else if (keyValue === 'clear') { 
-                            currentCalcInput = ''; previousCalcInput = ''; calcOperation = null; resetDisplay = false;
-                        } else if (keyValue === 'del') { 
-                             currentCalcInput = currentCalcInput.slice(0, -1);
-                        }  else if (keyValue === '%') {
-                            if (currentCalcInput !== '') { currentCalcInput = (parseFloat(currentCalcInput) / 100).toString(); resetDisplay = true; }
-                        }
-                        updateDisplay();
-                    });
-                }
-
-                function performCalculation() {
-                    const prev = parseFloat(previousCalcInput); const current = parseFloat(currentCalcInput);
-                    if (isNaN(prev) || isNaN(current)) { currentCalcInput = 'Error'; resetDisplay = true; calcOperation = null; previousCalcInput = ''; return; }
-                    let result;
-                    switch (calcOperation) {
-                        case '+': result = prev + current; break;
-                        case '-': result = prev - current; break;
-                        case '*': result = prev * current; break;
-                        case '/': 
-                            if (current === 0) { result = 'Error'; resetDisplay = true; calcOperation = null; previousCalcInput = '';} 
-                            else { result = prev / current; }
-                            break;
-                        default: return;
-                    }
-                    currentCalcInput = result.toString(); previousCalcInput = ''; 
-                }
-            } 
         });
     </script>
 </body>
