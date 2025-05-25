@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Price List - Effective May 21, 2025</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fc;
+            --card-bg-color: #ffffff;
+            --text-color-primary: #1a202c;
+            --text-color-secondary: #4a5568;
+            --header-bg-color: #3c366b;
+            --header-text-color: #ffffff;
+            --accent-color: #4f46e5;
+            --border-color: #e2e8f0;
+            --input-focus-border: var(--accent-color);
+            --input-focus-shadow: rgba(79, 70, 229, 0.25);
+            --footer-bg-color: #f3f4f6;
+            --footer-border-color: #e5e7eb;
+            --footer-text-color: #374151;
+            --swipe-msg-bg: #eef2ff;
+            --swipe-msg-text: #312e81;
+            --button-bg-color: var(--accent-color);
+            --button-hover-bg-color: #4338ca;
+            --button-text-color: #ffffff;
+            --form-section-bg: #f9fafb;
+            --calc-btn-bg: #e9ecef;
+            --calc-btn-hover-bg: #ced4da;
+            --calc-operator-bg: #ffc107;
+            --calc-operator-hover-bg: #e0a800;
+            --tab-active-border: var(--accent-color);
+            --tab-text-color: var(--text-color-secondary);
+            --tab-active-text-color: var(--accent-color);
+        }
+
+        .strike-red {
+            color: red;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.45;
+            background-color: var(--bg-color);
+            color: var(--text-color-primary);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .swipe-indicator {
+            width: 90%;
+            max-width: 920px;
+            text-align: center;
+            padding: 8px 12px;
+            background-color: var(--swipe-msg-bg);
+            color: var(--swipe-msg-text);
+            font-weight: 500;
+            font-size: 0.9em;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .swipe-indicator svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 920px;
+            background-color: var(--card-bg-color);
+            padding: 20px 25px 25px 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
+            margin-bottom: 15px;
+        }
+
+        .main-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .store-logo {
+            width: 250px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        h1 {
+            color: var(--text-color-primary);
+            text-align: left;
+            font-size: 2.0em;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-top: 0; 
+            margin-bottom: 0; 
+        }
+
+        .pickup-address-details { 
+            margin-bottom: 25px; 
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--form-section-bg);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .pickup-address-details h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.15em;
+            color: var(--text-color-primary);
+        }
+
+        .pickup-address-details strong {
+            font-weight: 600;
+        }
+
+        .effective-date {
+            text-align: center;
+            margin-top: 5px; 
+            margin-bottom: 15px; 
+            color: var(--text-color-secondary);
+            font-size: 1em; 
+            font-weight: 500;
+        }
+
+        /* Tab Styles */
+        .tabs-container {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--form-section-bg);
+            padding: 10px;
+        }
+
+        .tab-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--tab-text-color); 
+            border-bottom: 3px solid transparent;
+            margin-right: 5px;
+            margin-bottom: -2px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .tab-button.active {
+            color: var(--tab-active-text-color); 
+            border-bottom-color: var(--tab-active-border); 
+        }
+
+        .tab-button:hover {
+            color: var(--tab-active-text-color);
+        }
+
+        .tab-content .tab-pane {
+            display: none;
+        }
+
+        .tab-content .tab-pane.active {
+            display: block;
+        }
+
+        .table-wrapper { 
+            overflow-x: auto;
+            width: 100%;
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            -webkit-overflow-scrolling: touch;
+            margin-top: 10px; 
+        }
+
+        .tab-pane > .table-wrapper {
+             margin-bottom: 0; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 6px 14px; 
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: 1.1em; 
+            font-weight: 700; 
+            line-height: 1.2; 
+        }
+        
+        th {
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 0.75px;
+            font-size: 0.85em; 
+            text-align: center;
+        }
+
+        td.name { text-align: left; }
+        td.description { text-align: left; min-width: 100px; } 
+        td.num-box { text-align: right; }
+        td.price { text-align: right; }
+        td.qty-cell { text-align: center; }
+
+        tbody tr:nth-child(even) td {
+            background-color: #f9fafb; 
+        }
+
+        tbody tr:hover td {
+            background-color: #f0f2f5;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .qty-input {
+            width: 65px;
+            padding: 8px 6px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px; 
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 0.9em; 
+            color: var(--text-color-primary);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .qty-input:focus {
+            border-color: var(--input-focus-border);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
+        }
+
+        .qty-input::-webkit-outer-spin-button,
+        .qty-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .qty-input[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        #visibleOrderSummaryContainer {
+            background-color: var(--form-section-bg); 
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            margin-bottom: 15px; 
+            border: 1px solid var(--border-color);
+        }
+
+        #visibleOrderSummaryContainer h2 {
+            font-size: 1.3em;
+            color: var(--text-color-primary);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        #lineItemsDisplay ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        #lineItemsDisplay li {
+            padding: 5px 0;
+            border-bottom: 1px dotted var(--border-color);
+            font-size: 0.95em;
+        }
+
+        #lineItemsDisplay li:last-child {
+            border-bottom: none;
+        }
+
+        #lineItemsDisplay p {
+            font-style: italic;
+            color: var(--text-color-secondary);
+            text-align: center;
+        }
+
+        .customer-info-section {
+            background-color: var(--form-section-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .customer-info-section h2 {
+            font-size: 1.3em;
+            color: var(--text-color-primary);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px; 
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-color-secondary);
+            font-size: 0.9em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group select {            
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 0.95em; 
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            background-color: #fff; 
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group select:focus {            
+            border-color: var(--input-focus-border);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
+        }
+        
+        .calculator-section {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--form-section-bg);
+        }
+
+        .calculator-toggle-button {
+            background-color: var(--calc-btn-bg);
+            color: var(--text-color-primary);
+            border: 1px solid #cbd5e1;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .calculator-toggle-button:hover {
+            background-color: var(--calc-btn-hover-bg);
+        }
+
+        .calculator-container {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .calculator-display {
+            width: 100%;
+            padding: 8px;
+            font-size: 1.2em;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+        }
+
+        .calculator-keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .calc-btn {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--calc-btn-bg);
+            cursor: pointer;
+            transition: background-color 0.1s ease;
+        }
+
+        .calc-btn:hover {
+            background-color: var(--calc-btn-hover-bg);
+        }
+
+        .calc-btn.operator {
+            background-color: var(--calc-operator-bg);
+            color: #fff;
+        }
+
+        .calc-btn.operator:hover {
+            background-color: var(--calc-operator-hover-bg);
+        }
+
+        .calc-btn.wide {
+            grid-column: span 2;
+        }
+        
+        .form-summary {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .submit-button {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, transform 0.1s ease;
+            box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15);
+        }
+
+        .submit-button:hover {
+            background-color: var(--button-hover-bg-color);
+            transform: translateY(-1px);
+        }
+
+        .submit-button:active {
+            transform: translateY(0px);
+        }
+
+        .submit-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-contact {
+            text-align: center;
+            font-weight: 500;
+            color: var(--footer-text-color);
+            margin-top: 20px;
+            font-size: 1.05em;
+            padding: 15px;
+            background-color: var(--footer-bg-color);
+            border-radius: 12px;
+            border: 1px solid var(--footer-border-color);
+        }
+
+        .success-message,
+        .error-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Order Summary Table Styling */
+        #orderSummaryTable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #orderSummaryTable th,
+        #orderSummaryTable td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #orderSummaryTable tfoot td {
+            border-top: 2px solid var(--border-color);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="swipe-indicator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="m12.299 5.701-1.414 1.414 3.585 3.585H4V12.7h10.47l-3.586 3.586 1.414 1.414L19.414 12l-7.115-6.299Z"/>
+        </svg>
+        Table may require horizontal scrolling &nbsp;<strong>&gt;&gt;&gt;</strong>&nbsp; Swipe or use scrollbar
+    </div>
+
+    <div class="container">
+        <div class="main-title-container">
+            <!-- Note: Logo image won't display in this demo but will work with actual image file -->
+            <img src="images/TopsLogoCrop.png" alt="Tops Supermarket Logo" class="store-logo">
+            <h1>Price List</h1>
+        </div>
+        <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
+        <div class="pickup-address-details">
+            <h3>Pickup address:</h3>
+            <strong>Tops Supermarket</strong>
+            <br>1623 Centre St NW
+            <br>Calgary, AB  T2E 2S3
+            <br>Phone: 403-276-8889
+            <br>Hours: 9:00am - 4:00pm
+            <br>    ---
+        </div>
+
+        <form id="orderForm" action="https://formspree.io/f/mnndygrk" method="POST">
+            
+            <div class="tabs-container">
+                <div class="tab-navigation">
+                    <button type="button" class="tab-button active" data-tab="fruits">Fruits</button>
+                    <button type="button" class="tab-button" data-tab="veggies">Veggies</button>
+                    <button type="button" class="tab-button" data-tab="leafy">Leafy</button>
+                    <button type="button" class="tab-button" data-tab="cindy">Cindy</button>
+                </div>
+                <div class="tab-content">
+                    <div id="fruits" class="tab-pane active">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="name">Retail</th>
+                                        <th class="description">Description</th>
+                                        <th class="num-box"># Box</th>
+                                        <th class="price">Price</th>
+                                        <th class="qty">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="retail strike-red">$26.00</td>
+                                        <td class="description">Tomato</td>
+                                        <td class="num-box">20 lbs</td>
+                                        <td class="price">$20.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="tomato_qty" placeholder="0" aria-label="Quantity for Tomato"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$55.90</td>
+                                        <td class="description">Banana</td>
+                                        <td class="num-box">15 kg</td>
+                                        <td class="price">$43.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="banana_qty" placeholder="0" aria-label="Quantity for Banana"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$32.50</td>
+                                        <td class="description">Lettuce Stem1</td>
+                                        <td class="num-box">10 kg</td>
+                                        <td class="price">$25.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="lettuce_stem1_qty" placeholder="0" aria-label="Quantity for Lettuce Stem1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$39.00</td>
+                                        <td class="description">Thin Chili Peppers</td>
+                                        <td class="num-box">6 kg</td>
+                                        <td class="price">$30.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="thin_chili_peppers_qty" placeholder="0" aria-label="Quantity for Thin Chili Peppers"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$33.80</td>
+                                        <td class="description">Napa Cabbage</td>
+                                        <td class="num-box">10 kg</td>
+                                        <td class="price">$26.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="napa_cabbage_qty" placeholder="0" aria-label="Quantity for Napa Cabbage"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$65.00</td>
+                                        <td class="description">Taiwan Cauliflower</td>
+                                        <td class="num-box">10 kg</td>
+                                        <td class="price">$50.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="taiwan_cauliflower_qty" placeholder="0" aria-label="Quantity for Taiwan Cauliflower"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="veggies" class="tab-pane">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="name">Retail</th>
+                                        <th class="description">Description</th>
+                                        <th class="num-box"># Box</th>
+                                        <th class="price">Price</th>
+                                        <th class="qty">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="retail strike-red">$19.50</td>
+                                        <td class="description">Cucumber</td>
+                                        <td class="num-box">15 lbs</td>
+                                        <td class="price">$15.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="cucumber_qty" placeholder="0" aria-label="Quantity for Cucumber"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$65.00</td>
+                                        <td class="description">Envy Apple</td>
+                                        <td class="num-box">40 lbs</td>
+                                        <td class="price">$50.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="envy_apple_qty" placeholder="0" aria-label="Quantity for Envy Apple"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$26.00</td>
+                                        <td class="description">Fennel</td>
+                                        <td class="num-box">5 kg</td>
+                                        <td class="price">$20.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="fennel_qty" placeholder="0" aria-label="Quantity for Fennel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$20.80</td>
+                                        <td class="description">Sugar Snap Peas</td>
+                                        <td class="num-box">4.5 kg</td>
+                                        <td class="price">$16.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="sugar_snap_peas_qty" placeholder="0" aria-label="Quantity for Sugar Snap Peas"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$20.80</td>
+                                        <td class="description">Snow Peas</td>
+                                        <td class="num-box">4.5 kg</td>
+                                        <td class="price">$16.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="snow_peas_qty" placeholder="0" aria-label="Quantity for Snow Peas"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$32.50</td>
+                                        <td class="description">Garlic Leek</td>
+                                        <td class="num-box">10 kg</td>
+                                        <td class="price">$25.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="garlic_leek_qty" placeholder="0" aria-label="Quantity for Garlic Leek"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="leafy" class="tab-pane">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="name">Retail</th>
+                                        <th class="description">Description</th>
+                                        <th class="num-box"># Box</th>
+                                        <th class="price">Price</th>
+                                        <th class="qty">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="retail strike-red">$43.55</td>
+                                        <td class="description">Baby Bok Choy</td>
+                                        <td class="num-box">15 kg</td>
+                                        <td class="price">$33.50</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="baby_bok_choy_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$30.42</td>
+                                        <td class="description">Cabbage</td>
+                                        <td class="num-box">10 lbs</td>
+                                        <td class="price">$23.40</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="cabbage_qty" placeholder="0" aria-label="Quantity for Cabbage"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$28.86</td>
+                                        <td class="description">Lettuce</td>
+                                        <td class="num-box">10 lbs</td>
+                                        <td class="price">$22.20</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="lettuce_qty" placeholder="0" aria-label="Quantity for Lettuce"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$39.00</td>
+                                        <td class="description">Baby Bok Choy</td>
+                                        <td class="num-box">15 kg</td>
+                                        <td class="price">$30.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="baby_bok_choy2_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$20.80</td>
+                                        <td class="description">Spinach1</td>
+                                        <td class="num-box">4 kg</td>
+                                        <td class="price">$16.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="spinach1_qty" placeholder="0" aria-label="Quantity for Spinach1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$16.90</td>
+                                        <td class="description">A Choy</td>
+                                        <td class="num-box">4 kg</td>
+                                        <td class="price">$13.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="a_choy_qty" placeholder="0" aria-label="Quantity for A Choy"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="cindy" class="tab-pane">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="name">Retail</th>
+                                        <th class="description">Description</th>
+                                        <th class="num-box"># Box</th>
+                                        <th class="price">Price</th>
+                                        <th class="qty">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="retail strike-red">$45.50</td>
+                                        <td class="description">Water Chestnuts</td>
+                                        <td class="num-box">10 kg</td>
+                                        <td class="price">$35.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="water_chestnuts_qty" placeholder="0" aria-label="Quantity for Water Chestnuts"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="retail strike-red">$16.90</td>
+                                        <td class="description">Kobocha Pumpkin</td>
+                                        <td class="num-box">2.1 kg</td>
+                                        <td class="price">$13.00</td>
+                                        <td class="qty-cell"><input type="number" min="0" class="qty-input" name="kobocha_pumpkin_qty" placeholder="0" aria-label="Quantity for Kobocha Pumpkin"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrapper" id="total-qty-footer-wrapper" style="border-top: 2px solid var(--header-bg-color); margin-top: 10px; border-bottom: none; border-left:none; border-right:none; border-radius:0;">
+                    <table>
+                        <tfoot>
+                            <tr>
+                                <td class="name" style="border-bottom: none; visibility: hidden;"></td>
+                                <td class="description" style="border-bottom: none; visibility: hidden;"></td>
+                                <td class="num-box" style="border-bottom: none; visibility: hidden;"></td>
+                                <td class="price" style="border-bottom: none; font-weight: 700; text-align: right;">TOTAL QTY:</td>
+                                <td class="qty-cell" style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em;" id="table-total-qty">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div id="visibleOrderSummaryContainer">
+                <h2>Order Summary</h2>
+                <div id="lineItemsDisplay">
+                    <table id="orderSummaryTable">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="text-align:center; color: var(--text-color-secondary);">
+                                    No items selected yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" style="text-align:right;">Subtotal:</td>
+                                <td id="summarySubtotal">$0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        
+            <input type="hidden" name="order_summary" id="order_summary">
+            <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+            
+            <div class="customer-info-section">
+                <h2>Your Information</h2>
+                <div class="form-group">
+                    <label for="customerName">Name <span style="color: red;">*</span></label>
+                    <input type="text" id="customerName" name="customer_name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email (Optional)</label>
+                    <input type="email" id="customerEmail" name="customer_email" placeholder="example@domain.com">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone <span style="color: red;">*</span></label>
+                    <input type="tel" id="customerPhone" name="customer_phone" placeholder="e.g., 604-555-1234" required>
+                </div>
+                <div class="form-group">
+                    <label for="pickupDate">Requested Pickup Date <span style="color: red;">*</span></label>
+                    <input type="date" id="pickupDate" name="pickup_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="pickupTime">Preferred Pickup Time <span style="color: red;">*</span></label>
+                    <select id="pickupTime" name="pickup_time_slot" required>
+                        <option value="">-- Select a time slot --</option>
+                        <option value="9am-12pm">9:00am - 12:00pm</option>
+                        <option value="12pm-4pm">12:00pm - 4:00pm</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calculator-section">
+                <button type="button" id="toggleCalculatorBtn" class="calculator-toggle-button">Show/Hide Calculator</button>
+                <div id="calculator" class="calculator-container" style="display: none;">
+                    <input type="text" id="calcDisplay" readonly class="calculator-display" value="0">
+                    <div class="calculator-keys">
+                        <button type="button" class="calc-btn operator" data-value="clear">AC</button>
+                        <button type="button" class="calc-btn operator" data-value="del">DEL</button>
+                        <button type="button" class="calc-btn operator" data-value="%">%</button>
+                        <button type="button" class="calc-btn operator" data-value="/">÷</button>
+
+                        <button type="button" class="calc-btn" data-value="7">7</button>
+                        <button type="button" class="calc-btn" data-value="8">8</button>
+                        <button type="button" class="calc-btn" data-value="9">9</button>
+                        <button type="button" class="calc-btn operator" data-value="*">×</button>
+
+                        <button type="button" class="calc-btn" data-value="4">4</button>
+                        <button type="button" class="calc-btn" data-value="5">5</button>
+                        <button type="button" class="calc-btn" data-value="6">6</button>
+                        <button type="button" class="calc-btn operator" data-value="-">-</button>
+
+                        <button type="button" class="calc-btn" data-value="1">1</button>
+                        <button type="button" class="calc-btn" data-value="2">2</button>
+                        <button type="button" class="calc-btn" data-value="3">3</button>
+                        <button type="button" class="calc-btn operator" data-value="+">+</button>
+
+                        <button type="button" class="calc-btn wide" data-value="0">0</button>
+                        <button type="button" class="calc-btn" data-value=".">.</button>
+                        <button type="button" class="calc-btn operator" data-value="=">=</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-summary">
+                <button type="submit" class="submit-button">Place Order</button>
+            </div>
+
+            <div class="success-message" id="success-message">
+                Thank you! Your order has been submitted successfully. We will contact you soon.
+            </div>
+
+            <div class="error-message" id="error-message">
+                Sorry, there was an error submitting your order. Please try again or call us directly.
+            </div>
+        </form>
+
+        <div class="footer-contact">
+            Call: <strong>Tops Supermarket - 403-276-8889</strong>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Products data array with all items
+            const productsData = [
+                { description: "Tomato", price: 20.00, box: "20 lbs", retail: 26.00, category: "Fruits" },
+                { description: "Banana", price: 43.00, box: "15 kg", retail: 55.90, category: "Fruits" },
+                { description: "Lettuce Stem1", price: 25.00, box: "10 kg", retail: 32.50, category: "Fruits" },
+                { description: "Thin Chili Peppers", price: 30.00, box: "6 kg", retail: 39.00, category: "Fruits" },
+                { description: "Napa Cabbage", price: 26.00, box: "10 kg", retail: 33.80, category: "Fruits" },
+                { description: "Taiwan Cauliflower", price: 50.00, box: "10 kg", retail: 65.00, category: "Fruits" },
+                { description: "Cucumber", price: 15.00, box: "15 lbs", retail: 19.50, category: "Veggies" },
+                { description: "Envy Apple", price: 50.00, box: "40 lbs", retail: 65.00, category: "Veggies" },
+                { description: "Fennel", price: 20.00, box: "5 kg", retail: 26.00, category: "Veggies" },
+                { description: "Sugar Snap Peas", price: 16.00, box: "4.5 kg", retail: 20.80, category: "Veggies" },
+                { description: "Snow Peas", price: 16.00, box: "4.5 kg", retail: 20.80, category: "Veggies" },
+                { description: "Garlic Leek", price: 25.00, box: "10 kg", retail: 32.50, category: "Veggies" },
+                { description: "Baby Bok Choy", price: 33.50, box: "15 kg", retail: 43.55, category: "Leafy" },
+                { description: "Cabbage", price: 23.40, box: "10 lbs", retail: 30.42, category: "Leafy" },
+                { description: "Lettuce", price: 22.20, box: "10 lbs", retail: 28.86, category: "Leafy" },
+                { description: "Baby Bok Choy", price: 30.00, box: "15 kg", retail: 39.00, category: "Leafy" },
+                { description: "Spinach1", price: 16.00, box: "4 kg", retail: 20.80, category: "Leafy" },
+                { description: "A Choy", price: 13.00, box: "4 kg", retail: 16.90, category: "Leafy" },
+                { description: "Water Chestnuts", price: 35.00, box: "10 kg", retail: 45.50, category: "Cindy" },
+                { description: "Kobocha Pumpkin", price: 13.00, box: "2.1 kg", retail: 16.90, category: "Cindy" }
+            ];
+
+            const qtyInputs = document.querySelectorAll('.qty-input');
+            const tableTotalQtyElement = document.getElementById('table-total-qty');
+            const orderForm = document.getElementById('orderForm');
+            const submitButton = document.querySelector('.submit-button');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const orderSummaryInput = document.getElementById('order_summary');
+            const totalQuantityHiddenInput = document.getElementById('total_quantity_hidden');
+            const pickupDateInput = document.getElementById('pickupDate');
+
+            // Set minimum date to today
+            if (pickupDateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                pickupDateInput.setAttribute('min', today);
+            }
+
+            // Update total quantity and order summary
+            function updateTotalQuantity() {
+                let currentTotal = 0;
+                document.querySelectorAll('.qty-input').forEach(input => {
+                    currentTotal += parseInt(input.value, 10) || 0;
+                });
+                
+                if(tableTotalQtyElement) tableTotalQtyElement.textContent = currentTotal;
+                if(totalQuantityHiddenInput) totalQuantityHiddenInput.value = currentTotal;
+                
+                generateOrderSummary();
+            }
+
+            // Generate order summary
+            function generateOrderSummary() {
+                const tbody = document.querySelector('#orderSummaryTable tbody');
+                tbody.innerHTML = '';
+                let subtotal = 0;
+                const orderLines = [];
+
+                document.querySelectorAll('.qty-input').forEach((input, index) => {
+                    const qty = parseInt(input.value, 10) || 0;
+                    if (qty > 0 && productsData[index]) {
+                        const product = productsData[index];
+                        const amount = qty * product.price;
+                        subtotal += amount;
+
+                        // Create table row
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${product.description}</td>
+                            <td>${qty}</td>
+                            <td>$${amount.toFixed(2)}</td>
+                        `;
+                        tbody.appendChild(tr);
+
+                        // Add to order summary
+                        orderLines.push(`${product.description}: ${qty} x $${product.price.toFixed(2)} = $${amount.toFixed(2)}`);
+                    }
+                });
+
+                // If no items selected
+                if (tbody.children.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
+                }
+
+                // Update subtotal
+                document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+
+                // Update hidden order summary
+                if (orderSummaryInput) {
+                    orderSummaryInput.value = orderLines.join('\n') + '\n\nSubtotal: $' + subtotal.toFixed(2);
+                }
+            }
+
+            // Attach event listeners to quantity inputs
+            qtyInputs.forEach(input => {
+                input.addEventListener('input', updateTotalQuantity);
+            });
+
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
+            const tabPanes = document.querySelectorAll('.tab-content .tab-pane');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanes.forEach(pane => pane.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    button.classList.add('active');
+                    const targetTab = button.dataset.tab;
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // Calculator functionality
+            const toggleCalcBtn = document.getElementById('toggleCalculatorBtn');
+            const calculator = document.getElementById('calculator');
+            const calcDisplay = document.getElementById('calcDisplay');
+            const calcButtons = document.querySelectorAll('.calc-btn');
+            
+            let calcValue = '0';
+            let previousValue = null;
+            let operation = null;
+            let waitingForOperand = false;
+
+            toggleCalcBtn.addEventListener('click', () => {
+                calculator.style.display = calculator.style.display === 'none' ? 'block' : 'none';
+            });
+
+            function updateDisplay() {
+                calcDisplay.value = calcValue;
+            }
+
+            function inputNumber(num) {
+                if (waitingForOperand) {
+                    calcValue = String(num);
+                    waitingForOperand = false;
+                } else {
+                    calcValue = calcValue === '0' ? String(num) : calcValue + num;
+                }
+            }
+
+            function inputDecimal() {
+                if (waitingForOperand) {
+                    calcValue = '0.';
+                    waitingForOperand = false;
+                } else if (calcValue.indexOf('.') === -1) {
+                    calcValue += '.';
+                }
+            }
+
+            function clear() {
+                calcValue = '0';
+                previousValue = null;
+                operation = null;
+                waitingForOperand = false;
+            }
+
+            function performOperation() {
+                const inputValue = parseFloat(calcValue);
+                
+                if (previousValue === null) {
+                    previousValue = inputValue;
+                } else if (operation) {
+                    const currentValue = previousValue || 0;
+                    const newValue = inputValue;
+                    
+                    if (operation === '+') {
+                        calcValue = String(currentValue + newValue);
+                    } else if (operation === '-') {
+                        calcValue = String(currentValue - newValue);
+                    } else if (operation === '*') {
+                        calcValue = String(currentValue * newValue);
+                    } else if (operation === '/') {
+                        calcValue = String(currentValue / newValue);
+                    } else if (operation === '%') {
+                        calcValue = String(currentValue % newValue);
+                    }
+                    
+                    previousValue = null;
+                    operation = null;
+                }
+            }
+
+            calcButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.dataset.value;
+                    
+                    if (value === 'clear') {
+                        clear();
+                    } else if (value === 'del') {
+                        calcValue = calcValue.length > 1 ? calcValue.slice(0, -1) : '0';
+                    } else if (value === '.') {
+                        inputDecimal();
+                    } else if (value === '=') {
+                        performOperation();
+                    } else if (['+', '-', '*', '/', '%'].includes(value)) {
+                        performOperation();
+                        previousValue = parseFloat(calcValue);
+                        operation = value;
+                        waitingForOperand = true;
+                    } else {
+                        inputNumber(value);
+                    }
+                    
+                    updateDisplay();
+                });
+            });
+
+            // Form submission
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    const customerName = document.getElementById('customerName').value.trim();
+                    const customerPhone = document.getElementById('customerPhone').value.trim();
+                    const pickupDateVal = document.getElementById('pickupDate').value;
+                    const pickupTimeVal = document.getElementById('pickupTime').value;
+                    const totalQty = parseInt(totalQuantityHiddenInput.value, 10) || 0;
+
+                    if(successMessage) successMessage.style.display = 'none';
+                    if(errorMessage) errorMessage.style.display = 'none';
+
+                    if (!customerName || !customerPhone || !pickupDateVal || !pickupTimeVal) {
+                        alert('Please fill in all required fields (Name, Phone, Pickup Date, and Pickup Time).');
+                        return;
+                    }
+
+                    if (totalQty === 0) {
+                        alert('Please select at least one item to order.');
+                        return;
+                    }
+
+                    if(submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Submitting...';
+                    }
+
+                    const formData = new FormData(orderForm);
+
+                    fetch(orderForm.action, { 
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    }).then(response => {
+                        if (response.ok) {
+                            if(successMessage) successMessage.style.display = 'block';
+                            orderForm.reset();
+                            updateTotalQuantity();
+                            if (pickupDateInput) {
+                               const today = new Date().toISOString().split('T')[0];
+                               pickupDateInput.setAttribute('min', today);
+                            }
+                            if(successMessage) successMessage.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        if(errorMessage) {
+                           errorMessage.textContent = 'Sorry, there was an error submitting your order. Please try again or call us directly.';
+                           errorMessage.style.display = 'block';
+                           errorMessage.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }).finally(() => {
+                        if(submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Place Order';
+                        }
+                    });
+                });
+            }
+
+            // Initialize
+            updateTotalQuantity();
+        });
+    </script>
+</body>
+</html>
