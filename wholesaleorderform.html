@@ -28,6 +28,8 @@
             --tab-active-border: var(--accent-color);
             --tab-text-color: var(--text-color-secondary);
             --tab-active-text-color: var(--accent-color);
+            --bg-secondary: #f3f4f6;
+            --bg-tertiary: #e5e7eb;
         }
 
         .strike-red {
@@ -142,30 +144,44 @@
             padding: 10px;
         }
         .tab-navigation {
-            display: flex;
-            flex-wrap: wrap;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: none;
         }
         .tab-button {
-            padding: 10px 15px;
-            font-size: 1em;
+            padding: 12px 15px;
+            font-size: 0.95em;
             font-weight: 600;
-            border: none;
-            background-color: transparent;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
             cursor: pointer;
             color: var(--tab-text-color); 
-            border-bottom: 3px solid transparent;
-            margin-right: 5px;
-            margin-bottom: -2px;
-            transition: color 0.2s, border-color 0.2s;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
+
         .tab-button.active {
-            color: var(--tab-active-text-color); 
-            border-bottom-color: var(--tab-active-border); 
+            color: white;
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
         }
+
         .tab-button:hover {
-            color: var(--tab-active-text-color);
+            background-color: var(--bg-tertiary);
+            border-color: var(--accent-color);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab-button.active:hover {
+            background-color: var(--button-hover-bg-color);
         }
         .tab-content .tab-pane {
             display: none;
@@ -201,14 +217,19 @@
             background-color: #f0f2f5;
         }
 
-        .product-row-1, .product-row-2 {
+        .product-row-1 {
             border: none;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 8px;
-                gap: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
 
+        .product-row-2 {
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .product-row-1 td, .product-row-2 td {
@@ -218,10 +239,15 @@
 
         .product-description {
             font-weight: 700;
-            font-size: 1.1em;
+            font-size: 0.95em;
             color: var(--text-color-primary);
             cursor: pointer;
             transition: color 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            display: inline-block;
         }
 
         .product-description:hover {
@@ -230,24 +256,26 @@
 
         .product-unit {
             color: var(--text-color-secondary);
-            font-size: 1.1em;
+            font-size: 1.05em;
             font-weight: 700;
             text-align: right;
             display: block;
+            margin-right: 15px;
         }
 
         .product-retail {
             color: #ef4444;
             text-decoration: line-through;
-            font-size: 1.2em;
+            font-size: 1.15em;
             font-weight: 700;
         }
 
         .product-price {
             color: var(--accent-color);
             font-weight: 800;
-            font-size: 1.2em;
+            font-size: 1.15em;
             padding-left: 10px;
+            margin-right: 15px;
         }
 
         .product-qty-cell {
@@ -322,6 +350,16 @@
 
         /* Adjust for mobile */
         @media (max-width: 768px) {
+            .tab-navigation {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .tab-button {
+                padding: 10px 12px;
+                font-size: 0.9em;
+            }
+            
             .table-wrapper {
                 margin: 0 -5px;
                 border-radius: 0;
@@ -592,7 +630,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="King's Chicken -7003 - SKU: 7003">King's Chicken -7003</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
@@ -607,7 +645,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Chicken - SKU: 802">Chicken</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
@@ -622,7 +660,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Pork Front Feet - SKU: 5027">Pork Front Feet</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -637,7 +675,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Pork Belly Boneless - SKU: 5010">Pork Belly Boneless</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -652,7 +690,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Utility Silkie Chicken - SKU: 337">Utility Silkie Chicken</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -667,7 +705,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="AAA Beef Fingermeat - SKU: 60111">AAA Beef Fingermeat</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -682,7 +720,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="AAA Beef Short Rib - SKU: 6008">AAA Beef Short Rib</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -697,7 +735,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="WW Chinese Style Pork Sausage - SKU: 66736676889">WW Chinese Style Pork Sausage</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">375g</span>
@@ -712,7 +750,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Beef Heel Muscle(Digital) - SKU: 6004">Beef Heel Muscle(Digital)</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -727,7 +765,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Chicken Feet-Jumbo - SKU: 70071">Chicken Feet-Jumbo</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -742,7 +780,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Pork - SKU: 801">Pork</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
@@ -757,7 +795,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Watson Cooked Young Duck - SKU: 800794301297">Watson Cooked Young Duck</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">500g</span>
@@ -772,7 +810,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Pork Shoulder Butt - SKU: 5001">Pork Shoulder Butt</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -801,7 +839,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Yu Choy £¨Red£© - 421 - SKU: 421">Yu Choy £¨Red£© - 421</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -816,7 +854,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Lo Bok - 450 - SKU: 450">Lo Bok - 450</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -831,7 +869,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Short Nappa - 046 - SKU: 46">Short Nappa - 046</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -846,7 +884,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Green Chives -105 - SKU: 105">Green Chives -105</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -861,7 +899,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Yu Choy Mui - 460 - SKU: 460">Yu Choy Mui - 460</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -876,7 +914,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Shang Hai Bok Choy - 033 - SKU: 33">Shang Hai Bok Choy - 033</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -891,7 +929,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Chinese Eggplant  - 102 - SKU: 102">Chinese Eggplant  - 102</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -906,7 +944,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Shanghai Choy Mui - 0991 - SKU: 991">Shanghai Choy Mui - 0991</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -921,7 +959,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Baby Bok Choy - 007 - SKU: 7">Baby Bok Choy - 007</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -936,7 +974,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Gailan (Red) 0981 - SKU: 981">Gailan (Red) 0981</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -951,7 +989,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Broccoli - 0361 - SKU: 361">Broccoli - 0361</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -966,7 +1004,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Cabbage - 0381 - SKU: 381">Cabbage - 0381</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -981,7 +1019,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="A Choy -119 - SKU: 119">A Choy -119</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -996,7 +1034,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Ginger - 004 - SKU: 4">Ginger - 004</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1025,7 +1063,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Golden Logan box - 0801 - SKU: 801">Golden Logan box - 0801</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">CS</span>
@@ -1040,7 +1078,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Peruvian Mango - SKU: 4173">Peruvian Mango</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1055,7 +1093,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Blue Jay Oranges - 4013 - SKU: 4013">Blue Jay Oranges - 4013</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1070,7 +1108,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Sweet Tangerine - 075 - SKU: 75">Sweet Tangerine - 075</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1099,7 +1137,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Searay White Shrimp 31/40 - SKU: 827510001866">Searay White Shrimp 31/40</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">1LB</span>
@@ -1114,7 +1152,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="FRZ Marinated Asian Seabass - SKU: 874718009859">FRZ Marinated Asian Seabass</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
@@ -1129,7 +1167,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Searay China Yellow Croaker - SKU: 827510000197">Searay China Yellow Croaker</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1144,7 +1182,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Vs Basa Filt 12/14 3PC - SKU: 871392003173">Vs Basa Filt 12/14 3PC</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1159,7 +1197,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Greenland Turbot Halibut Steak - SKU: 827510000340">Greenland Turbot Halibut Steak</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1174,7 +1212,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Gold Label Golden Pompano - SKU: 827510050055">Gold Label Golden Pompano</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1189,7 +1227,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="3Fish FRZ Snakehead Fish Slice - SKU: 874718005875">3Fish FRZ Snakehead Fish Slice</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">250g </span>
@@ -1204,7 +1242,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Searay Greenland Turbot - SKU: 82751000018">Searay Greenland Turbot</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
@@ -1219,7 +1257,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Searay Fish Shaomai - SKU: 827510006144">Searay Fish Shaomai</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">500G</span>
@@ -1234,7 +1272,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="3Fish FRZ Grass Carp Slice - SKU: 874718005868">3Fish FRZ Grass Carp Slice</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">250g </span>
@@ -1249,7 +1287,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Searay Abalone with Shell - SKU: 827510004676">Searay Abalone with Shell</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">220G</span>
@@ -1278,7 +1316,7 @@
                                 </thead>
                                 <tbody>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="CC Salted Duck Eggs - SKU: 20616992827">CC Salted Duck Eggs</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">6PCS</span>
@@ -1293,7 +1331,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="CC Peanut With Skin - SKU: 613269006524">CC Peanut With Skin</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;">5LB </span>
@@ -1308,7 +1346,7 @@
                                         </td>
                                     </tr>
                                     <tr class="product-row-group">
-                                        <td>
+                                        <td style="padding-right: 20px;">
                                             <div class="product-row-1">
                                                 <span class="product-description" data-full-description="Jin Xin Premium Rice Stick - SKU: 1785">Jin Xin Premium Rice Stick</span>
                                                 <span class="product-unit" style="float: right; margin-left: 20px;"></span>
@@ -2102,8 +2140,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
                 
-                // Show popup
-                descriptionContent.innerHTML = `<h3>${this.textContent}</h3><p>${fullDescription}</p>`;
+                // Show popup - only show full description without repeating the title
+                descriptionContent.innerHTML = `<p>${fullDescription}</p>`;
                 descriptionOverlay.classList.add('active');
                 descriptionPopup.classList.add('active');
             });
