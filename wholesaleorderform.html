@@ -1478,15 +1478,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get all quantity inputs
             const allInputs = document.querySelectorAll('.qty-input');
-            console.log('=== ORDER SUMMARY GENERATION ===');
-            console.log('Total inputs:', allInputs.length);
-
+            
             allInputs.forEach((input, index) => {
                 const qty = parseInt(input.value, 10) || 0;
                 
-                if (qty > 0) {
-                    console.log(`Processing input ${index}: name="${input.name}", qty=${qty}`);
-                    
+                if (qty > 0) {                    
                     // Get the product info from the same row
                     const row = input.closest('tr');
                     let productName = '';
@@ -1497,14 +1493,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         const descCell = row.querySelector('td.description');
                         if (descCell) {
                             productName = descCell.textContent.trim();
-                            console.log('Found product name from row:', productName);
                         }
                         
                         // Get the price from the same row
                         const priceCell = row.querySelector('td.price');
                         if (priceCell) {
                             productPrice = priceCell.textContent.trim();
-                            console.log('Found price from row:', productPrice);
                         }
                     }
                     
@@ -1525,9 +1519,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Add to order lines
                         orderLines.push(`${productName}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
-                        console.log('Added to order summary:', productName);
                     } else {
-                        console.log('Could not parse price:', productPrice);
                     }
                 }
             });
@@ -1536,9 +1528,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tbody.children.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
             }
-
-            console.log('Total items in order:', orderLines.length);
-            console.log('Subtotal:', subtotal);
 
             // Update subtotal
             document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
@@ -1772,7 +1761,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('Form submission failed');
                 }
             }).catch(error => {
-                console.error('Error:', error);
                 if(errorMessage) {
                     errorMessage.textContent = 'Sorry, there was an error submitting your order. Please try again or call us directly.';
                     errorMessage.style.display = 'block';
