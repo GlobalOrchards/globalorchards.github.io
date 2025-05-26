@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray-50);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        input, select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: var(--gray-50);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 1rem;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        tr:hover {
+            background-color: var(--gray-50);
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .chinese-name {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .margin-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .margin-high {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .margin-medium {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .margin-low {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .highlight-row {
+            background-color: #fef3c7;
+        }
+
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sortable:hover {
+            background-color: var(--gray-100);
+        }
+
+        .sort-arrow {
+            display: inline-block;
+            margin-left: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .sort-desc {
+            transform: rotate(180deg);
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            height: 400px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--gray-300);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-500);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--gray-800);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+            z-index: 100;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Inventory Analytics</h1>
+            <div class="header-actions">
+                <button class="btn btn-secondary" onclick="exportData()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Export
+                </button>
+                <button class="btn btn-primary" onclick="refreshData()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 4v6h6M23 20v-6h-6"/>
+                        <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+        </header>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Products</div>
+                <div class="metric-value" id="totalProducts">13</div>
+                <div class="metric-trend trend-up">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 14l5-5 5 5H7z"/>
+                    </svg>
+                    +3 from last month
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Average Margin/Cu Ft</div>
+                <div class="metric-value" id="avgMargin">$2.27</div>
+                <div class="metric-trend trend-up">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 14l5-5 5 5H7z"/>
+                    </svg>
+                    +12% improvement
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Inventory Volume</div>
+                <div class="metric-value" id="totalVolume">2,541 ft³</div>
+                <div class="metric-trend trend-down">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                    -5% optimization
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Best Performer</div>
+                <div class="metric-value" id="bestPerformer">Snow Peas</div>
+                <div class="metric-trend">$4.28/cu ft margin</div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label class="filter-label">Search</label>
+                <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterTable()">
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Margin Range</label>
+                <select id="marginFilter" onchange="filterTable()">
+                    <option value="">All Margins</option>
+                    <option value="high">High (>$3.00)</option>
+                    <option value="medium">Medium ($1.50-$3.00)</option>
+                    <option value="low">Low (<$1.50)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label">Highlighted Only</label>
+                <input type="checkbox" id="highlightFilter" onchange="filterTable()">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" onclick="sortTable(0)">Product <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(1)">Weight (kg) <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(2)">Boxes <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(3)">Pallets <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(4)">Cu Ft/Box <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(5)">Sale $/Cu Ft <span class="sort-arrow">⬍</span></th>
+                        <th class="sortable" onclick="sortTable(6)">Margin/Cu Ft <span class="sort-arrow">⬍</span></th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="marginChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script>
+        // Original data
+        const inventoryData = [
+            { name: 'Baby Bok Choy', chinese: '大娃娃', weight: 15.0, boxes: 40, pallets: 1.0, cuFt: 2.3, sale: 7.6, margin: 1.26, highlighted: true },
+            { name: 'Spinach', chinese: '菠菜', weight: 4.0, boxes: 360, pallets: 8.0, cuFt: 2.1, sale: 7.6, margin: 1.27, highlighted: false },
+            { name: 'A Choy', chinese: '油麦', weight: 4.0, boxes: 360, pallets: 8.0, cuFt: 2.1, sale: 6.1, margin: 1.02, highlighted: true },
+            { name: 'Fennel', chinese: '小茴香', weight: 5.0, boxes: 9, pallets: 0.1, cuFt: 1.0, sale: 10.1, margin: 1.68, highlighted: false },
+            { name: 'Sugar Snap Peas', chinese: '甜豆', weight: 4.5, boxes: 640, pallets: 3.5, cuFt: 0.5, sale: 23.8, margin: 3.96, highlighted: true },
+            { name: 'Snow Peas', chinese: '荷兰豆', weight: 4.5, boxes: 180, pallets: 1.0, cuFt: 0.5, sale: 25.7, margin: 4.28, highlighted: false },
+            { name: 'Garlic Leek', chinese: '蒜苗', weight: 10.0, boxes: 50, pallets: 1.0, cuFt: 1.9, sale: 9.4, margin: 1.56, highlighted: true },
+            { name: 'Lettuce Stem', chinese: '莴笋', weight: 10.0, boxes: 50, pallets: 1.0, cuFt: 1.9, sale: 9.4, margin: 1.56, highlighted: false },
+            { name: 'Thin Chili Peppers', chinese: '线椒', weight: 6.0, boxes: 15, pallets: 0.2, cuFt: 1.2, sale: 14.9, margin: 2.49, highlighted: true },
+            { name: 'Napa Cabbage', chinese: '长白菜', weight: 10.0, boxes: 10, pallets: 0.5, cuFt: 4.7, sale: 5.5, margin: 0.92, highlighted: false },
+            { name: 'Taiwan Cauliflower', chinese: '松花', weight: 10.0, boxes: 80, pallets: 1.0, cuFt: 1.2, sale: 14.3, margin: 2.38, highlighted: true },
+            { name: 'Water Chestnuts', chinese: '真空马蹄', weight: 10.0, boxes: 50, pallets: 1.0, cuFt: 1.9, sale: 15.3, margin: 2.55, highlighted: false },
+            { name: 'Kobocha Pumpkin', chinese: '贝贝南瓜', weight: 2.1, boxes: 400, pallets: 2.0, cuFt: 0.5, sale: 21.7, margin: 3.62, highlighted: true }
+        ];
+
+        let sortColumn = -1;
+        let sortDirection = 'asc';
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            inventoryData.forEach(item => {
+                const row = document.createElement('tr');
+                if (item.highlighted) {
+                    row.classList.add('highlight-row');
+                }
+                
+                const marginClass = item.margin > 3 ? 'margin-high' : item.margin > 1.5 ? 'margin-medium' : 'margin-low';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="product-name">${item.name}</div>
+                        <div class="chinese-name">${item.chinese}</div>
+                    </td>
+                    <td>${item.weight.toFixed(1)}</td>
+                    <td>${item.boxes.toLocaleString()}</td>
+                    <td>${item.pallets}</td>
+                    <td>${item.cuFt.toFixed(1)}</td>
+                    <td>$${item.sale.toFixed(1)}</td>
+                    <td>
+                        <span class="margin-badge ${marginClass}">
+                            $${item.margin.toFixed(2)}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="tooltip">
+                            ${item.highlighted ? '⭐' : ''}
+                            <span class="tooltip-text">${item.highlighted ? 'Priority Item' : 'Standard Item'}</span>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+            
+            const sortArrows = document.querySelectorAll('.sort-arrow');
+            sortArrows.forEach((arrow, index) => {
+                arrow.classList.remove('sort-desc');
+                if (index === column) {
+                    if (sortDirection === 'desc') {
+                        arrow.classList.add('sort-desc');
+                    }
+                }
+            });
+            
+            inventoryData.sort((a, b) => {
+                let aVal, bVal;
+                switch(column) {
+                    case 0: aVal = a.name; bVal = b.name; break;
+                    case 1: aVal = a.weight; bVal = b.weight; break;
+                    case 2: aVal = a.boxes; bVal = b.boxes; break;
+                    case 3: aVal = a.pallets; bVal = b.pallets; break;
+                    case 4: aVal = a.cuFt; bVal = b.cuFt; break;
+                    case 5: aVal = a.sale; bVal = b.sale; break;
+                    case 6: aVal = a.margin; bVal = b.margin; break;
+                }
+                
+                if (typeof aVal === 'string') {
+                    return sortDirection === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+                } else {
+                    return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+                }
+            });
+            
+            renderTable();
+            updateChart();
+        }
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const marginFilter = document.getElementById('marginFilter').value;
+            const highlightOnly = document.getElementById('highlightFilter').checked;
+            
+            const rows = document.getElementById('tableBody').getElementsByTagName('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const item = inventoryData[i];
+                let show = true;
+                
+                // Search filter
+                if (searchTerm && !item.name.toLowerCase().includes(searchTerm) && 
+                    !item.chinese.includes(searchTerm)) {
+                    show = false;
+                }
+                
+                // Margin filter
+                if (marginFilter) {
+                    if (marginFilter === 'high' && item.margin <= 3) show = false;
+                    if (marginFilter === 'medium' && (item.margin <= 1.5 || item.margin > 3)) show = false;
+                    if (marginFilter === 'low' && item.margin > 1.5) show = false;
+                }
+                
+                // Highlight filter
+                if (highlightOnly && !item.highlighted) {
+                    show = false;
+                }
+                
+                rows[i].style.display = show ? '' : 'none';
+            }
+        }
+
+        function updateMetrics() {
+            // Calculate average margin
+            const avgMargin = inventoryData.reduce((sum, item) => sum + item.margin, 0) / inventoryData.length;
+            document.getElementById('avgMargin').textContent = `$${avgMargin.toFixed(2)}`;
+            
+            // Calculate total volume
+            const totalVolume = inventoryData.reduce((sum, item) => sum + (item.cuFt * item.boxes), 0);
+            document.getElementById('totalVolume').textContent = `${totalVolume.toLocaleString()} ft³`;
+            
+            // Find best performer
+            const bestItem = inventoryData.reduce((best, item) => item.margin > best.margin ? item : best);
+            document.getElementById('bestPerformer').textContent = bestItem.name;
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('marginChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: inventoryData.map(item => item.name),
+                    datasets: [{
+                        label: 'Margin per Cu Ft',
+                        data: inventoryData.map(item => item.margin),
+                        backgroundColor: inventoryData.map(item => 
+                            item.margin > 3 ? '#10b981' : 
+                            item.margin > 1.5 ? '#f59e0b' : '#ef4444'
+                        ),
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Product Margin Analysis',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            window.marginChart = chart;
+        }
+
+        function updateChart() {
+            if (window.marginChart) {
+                window.marginChart.data.labels = inventoryData.map(item => item.name);
+                window.marginChart.data.datasets[0].data = inventoryData.map(item => item.margin);
+                window.marginChart.update();
+            }
+        }
+
+        function exportData() {
+            // Simple CSV export
+            let csv = 'Product,Chinese Name,Weight (kg),Boxes,Pallets,Cu Ft/Box,Sale $/Cu Ft,Margin/Cu Ft\n';
+            inventoryData.forEach(item => {
+                csv += `"${item.name}","${item.chinese}",${item.weight},${item.boxes},${item.pallets},${item.cuFt},${item.sale},${item.margin}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'inventory_data.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function refreshData() {
+            // Simulate data refresh
+            const btn = event.target.closest('button');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="loading"></span> Loading...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                // In a real app, this would fetch new data
+                alert('Data refreshed successfully!');
+            }, 1500);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+            updateMetrics();
+            initChart();
+        });
+    </script>
+</body>
+</html>
