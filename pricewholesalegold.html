@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Price List - Effective May 21, 2025</title>
+    <title>Interactive Price List</title>
     <style>
         :root {
             --bg-color: #f8f9fc;
@@ -37,7 +37,7 @@
             text-decoration: line-through;
         }
         
-            body {
+        body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
             line-height: 1.45; /* Reduced line-height */
             background-color: var(--bg-color);
@@ -244,6 +244,13 @@
             font-size: 1.3em; color: var(--text-color-primary); margin-top: 0; margin-bottom: 15px;
             text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
         }
+        
+        /* Remove max-height and overflow to let order summary expand */
+        .order-items {
+            /* max-height: 200px; */ /* REMOVED */
+            /* overflow-y: auto; */  /* REMOVED */
+        }
+        
         #lineItemsDisplay ul { list-style-type: none; padding-left: 0; margin: 0; }
         #lineItemsDisplay li { padding: 5px 0; border-bottom: 1px dotted var(--border-color); font-size: 0.95em; }
         #lineItemsDisplay li:last-child { border-bottom: none; }
@@ -310,7 +317,7 @@
         <div class="main-title-container">
             <img src="images/TopsLogoCrop.png" alt="Tops Supermarket Logo" class="store-logo"> <h1>Price List</h1>
         </div>
-        <p class="effective-date">Effective Date: <strong>From May 21, 2025</strong></p>
+        <p class="effective-date">Effective Date: <strong>From May 25, 2025</strong></p>
         <div class="pickup-address-details"> <h3>Pickup address:</h3>
             <strong>Tops Supermarket</strong>
             <br>1623 Centre St NW
