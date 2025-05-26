@@ -21,8 +21,8 @@
             --footer-text-color: #374151;
             --swipe-msg-bg: #d1fae5;
             --swipe-msg-text: #065f46;
-            --button-bg-color: var(--accent-color);
-            --button-hover-bg-color: #047857;
+            --button-bg-color: #3b82f6;
+            --button-hover-bg-color: #2563eb;
             --button-text-color: #ffffff;
             --form-section-bg: #f9fafb;
             --tab-active-border: var(--accent-color);
@@ -206,9 +206,10 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
-        /* Two-row product layout */
+        /* Two-row product layout with fixed widths */
         .product-row-group {
             border-bottom: 2px solid var(--border-color);
         }
@@ -237,6 +238,7 @@
             border: none;
         }
 
+        /* Expanded product description with tooltip */
         .product-description {
             font-weight: 700;
             font-size: 0.95em;
@@ -246,12 +248,49 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%;
+            max-width: calc(100% - 50px); /* Expand to use almost all available space minus unit width */
             display: inline-block;
+            position: relative;
+            flex: 1; /* Take up remaining space */
         }
 
         .product-description:hover {
             color: var(--accent-color);
+        }
+
+        /* Inline tooltip styling */
+        .product-description-tooltip {
+            position: absolute;
+            background: #2d3748;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 500;
+            white-space: normal;
+            word-wrap: break-word;
+            z-index: 1000;
+            max-width: 300px;
+            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            display: none;
+            top: 100%;
+            left: 0;
+            margin-top: 5px;
+        }
+
+        .product-description-tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 15px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #2d3748;
+        }
+
+        .product-description-tooltip.show {
+            display: block;
         }
 
         .product-unit {
@@ -260,7 +299,9 @@
             font-weight: 700;
             text-align: right;
             display: block;
-            margin-right: 15px;
+            margin-left: 10px;
+            min-width: 30px;
+            flex-shrink: 0; /* Prevent unit from shrinking */
         }
 
         .product-retail {
@@ -285,55 +326,15 @@
             position: relative;
         }
 
-        /* Expanded description overlay */
-        .description-expanded {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            color: var(--text-color-primary);
-            padding: 20px;
-            border: 2px solid var(--accent-color);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            max-width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            display: none;
+        /* Set column widths for consistent layout */
+        .product-details-cell {
+            width: calc(100% - 120px); /* Take all space except qty column */
+            min-width: 200px;
         }
 
-        .description-expanded.active {
-            display: block;
-        }
-
-        .description-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .description-overlay.active {
-            display: block;
-        }
-
-        .description-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color-secondary);
-        }
-
-        .description-close:hover {
-            color: var(--text-color-primary);
+        .product-qty-cell {
+            width: 120px;
+            min-width: 120px;
         }
 
         th {
@@ -372,15 +373,13 @@
             .container {
                 width: 95%;
                 max-width: 920px;
-                min-width: 300px; /* Allow smaller screens */
-                ...
+                min-width: 300px;
             }
 
             .swipe-indicator {
                 width: 95%;
                 max-width: 920px;
-                min-width: 300px; /* Match container */
-                ...
+                min-width: 300px;
             }
             .tabs-container {
                 padding: 5px;
@@ -402,15 +401,25 @@
             }
             
             .product-description {
-                font-size: 1em;
+                font-size: 0.9em;
+                max-width: calc(100% - 40px); /* Even more space on mobile */
             }
             
             .product-price {
-                font-size: 1.1em;
+                font-size: 1.05em;
+            }
+            
+            .product-retail {
+                font-size: 1.05em;
+            }
+            
+            .product-unit {
+                font-size: 0.95em;
+                min-width: 25px;
             }
         }
 
-        /* Quantity controls with plus/minus buttons */
+        /* Blue quantity controls */
         .qty-controls {
             display: flex;
             align-items: center;
@@ -421,8 +430,8 @@
         .qty-btn {
             width: 28px;
             height: 28px;
-            border: 1px solid var(--accent-color);
-            background: var(--accent-color);
+            border: 1px solid var(--button-bg-color);
+            background: var(--button-bg-color);
             color: #ffffff;
             border-radius: 4px;
             cursor: pointer;
@@ -437,6 +446,7 @@
 
         .qty-btn:hover {
             background: var(--button-hover-bg-color);
+            border-color: var(--button-hover-bg-color);
             transform: scale(1.1);
         }
 
@@ -544,7 +554,7 @@
         }
         
         .form-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
-        .submit-button { background-color: var(--button-bg-color); color: var(--button-text-color); border: none; padding: 10px 20px; font-size: 1em; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 3px 8px rgba(5, 150, 105, 0.15); }
+        .submit-button { background-color: var(--accent-color); color: var(--button-text-color); border: none; padding: 10px 20px; font-size: 1em; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 3px 8px rgba(5, 150, 105, 0.15); }
         .submit-button:hover { background-color: var(--button-hover-bg-color); transform: translateY(-1px); }
         .submit-button:active { transform: translateY(0px); }
         .submit-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
@@ -612,14 +622,15 @@
             
             <div class="tabs-container">
             <div class="tab-navigation">
-                    <button type="button" class="tab-button active" data-tab="meat">Meat</button>
+                    <button type="button" class="tab-button active" data-tab="cindy">Cindy</button>
+                    <button type="button" class="tab-button" data-tab="meat">Meat</button>
                     <button type="button" class="tab-button" data-tab="vegetable">Vegetable</button>
                     <button type="button" class="tab-button" data-tab="fruit">Fruit</button>
                     <button type="button" class="tab-button" data-tab="seafood">Seafood</button>
                     <button type="button" class="tab-button" data-tab="grocery">Grocery</button>
                 </div>
             <div class="tab-content">
-                    <div id="meat" class="tab-pane active">
+                    <div id="cindy" class="tab-pane active">
                         <div class="table-wrapper">
                             <table>
                                 <thead>
@@ -632,18 +643,32 @@
                                     <tr class="product-row-group">
                                         <td style="padding-right: 20px;">
                                             <div class="product-row-1">
-                                                <span class="product-description" data-full-description="King's Chicken -7003 - SKU: 7003">King's Chicken -7003</span>
-                                                <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
+                                                <span class="product-description" data-full-description="iPhone 16 - SKU: 437373">iPhone 16</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">Box</span>
                                             </div>
                                             <div class="product-row-2">
-                                                <span class="product-retail">$28.76</span>
-                                                <span class="product-price">$20.54</span>
+                                                <span class="product-retail">$40.00</span>
+                                                <span class="product-price">$30.00</span>
                                             </div>
                                         </td>
                                         <td class="product-qty-cell">
-                                            <input type="number" min="0" class="qty-input" name="SKU: 7003_qty" placeholder="0" aria-label="Quantity for King's Chicken -7003">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 437373_qty" placeholder="0" aria-label="Quantity for iPhone 16">
                                         </td>
                                     </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="meat" class="tab-pane">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <tr class="product-row-group">
                                         <td style="padding-right: 20px;">
                                             <div class="product-row-1">
@@ -1364,21 +1389,24 @@
                             </table>
                         </div>
                     </div>
-                <!-- Example of the new two-row format:
+                <!-- Example of the new two-row format with expanded width:
                 <div id="meat" class="tab-pane active">
                     <div class="table-wrapper">
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2">Product Details</th>
-                                    <th rowspan="2">QTY</th>
+                                    <th class="product-details-cell">Product Details</th>
+                                    <th class="product-qty-cell">QTY</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="product-row-group">
-                                    <td rowspan="2" style="width: 70%;">
+                                    <td class="product-details-cell">
                                         <div class="product-row-1">
-                                            <div class="product-description" data-full-description="King's Chicken Premium Quality - SKU 7003">King's Chicken</div>
+                                            <div class="product-description" data-full-description="King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003">
+                                                King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free
+                                                <div class="product-description-tooltip">King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003</div>
+                                            </div>
                                             <div class="product-unit">EA</div>
                                         </div>
                                         <div class="product-row-2">
@@ -1386,7 +1414,7 @@
                                             <span class="product-price">$20.54</span>
                                         </div>
                                     </td>
-                                    <td rowspan="2" class="product-qty-cell">
+                                    <td class="product-qty-cell">
                                         <input type="number" min="0" class="qty-input" name="SKU_7003_qty" placeholder="0" aria-label="Quantity for King's Chicken">
                                     </td>
                                 </tr>
@@ -1495,23 +1523,16 @@
         </div>
     </div>
 
-    <!-- Description popup overlay -->
-    <div class="description-overlay" id="descriptionOverlay"></div>
-    <div class="description-expanded" id="descriptionPopup">
-        <span class="description-close" id="descriptionClose">&times;</span>
-        <div id="descriptionContent"></div>
-    </div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
             const productsData = [
                 {
-                    retail: "28.76 (King\'s Chicken -7003)",
-                    price: "$20.54",
-                    box: "EA",
-                    originalName: "28.76",
-                    description: "King\'s Chicken -7003",
-                    category: "Meat"
+                    retail: "40.00 (iPhone 16)",
+                    price: "$30.00",
+                    box: "Box",
+                    originalName: "40.00",
+                    description: "iPhone 16",
+                    category: "Cindy"
                 }
 ,
                 {
@@ -1920,12 +1941,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const pickupDateInput = document.getElementById('pickupDate');
     const tableTotalQtyElement = document.getElementById('table-total-qty');
     const pickupTimeHidden = document.getElementById('pickup_time_slot_hidden');
-    
-    // Description popup elements
-    const descriptionOverlay = document.getElementById('descriptionOverlay');
-    const descriptionPopup = document.getElementById('descriptionPopup');
-    const descriptionContent = document.getElementById('descriptionContent');
-    const descriptionClose = document.getElementById('descriptionClose');
 
     // Add icons to tab buttons based on their text content
     function addTabIcons() {
@@ -1945,6 +1960,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 icon = '🛒 ';
             } else if (buttonText.includes('seafood')) {
                 icon = '🦐 ';
+            } else if (buttonText.includes('cindy')) {
+                icon = '⭐ ';
             } else {
                 // Default icon for any other categories
                 icon = '📦 ';
@@ -2122,39 +2139,68 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTotalQuantity();
     }, 100);
 
-    // Handle description click - now with popup
+    // Handle description click with inline tooltip
     setTimeout(function() {
         document.querySelectorAll('.product-description').forEach((desc) => {
+            let tooltipTimeout;
+            let isTooltipVisible = false;
+            
+            desc.addEventListener('mouseenter', function() {
+                const tooltip = this.querySelector('.product-description-tooltip');
+                if (tooltip && !isTooltipVisible) {
+                    // Clear any existing timeout
+                    clearTimeout(tooltipTimeout);
+                    
+                    // Show tooltip after short delay
+                    tooltipTimeout = setTimeout(() => {
+                        tooltip.classList.add('show');
+                        isTooltipVisible = true;
+                    }, 500);
+                }
+            });
+            
+            desc.addEventListener('mouseleave', function() {
+                const tooltip = this.querySelector('.product-description-tooltip');
+                if (tooltip) {
+                    // Clear timeout and hide tooltip
+                    clearTimeout(tooltipTimeout);
+                    tooltip.classList.remove('show');
+                    isTooltipVisible = false;
+                }
+            });
+            
+            // Also show on click for mobile
             desc.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
-                // Get full description from data attribute or productsData
-                let fullDescription = this.getAttribute('data-full-description') || this.textContent;
-                
-                // Try to get more details from productsData if available
-                if (typeof productsData !== 'undefined') {
-                    const productName = this.textContent.trim();
-                    const product = productsData.find(p => p.description && p.description.includes(productName));
-                    if (product && product.description) {
-                        fullDescription = product.description;
+                // Hide all other tooltips first
+                document.querySelectorAll('.product-description-tooltip.show').forEach(t => {
+                    if (t !== this.querySelector('.product-description-tooltip')) {
+                        t.classList.remove('show');
                     }
-                }
+                });
                 
-                // Show popup - only show full description without repeating the title
-                descriptionContent.innerHTML = `<p>${fullDescription}</p>`;
-                descriptionOverlay.classList.add('active');
-                descriptionPopup.classList.add('active');
+                const tooltip = this.querySelector('.product-description-tooltip');
+                if (tooltip) {
+                    const wasVisible = tooltip.classList.contains('show');
+                    tooltip.classList.toggle('show');
+                    isTooltipVisible = !wasVisible;
+                }
             });
         });
         
-        // Close popup handlers
-        descriptionClose.addEventListener('click', closeDescriptionPopup);
-        descriptionOverlay.addEventListener('click', closeDescriptionPopup);
-        
-        function closeDescriptionPopup() {
-            descriptionOverlay.classList.remove('active');
-            descriptionPopup.classList.remove('active');
-        }
+        // Hide tooltips when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.product-description')) {
+                document.querySelectorAll('.product-description-tooltip.show').forEach(tooltip => {
+                    tooltip.classList.remove('show');
+                });
+                // Reset all visibility flags
+                document.querySelectorAll('.product-description').forEach(desc => {
+                    desc.isTooltipVisible = false;
+                });
+            }
+        });
     }, 200);
 
     // Tab switching
