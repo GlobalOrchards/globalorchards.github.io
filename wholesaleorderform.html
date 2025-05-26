@@ -35,6 +35,7 @@
             color: red;
             font-weight: bold;
             text-decoration: line-through;
+            text-align: right;
         }
         
         body {
@@ -215,7 +216,11 @@
         td.name { text-align: left; }
         td.description { text-align: left; min-width: 80; } 
         td.num-box { text-align: right; }
-        td.price { text-align: right; }
+        td.price { 
+            text-align: right;
+            color: #059669;
+            font-weight: 800; /* Make it even bolder */
+            }
         td.qty-cell { text-align: center; }
 
         tbody tr:nth-child(even) td {
