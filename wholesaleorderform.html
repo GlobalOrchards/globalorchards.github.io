@@ -476,14 +476,27 @@
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
+        #orderSummaryTable th:last-child,
+        #orderSummaryTable td:last-child {
+            text-align: right;
+        }
         #orderSummaryTable tfoot td {
             border-top: 2px solid var(--border-color);
             font-weight: 700;
         }
+        #orderSummaryTable tfoot td:last-child {
+            text-align: right;
+        }
 
-#orderSummaryTable tfoot td:last-child {
-    text-align: right;
-}
+        /* Order Summary Table Wrapper - no height limit */
+        #lineItemsDisplay .table-wrapper {
+            overflow-x: auto;  /* Keep horizontal scroll if needed */
+            overflow-y: visible;  /* No vertical scroll */
+        }
+
+        #orderSummaryTable tfoot td:last-child {
+            text-align: right;
+        }
 
     </style>
 </head>
@@ -881,35 +894,37 @@
             </div>
         </div>
 
-            <div id="visibleOrderSummaryContainer">
-            <h2>Order Summary</h2>
-            <div id="lineItemsDisplay">
-                <div class="table-wrapper">  <!-- Add this wrapper -->
-                <table id="orderSummaryTable">
-                <thead>
-                    <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td colspan="3" style="text-align:center; color: var(--text-color-secondary);">
-                        No items selected yet.
-                    </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                    <td colspan="2" style="text-align:right;">Subtotal:</td>
-                    <td id="summarySubtotal">$0.00</td>
-                    </tr>
-                </tfoot>
-                </table>
-                </div>
+        <div id="visibleOrderSummaryContainer">
+        <h2>Order Summary</h2>
+        <div id="lineItemsDisplay">
+            <div class="table-wrapper">
+            <table id="orderSummaryTable">
+            <thead>
+                <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td colspan="3" style="text-align:center; color: var(--text-color-secondary);">
+                    No items selected yet.
+                </td>
+                </tr>
+            </tbody>
+            </table>
             </div>
-            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+            <tfoot>
+                <tr>
+                <td colspan="2" style="text-align:right; padding: 8px; border-top: 2px solid var(--border-color); font-weight: 700;">Subtotal:</td>
+                <td id="summarySubtotal" style="text-align:right; padding: 8px; border-top: 2px solid var(--border-color); font-weight: 700;">$0.00</td>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+        </div>
         
 
             <input type="hidden" name="order_summary" id="order_summary">
@@ -1457,58 +1472,98 @@ document.addEventListener('DOMContentLoaded', function() {
         generateOrderSummary();
     }
 
-    function generateOrderSummary() {
-        const tbody = document.querySelector('#orderSummaryTable tbody');
-        tbody.innerHTML = '';
-        let subtotal = 0;
-        const orderLines = [];
+        function generateOrderSummary() {
+            const tbody = document.querySelector('#orderSummaryTable tbody');
+            tbody.innerHTML = '';
+            let subtotal = 0;
+            const orderLines = [];
 
-        document.querySelectorAll('.qty-input').forEach((input, i) => {
-            const qty = parseInt(input.value, 10) || 0;
-            const prod = productsData[i];
-            
-            if (qty > 0 && prod) {
-                // Parse price - remove $ and any other non-numeric chars
-                const priceNum = parseFloat(prod.price.replace(/[^0-9.\-]+/g, ''));
-                const amount = qty * priceNum;
-                subtotal += amount;
+            // Get all quantity inputs
+            const allInputs = document.querySelectorAll('.qty-input');
+            console.log('=== ORDER SUMMARY GENERATION ===');
+            console.log('Total inputs:', allInputs.length);
 
-                // Create table row
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${prod.description || prod.name}</td>
-                    <td>${qty}</td>
-                    <td>$${amount.toFixed(2)}</td>
-                `;
-                tbody.appendChild(tr);
+            allInputs.forEach((input, index) => {
+                const qty = parseInt(input.value, 10) || 0;
                 
-                // Add to order lines with newlines
-                orderLines.push(`${prod.description}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
+                if (qty > 0) {
+                    console.log(`Processing input ${index}: name="${input.name}", qty=${qty}`);
+                    
+                    // Get the product info from the same row
+                    const row = input.closest('tr');
+                    let productName = '';
+                    let productPrice = '';
+                    
+                    if (row) {
+                        // Get the description from the same row
+                        const descCell = row.querySelector('td.description');
+                        if (descCell) {
+                            productName = descCell.textContent.trim();
+                            console.log('Found product name from row:', productName);
+                        }
+                        
+                        // Get the price from the same row
+                        const priceCell = row.querySelector('td.price');
+                        if (priceCell) {
+                            productPrice = priceCell.textContent.trim();
+                            console.log('Found price from row:', productPrice);
+                        }
+                    }
+                    
+                    // Parse price
+                    const priceNum = parseFloat(productPrice.replace(/[^0-9.\-]+/g, ''));
+                    if (!isNaN(priceNum)) {
+                        const amount = qty * priceNum;
+                        subtotal += amount;
+
+                        // Create table row
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${productName}</td>
+                            <td>${qty}</td>
+                            <td>$${amount.toFixed(2)}</td>
+                        `;
+                        tbody.appendChild(tr);
+                        
+                        // Add to order lines
+                        orderLines.push(`${productName}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
+                        console.log('Added to order summary:', productName);
+                    } else {
+                        console.log('Could not parse price:', productPrice);
+                    }
+                }
+            });
+
+            // Show empty message if no items
+            if (tbody.children.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
             }
-        });
 
-        // Show empty message if no items
-        if (tbody.children.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
-        }
+            console.log('Total items in order:', orderLines.length);
+            console.log('Subtotal:', subtotal);
 
-        // Update subtotal
-        document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+            // Update subtotal
+            document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
 
-        // Update hidden order summary - use newlines for better formatting
-        if (orderSummaryInput) {
-            if (orderLines.length > 0) {
-                orderSummaryInput.value = orderLines.join('\n') + '\n\nTotal: $' + subtotal.toFixed(2);
-            } else {
-                orderSummaryInput.value = '';
+            // Update hidden order summary
+            const orderSummaryInput = document.getElementById('order_summary');
+            if (orderSummaryInput) {
+                if (orderLines.length > 0) {
+                    orderSummaryInput.value = orderLines.join('\n') + '\n\nTotal: $' + subtotal.toFixed(2);
+                } else {
+                    orderSummaryInput.value = '';
+                }
             }
         }
-    }
 
     // Wait for VBA to generate inputs, then add quantity controls
     setTimeout(function() {
+
         // Add plus/minus buttons to quantity inputs
         document.querySelectorAll('.qty-input').forEach((input, index) => {
+            // Store the original name attribute
+            const originalName = input.name;
+            
             const wrapper = document.createElement('div');
             wrapper.className = 'qty-controls';
             
@@ -1539,6 +1594,9 @@ document.addEventListener('DOMContentLoaded', function() {
             wrapper.appendChild(minusBtn);
             wrapper.appendChild(input);
             wrapper.appendChild(plusBtn);
+            
+            // Ensure the name attribute is preserved
+            input.name = originalName;
         });
 
         // Event delegation for quantity inputs
