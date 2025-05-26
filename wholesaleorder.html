@@ -33,11 +33,102 @@
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #1f2937;
+            --gray-100: #374151;
+            --gray-200: #4b5563;
+            --gray-300: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-500: #d1d5db;
+            --gray-600: #e5e7eb;
+            --gray-700: #f3f4f6;
+            --gray-800: #f9fafb;
+            --gray-900: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--gray-50);
             color: var(--gray-900);
             line-height: 1.6;
+            margin: 0;
+            padding-top: 60px; /* Account for fixed banner */
+        }
+
+        .top-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--gray-900);
+            color: var(--gray-50);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-700);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="dark"] .top-banner {
+            background: var(--gray-100);
+            color: var(--gray-900);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .banner-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--gray-600);
+            color: inherit;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            border-color: var(--gray-400);
+        }
+
+        .theme-toggle:hover {
+            background: var(--gray-800);
+            border-color: var(--gray-500);
+        }
+
+        [data-theme="dark"] .theme-toggle:hover {
+            background: var(--gray-200);
+            border-color: var(--gray-500);
+        }
+
+        .theme-icon {
+            width: 16px;
+            height: 16px;
         }
 
         .container {
@@ -352,6 +443,22 @@
     </style>
 </head>
 <body>
+    <div class="top-banner">
+        <div class="banner-left">
+            <h2 class="banner-title">Inventory Analytics Dashboard</h2>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg class="theme-icon moon-icon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span class="theme-text">Light</span>
+        </button>
+    </div>
+
     <div class="container">
         <header>
             <h1>Inventory Analytics</h1>
@@ -691,8 +798,67 @@
             }, 1500);
         }
 
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            
+            // Update button text and icons
+            const themeText = document.querySelector('.theme-text');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            if (newTheme === 'dark') {
+                themeText.textContent = 'Dark';
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                themeText.textContent = 'Light';
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+            
+            // Store preference - Note: This won't work in Claude.ai but will work when you save this to a file
+            try {
+                localStorage.setItem('theme', newTheme);
+            } catch (e) {
+                // localStorage not available in this environment
+            }
+        }
+
+        // Load saved theme preference
+        function loadTheme() {
+            let savedTheme = 'light';
+            try {
+                savedTheme = localStorage.getItem('theme') || 'light';
+            } catch (e) {
+                // localStorage not available in this environment
+            }
+            
+            const html = document.documentElement;
+            const themeText = document.querySelector('.theme-text');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            
+            html.setAttribute('data-theme', savedTheme);
+            
+            if (savedTheme === 'dark') {
+                themeText.textContent = 'Dark';
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                themeText.textContent = 'Light';
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
             renderTable();
             updateMetrics();
             initChart();
