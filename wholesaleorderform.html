@@ -10,22 +10,21 @@
             --card-bg-color: #ffffff;
             --text-color-primary: #1a202c;
             --text-color-secondary: #4a5568;
-            --header-bg-color: #059669; /* Changed to green */
+            --header-bg-color: #059669;
             --header-text-color: #ffffff;
-            --accent-color: #059669; /* Changed to green */
+            --accent-color: #059669;
             --border-color: #e2e8f0;
             --input-focus-border: var(--accent-color);
-            --input-focus-shadow: rgba(5, 150, 105, 0.25); /* Updated for green */
+            --input-focus-shadow: rgba(5, 150, 105, 0.25);
             --footer-bg-color: #f3f4f6;
             --footer-border-color: #e5e7eb;
             --footer-text-color: #374151;
-            --swipe-msg-bg: #d1fae5; /* Light green background */
-            --swipe-msg-text: #065f46; /* Dark green text */
+            --swipe-msg-bg: #d1fae5;
+            --swipe-msg-text: #065f46;
             --button-bg-color: var(--accent-color);
-            --button-hover-bg-color: #047857; /* Darker green */
+            --button-hover-bg-color: #047857;
             --button-text-color: #ffffff;
             --form-section-bg: #f9fafb;
-            /* Tab colors updated to green */
             --tab-active-border: var(--accent-color);
             --tab-text-color: var(--text-color-secondary);
             --tab-active-text-color: var(--accent-color);
@@ -35,7 +34,6 @@
             color: red;
             font-weight: bold;
             text-decoration: line-through;
-            text-align: right;
         }
         
         body {
@@ -74,13 +72,13 @@
         }
 
         .container {
-            width: 95%; /* Increased from 90% */
+            width: 95%;
             max-width: 920px;
             background-color: var(--card-bg-color);
-            padding: 15px 15px 20px 15px; /* Reduced from 20px 25px 25px 25px */
+            padding: 15px 15px 20px 15px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
-            margin-bottom: 10px; /* Reduced from 15px */
+            margin-bottom: 10px;
         }
 
         .main-title-container {
@@ -194,123 +192,184 @@
             border-collapse: collapse;
         }
 
-        th, td {
-            border-bottom: 1px solid var(--border-color);
-            padding: 6px 14px; 
-            vertical-align: middle;
-            white-space: nowrap;
-            font-size: 1.1em; 
-            font-weight: 700; 
-            line-height: 1.2; 
+        /* Two-row product layout */
+        .product-row-group {
+            border-bottom: 2px solid var(--border-color);
         }
-        
+
+        .product-row-group:hover {
+            background-color: #f0f2f5;
+        }
+
+        .product-row-1, .product-row-2 {
+            border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+                gap: 15px;
+
+        }
+
+        .product-row-1 td, .product-row-2 td {
+            padding: 4px 14px;
+            border: none;
+        }
+
+        .product-description {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--text-color-primary);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .product-description:hover {
+            color: var(--accent-color);
+        }
+
+        .product-unit {
+            color: var(--text-color-secondary);
+            font-size: 1.1em;
+            font-weight: 700;
+            text-align: right;
+            display: block;
+        }
+
+        .product-retail {
+            color: #ef4444;
+            text-decoration: line-through;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: 800;
+            font-size: 1.2em;
+            padding-left: 10px;
+        }
+
+        .product-qty-cell {
+            text-align: center;
+            vertical-align: middle;
+            width: 120px;
+            position: relative;
+        }
+
+        /* Expanded description overlay */
+        .description-expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: var(--text-color-primary);
+            padding: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .description-expanded.active {
+            display: block;
+        }
+
+        .description-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .description-overlay.active {
+            display: block;
+        }
+
+        .description-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color-secondary);
+        }
+
+        .description-close:hover {
+            color: var(--text-color-primary);
+        }
+
         th {
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
-            font-weight: 700; 
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.75px;
-            font-size: 0.85em; 
+            font-size: 0.85em;
             text-align: center;
-        }
-
-        td.name { text-align: left; }
-        td.description {
-            text-align: left;
-            max-width: 120px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        /* Expanded description styles */
-        tr.description-expanded td.description {
-            position: absolute;
-            left: 0;
-            right: 0;
-            max-width: none;
-            white-space: normal;
-            background: white;
-            color: var(--text-color-primary);
-            padding: 12px;
-            border: 2px solid var(--accent-color);
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 100;
-            font-weight: 600;
-            text-overflow: initial;
-            overflow: visible;
-            text-align: left;
-            width: calc(100% - 2px);
-            box-sizing: border-box;
-        }
-
-        /* Ensure the expanded row has proper positioning context and contains the expansion */
-        tr.description-expanded {
-            position: relative;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         /* Adjust for mobile */
         @media (max-width: 768px) {
             .table-wrapper {
-                margin: 0 -5px; /* Negative margin to extend to edges */
-                border-radius: 0; /* Remove border radius on mobile for full width */
+                margin: 0 -5px;
+                border-radius: 0;
                 border-left: none;
                 border-right: none;
             }
-            td.description {
-                max-width: 80px;
-            }
-                body {
-            padding: 5px; /* Reduced from 10px */
+            body {
+                padding: 5px;
             }
             .container {
-                width: 98%; /* Use almost full width on mobile */
-                padding: 10px; /* Even less padding on mobile */
-                border-radius: 12px;
+                width: 95%;
+                max-width: 920px;
+                min-width: 300px; /* Allow smaller screens */
+                ...
             }
+
             .swipe-indicator {
-                width: 98%;
-                padding: 6px 10px; /* Slightly reduce padding */
-                font-size: 0.8em; /* Slightly smaller text */
-                margin-bottom: 10px; /* Reduced from 15px */
+                width: 95%;
+                max-width: 920px;
+                min-width: 300px; /* Match container */
+                ...
             }
             .tabs-container {
-                padding: 5px; /* Reduced from 10px */
+                padding: 5px;
             }
             
             .pickup-address-details {
-                padding: 8px; /* Reduced from 10px */
-                margin-bottom: 15px; /* Reduced from 25px */
+                padding: 8px;
+                margin-bottom: 15px;
             }
             
             #visibleOrderSummaryContainer,
             .customer-info-section {
-                padding: 12px; /* Reduced from 20px */
-                margin-top: 10px; /* Reduced from 15px */
+                padding: 12px;
+                margin-top: 10px;
             }
             
             .tab-content {
-                padding: 5px; /* Reduced from default */
+                padding: 5px;
             }
-        }
-        td.num-box { text-align: right; }
-        td.price { 
-            text-align: right;
-            color: #059669;
-            font-weight: 800; /* Make it even bolder */
+            
+            .product-description {
+                font-size: 1em;
             }
-        td.qty-cell { text-align: center; }
-
-        tbody tr:nth-child(even) td {
-            background-color: #f9fafb; 
-        }
-        tbody tr:hover td {
-            background-color: #f0f2f5;
-            transition: background-color 0.15s ease-in-out;
+            
+            .product-price {
+                font-size: 1.1em;
+            }
         }
 
         /* Quantity controls with plus/minus buttons */
@@ -384,11 +443,6 @@
             font-size: 1.3em; color: var(--text-color-primary); margin-top: 0; margin-bottom: 15px;
             text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
         }
-        
-        #lineItemsDisplay ul { list-style-type: none; padding-left: 0; margin: 0; }
-        #lineItemsDisplay li { padding: 5px 0; border-bottom: 1px dotted var(--border-color); font-size: 0.95em; }
-        #lineItemsDisplay li:last-child { border-bottom: none; }
-        #lineItemsDisplay p { font-style: italic; color: var(--text-color-secondary); text-align: center; }
 
         .customer-info-section {
             background-color: var(--form-section-bg); padding: 20px; border-radius: 10px;
@@ -489,14 +543,9 @@
 
         /* Order Summary Table Wrapper - no height limit */
         #lineItemsDisplay .table-wrapper {
-            overflow-x: auto;  /* Keep horizontal scroll if needed */
-            overflow-y: visible;  /* No vertical scroll */
+            overflow-x: auto;
+            overflow-y: visible;
         }
-
-        #orderSummaryTable tfoot td:last-child {
-            text-align: right;
-        }
-
     </style>
 </head>
 <body>
@@ -533,360 +582,788 @@
                 </div>
             <div class="tab-content">
                     <div id="meat" class="tab-pane active">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="name">Retail</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="description">King's Chicken -7003</td>
-                            <td class="num-box">EA</td>
-                            <td class="retail strike-red">$28.76</td>
-                            <td class="price">$20.54</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 7003_qty" placeholder="0" aria-label="Quantity for King's Chicken -7003"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Chicken</td>
-                            <td class="num-box">EA</td>
-                            <td class="retail strike-red">$1.40</td>
-                            <td class="price">$1.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 802_qty" placeholder="0" aria-label="Quantity for Chicken"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Pork Front Feet</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$4.53</td>
-                            <td class="price">$3.24</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5027_qty" placeholder="0" aria-label="Quantity for Pork Front Feet"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Pork Belly Boneless</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$7.18</td>
-                            <td class="price">$5.13</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5010_qty" placeholder="0" aria-label="Quantity for Pork Belly Boneless"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Utility Silkie Chicken</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$8.77</td>
-                            <td class="price">$6.26</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 337_qty" placeholder="0" aria-label="Quantity for Utility Silkie Chicken"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">AAA Beef Fingermeat</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$11.85</td>
-                            <td class="price">$8.47</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 60111_qty" placeholder="0" aria-label="Quantity for AAA Beef Fingermeat"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">AAA Beef Short Rib</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$12.02</td>
-                            <td class="price">$8.59</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 6008_qty" placeholder="0" aria-label="Quantity for AAA Beef Short Rib"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">WW Chinese Style Pork Sausage</td>
-                            <td class="num-box">375g</td>
-                            <td class="retail strike-red">$7.52</td>
-                            <td class="price">$5.37</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 66736676889_qty" placeholder="0" aria-label="Quantity for WW Chinese Style Pork Sausage"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Beef Heel Muscle(Digital)</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$12.05</td>
-                            <td class="price">$8.61</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 6004_qty" placeholder="0" aria-label="Quantity for Beef Heel Muscle(Digital)"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Chicken Feet-Jumbo</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$4.66</td>
-                            <td class="price">$3.33</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 70071_qty" placeholder="0" aria-label="Quantity for Chicken Feet-Jumbo"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Pork</td>
-                            <td class="num-box">EA</td>
-                            <td class="retail strike-red">$1.40</td>
-                            <td class="price">$1.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Pork"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Watson Cooked Young Duck</td>
-                            <td class="num-box">500g</td>
-                            <td class="retail strike-red">$12.59</td>
-                            <td class="price">$8.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 800794301297_qty" placeholder="0" aria-label="Quantity for Watson Cooked Young Duck"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Pork Shoulder Butt</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$6.20</td>
-                            <td class="price">$4.43</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5001_qty" placeholder="0" aria-label="Quantity for Pork Shoulder Butt"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="King's Chicken -7003 - SKU: 7003">King's Chicken -7003</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$28.76</span>
+                                                <span class="product-price">$20.54</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 7003_qty" placeholder="0" aria-label="Quantity for King's Chicken -7003">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Chicken - SKU: 802">Chicken</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$1.40</span>
+                                                <span class="product-price">$1.00</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 802_qty" placeholder="0" aria-label="Quantity for Chicken">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Pork Front Feet - SKU: 5027">Pork Front Feet</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$4.53</span>
+                                                <span class="product-price">$3.24</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 5027_qty" placeholder="0" aria-label="Quantity for Pork Front Feet">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Pork Belly Boneless - SKU: 5010">Pork Belly Boneless</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$7.18</span>
+                                                <span class="product-price">$5.13</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 5010_qty" placeholder="0" aria-label="Quantity for Pork Belly Boneless">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Utility Silkie Chicken - SKU: 337">Utility Silkie Chicken</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$8.77</span>
+                                                <span class="product-price">$6.26</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 337_qty" placeholder="0" aria-label="Quantity for Utility Silkie Chicken">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="AAA Beef Fingermeat - SKU: 60111">AAA Beef Fingermeat</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$11.85</span>
+                                                <span class="product-price">$8.47</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 60111_qty" placeholder="0" aria-label="Quantity for AAA Beef Fingermeat">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="AAA Beef Short Rib - SKU: 6008">AAA Beef Short Rib</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$12.02</span>
+                                                <span class="product-price">$8.59</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 6008_qty" placeholder="0" aria-label="Quantity for AAA Beef Short Rib">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="WW Chinese Style Pork Sausage - SKU: 66736676889">WW Chinese Style Pork Sausage</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">375g</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$7.52</span>
+                                                <span class="product-price">$5.37</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 66736676889_qty" placeholder="0" aria-label="Quantity for WW Chinese Style Pork Sausage">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Beef Heel Muscle(Digital) - SKU: 6004">Beef Heel Muscle(Digital)</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$12.05</span>
+                                                <span class="product-price">$8.61</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 6004_qty" placeholder="0" aria-label="Quantity for Beef Heel Muscle(Digital)">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Chicken Feet-Jumbo - SKU: 70071">Chicken Feet-Jumbo</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$4.66</span>
+                                                <span class="product-price">$3.33</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 70071_qty" placeholder="0" aria-label="Quantity for Chicken Feet-Jumbo">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Pork - SKU: 801">Pork</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$1.40</span>
+                                                <span class="product-price">$1.00</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Pork">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Watson Cooked Young Duck - SKU: 800794301297">Watson Cooked Young Duck</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">500g</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$12.59</span>
+                                                <span class="product-price">$8.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 800794301297_qty" placeholder="0" aria-label="Quantity for Watson Cooked Young Duck">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Pork Shoulder Butt - SKU: 5001">Pork Shoulder Butt</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$6.20</span>
+                                                <span class="product-price">$4.43</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 5001_qty" placeholder="0" aria-label="Quantity for Pork Shoulder Butt">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div id="vegetable" class="tab-pane">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="name">Retail</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="description">Yu Choy £¨Red£© - 421</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$3.01</td>
-                            <td class="price">$2.15</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 421_qty" placeholder="0" aria-label="Quantity for Yu Choy £¨Red£© - 421"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Lo Bok - 450</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$1.28</td>
-                            <td class="price">$0.91</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 450_qty" placeholder="0" aria-label="Quantity for Lo Bok - 450"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Short Nappa - 046</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.01</td>
-                            <td class="price">$1.44</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 46_qty" placeholder="0" aria-label="Quantity for Short Nappa - 046"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Green Chives -105</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$4.49</td>
-                            <td class="price">$3.21</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 105_qty" placeholder="0" aria-label="Quantity for Green Chives -105"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Yu Choy Mui - 460</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$4.42</td>
-                            <td class="price">$3.16</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 460_qty" placeholder="0" aria-label="Quantity for Yu Choy Mui - 460"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Shang Hai Bok Choy - 033</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.45</td>
-                            <td class="price">$1.75</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 33_qty" placeholder="0" aria-label="Quantity for Shang Hai Bok Choy - 033"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Chinese Eggplant  - 102</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.97</td>
-                            <td class="price">$2.12</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 102_qty" placeholder="0" aria-label="Quantity for Chinese Eggplant  - 102"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Shanghai Choy Mui - 0991</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$3.78</td>
-                            <td class="price">$2.70</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 991_qty" placeholder="0" aria-label="Quantity for Shanghai Choy Mui - 0991"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Baby Bok Choy - 007</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.56</td>
-                            <td class="price">$1.83</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 7_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy - 007"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Gailan (Red) 0981</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$3.65</td>
-                            <td class="price">$2.61</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 981_qty" placeholder="0" aria-label="Quantity for Gailan (Red) 0981"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Broccoli - 0361</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.41</td>
-                            <td class="price">$1.72</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 361_qty" placeholder="0" aria-label="Quantity for Broccoli - 0361"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Cabbage - 0381</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$1.58</td>
-                            <td class="price">$1.13</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 381_qty" placeholder="0" aria-label="Quantity for Cabbage - 0381"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">A Choy -119</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$3.56</td>
-                            <td class="price">$2.55</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 119_qty" placeholder="0" aria-label="Quantity for A Choy -119"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Ginger - 004</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$3.55</td>
-                            <td class="price">$2.54</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4_qty" placeholder="0" aria-label="Quantity for Ginger - 004"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Yu Choy £¨Red£© - 421 - SKU: 421">Yu Choy £¨Red£© - 421</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$3.01</span>
+                                                <span class="product-price">$2.15</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 421_qty" placeholder="0" aria-label="Quantity for Yu Choy £¨Red£© - 421">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Lo Bok - 450 - SKU: 450">Lo Bok - 450</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$1.28</span>
+                                                <span class="product-price">$0.91</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 450_qty" placeholder="0" aria-label="Quantity for Lo Bok - 450">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Short Nappa - 046 - SKU: 46">Short Nappa - 046</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.01</span>
+                                                <span class="product-price">$1.44</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 46_qty" placeholder="0" aria-label="Quantity for Short Nappa - 046">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Green Chives -105 - SKU: 105">Green Chives -105</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$4.49</span>
+                                                <span class="product-price">$3.21</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 105_qty" placeholder="0" aria-label="Quantity for Green Chives -105">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Yu Choy Mui - 460 - SKU: 460">Yu Choy Mui - 460</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$4.42</span>
+                                                <span class="product-price">$3.16</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 460_qty" placeholder="0" aria-label="Quantity for Yu Choy Mui - 460">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Shang Hai Bok Choy - 033 - SKU: 33">Shang Hai Bok Choy - 033</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.45</span>
+                                                <span class="product-price">$1.75</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 33_qty" placeholder="0" aria-label="Quantity for Shang Hai Bok Choy - 033">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Chinese Eggplant  - 102 - SKU: 102">Chinese Eggplant  - 102</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.97</span>
+                                                <span class="product-price">$2.12</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 102_qty" placeholder="0" aria-label="Quantity for Chinese Eggplant  - 102">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Shanghai Choy Mui - 0991 - SKU: 991">Shanghai Choy Mui - 0991</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$3.78</span>
+                                                <span class="product-price">$2.70</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 991_qty" placeholder="0" aria-label="Quantity for Shanghai Choy Mui - 0991">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Baby Bok Choy - 007 - SKU: 7">Baby Bok Choy - 007</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.56</span>
+                                                <span class="product-price">$1.83</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 7_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy - 007">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Gailan (Red) 0981 - SKU: 981">Gailan (Red) 0981</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$3.65</span>
+                                                <span class="product-price">$2.61</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 981_qty" placeholder="0" aria-label="Quantity for Gailan (Red) 0981">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Broccoli - 0361 - SKU: 361">Broccoli - 0361</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.41</span>
+                                                <span class="product-price">$1.72</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 361_qty" placeholder="0" aria-label="Quantity for Broccoli - 0361">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Cabbage - 0381 - SKU: 381">Cabbage - 0381</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$1.58</span>
+                                                <span class="product-price">$1.13</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 381_qty" placeholder="0" aria-label="Quantity for Cabbage - 0381">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="A Choy -119 - SKU: 119">A Choy -119</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$3.56</span>
+                                                <span class="product-price">$2.55</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 119_qty" placeholder="0" aria-label="Quantity for A Choy -119">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Ginger - 004 - SKU: 4">Ginger - 004</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$3.55</span>
+                                                <span class="product-price">$2.54</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 4_qty" placeholder="0" aria-label="Quantity for Ginger - 004">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div id="fruit" class="tab-pane">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="name">Retail</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="description">Golden Logan box - 0801</td>
-                            <td class="num-box">CS</td>
-                            <td class="retail strike-red">$20.25</td>
-                            <td class="price">$14.46</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Golden Logan box - 0801"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Peruvian Mango</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$7.78</td>
-                            <td class="price">$5.56</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4173_qty" placeholder="0" aria-label="Quantity for Peruvian Mango"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Blue Jay Oranges - 4013</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.36</td>
-                            <td class="price">$1.69</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4013_qty" placeholder="0" aria-label="Quantity for Blue Jay Oranges - 4013"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Sweet Tangerine - 075</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$2.92</td>
-                            <td class="price">$2.09</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 75_qty" placeholder="0" aria-label="Quantity for Sweet Tangerine - 075"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Golden Logan box - 0801 - SKU: 801">Golden Logan box - 0801</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">CS</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$20.25</span>
+                                                <span class="product-price">$14.46</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Golden Logan box - 0801">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Peruvian Mango - SKU: 4173">Peruvian Mango</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$7.78</span>
+                                                <span class="product-price">$5.56</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 4173_qty" placeholder="0" aria-label="Quantity for Peruvian Mango">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Blue Jay Oranges - 4013 - SKU: 4013">Blue Jay Oranges - 4013</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.36</span>
+                                                <span class="product-price">$1.69</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 4013_qty" placeholder="0" aria-label="Quantity for Blue Jay Oranges - 4013">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Sweet Tangerine - 075 - SKU: 75">Sweet Tangerine - 075</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$2.92</span>
+                                                <span class="product-price">$2.09</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 75_qty" placeholder="0" aria-label="Quantity for Sweet Tangerine - 075">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div id="seafood" class="tab-pane">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="name">Retail</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="description">Searay White Shrimp 31/40</td>
-                            <td class="num-box">1LB</td>
-                            <td class="retail strike-red">$9.79</td>
-                            <td class="price">$6.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510001866_qty" placeholder="0" aria-label="Quantity for Searay White Shrimp 31/40"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">FRZ Marinated Asian Seabass</td>
-                            <td class="num-box">EA</td>
-                            <td class="retail strike-red">$10.35</td>
-                            <td class="price">$7.39</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718009859_qty" placeholder="0" aria-label="Quantity for FRZ Marinated Asian Seabass"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Searay China Yellow Croaker</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$6.99</td>
-                            <td class="price">$4.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510000197_qty" placeholder="0" aria-label="Quantity for Searay China Yellow Croaker"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Vs Basa Filt 12/14 3PC</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$4.42</td>
-                            <td class="price">$3.15</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 871392003173_qty" placeholder="0" aria-label="Quantity for Vs Basa Filt 12/14 3PC"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Greenland Turbot Halibut Steak</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$12.29</td>
-                            <td class="price">$8.78</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510000340_qty" placeholder="0" aria-label="Quantity for Greenland Turbot Halibut Steak"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Gold Label Golden Pompano</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$5.59</td>
-                            <td class="price">$3.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510050055_qty" placeholder="0" aria-label="Quantity for Gold Label Golden Pompano"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">3Fish FRZ Snakehead Fish Slice</td>
-                            <td class="num-box">250g </td>
-                            <td class="retail strike-red">$6.99</td>
-                            <td class="price">$4.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718005875_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Snakehead Fish Slice"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Searay Greenland Turbot</td>
-                            <td class="num-box">LB</td>
-                            <td class="retail strike-red">$11.19</td>
-                            <td class="price">$7.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 82751000018_qty" placeholder="0" aria-label="Quantity for Searay Greenland Turbot"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Searay Fish Shaomai</td>
-                            <td class="num-box">500G</td>
-                            <td class="retail strike-red">$6.99</td>
-                            <td class="price">$4.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510006144_qty" placeholder="0" aria-label="Quantity for Searay Fish Shaomai"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">3Fish FRZ Grass Carp Slice</td>
-                            <td class="num-box">250g </td>
-                            <td class="retail strike-red">$11.19</td>
-                            <td class="price">$7.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718005868_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Grass Carp Slice"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Searay Abalone with Shell</td>
-                            <td class="num-box">220G</td>
-                            <td class="retail strike-red">$9.79</td>
-                            <td class="price">$6.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510004676_qty" placeholder="0" aria-label="Quantity for Searay Abalone with Shell"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Searay White Shrimp 31/40 - SKU: 827510001866">Searay White Shrimp 31/40</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">1LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$9.79</span>
+                                                <span class="product-price">$6.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510001866_qty" placeholder="0" aria-label="Quantity for Searay White Shrimp 31/40">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="FRZ Marinated Asian Seabass - SKU: 874718009859">FRZ Marinated Asian Seabass</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">EA</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$10.35</span>
+                                                <span class="product-price">$7.39</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 874718009859_qty" placeholder="0" aria-label="Quantity for FRZ Marinated Asian Seabass">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Searay China Yellow Croaker - SKU: 827510000197">Searay China Yellow Croaker</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$6.99</span>
+                                                <span class="product-price">$4.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510000197_qty" placeholder="0" aria-label="Quantity for Searay China Yellow Croaker">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Vs Basa Filt 12/14 3PC - SKU: 871392003173">Vs Basa Filt 12/14 3PC</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$4.42</span>
+                                                <span class="product-price">$3.15</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 871392003173_qty" placeholder="0" aria-label="Quantity for Vs Basa Filt 12/14 3PC">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Greenland Turbot Halibut Steak - SKU: 827510000340">Greenland Turbot Halibut Steak</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$12.29</span>
+                                                <span class="product-price">$8.78</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510000340_qty" placeholder="0" aria-label="Quantity for Greenland Turbot Halibut Steak">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Gold Label Golden Pompano - SKU: 827510050055">Gold Label Golden Pompano</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$5.59</span>
+                                                <span class="product-price">$3.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510050055_qty" placeholder="0" aria-label="Quantity for Gold Label Golden Pompano">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="3Fish FRZ Snakehead Fish Slice - SKU: 874718005875">3Fish FRZ Snakehead Fish Slice</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">250g </span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$6.99</span>
+                                                <span class="product-price">$4.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 874718005875_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Snakehead Fish Slice">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Searay Greenland Turbot - SKU: 82751000018">Searay Greenland Turbot</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">LB</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$11.19</span>
+                                                <span class="product-price">$7.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 82751000018_qty" placeholder="0" aria-label="Quantity for Searay Greenland Turbot">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Searay Fish Shaomai - SKU: 827510006144">Searay Fish Shaomai</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">500G</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$6.99</span>
+                                                <span class="product-price">$4.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510006144_qty" placeholder="0" aria-label="Quantity for Searay Fish Shaomai">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="3Fish FRZ Grass Carp Slice - SKU: 874718005868">3Fish FRZ Grass Carp Slice</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">250g </span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$11.19</span>
+                                                <span class="product-price">$7.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 874718005868_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Grass Carp Slice">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Searay Abalone with Shell - SKU: 827510004676">Searay Abalone with Shell</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">220G</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$9.79</span>
+                                                <span class="product-price">$6.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 827510004676_qty" placeholder="0" aria-label="Quantity for Searay Abalone with Shell">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div id="grocery" class="tab-pane">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="name">Retail</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="description">CC Salted Duck Eggs</td>
-                            <td class="num-box">6PCS</td>
-                            <td class="retail strike-red">$5.69</td>
-                            <td class="price">$4.06</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 20616992827_qty" placeholder="0" aria-label="Quantity for CC Salted Duck Eggs"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">CC Peanut With Skin</td>
-                            <td class="num-box">5LB </td>
-                            <td class="retail strike-red">$18.20</td>
-                            <td class="price">$13.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 613269006524_qty" placeholder="0" aria-label="Quantity for CC Peanut With Skin"></td>
-                        </tr>
-                        <tr>
-                            <td class="description">Jin Xin Premium Rice Stick</td>
-                            <td class="num-box"></td>
-                            <td class="retail strike-red">$8.39</td>
-                            <td class="price">$5.99</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 1785_qty" placeholder="0" aria-label="Quantity for Jin Xin Premium Rice Stick"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%;">Product Details</th>
+                                        <th style="width: 20%;">QTY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="CC Salted Duck Eggs - SKU: 20616992827">CC Salted Duck Eggs</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">6PCS</span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$5.69</span>
+                                                <span class="product-price">$4.06</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 20616992827_qty" placeholder="0" aria-label="Quantity for CC Salted Duck Eggs">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="CC Peanut With Skin - SKU: 613269006524">CC Peanut With Skin</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;">5LB </span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$18.20</span>
+                                                <span class="product-price">$13.00</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 613269006524_qty" placeholder="0" aria-label="Quantity for CC Peanut With Skin">
+                                        </td>
+                                    </tr>
+                                    <tr class="product-row-group">
+                                        <td>
+                                            <div class="product-row-1">
+                                                <span class="product-description" data-full-description="Jin Xin Premium Rice Stick - SKU: 1785">Jin Xin Premium Rice Stick</span>
+                                                <span class="product-unit" style="float: right; margin-left: 20px;"></span>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$8.39</span>
+                                                <span class="product-price">$5.99</span>
+                                            </div>
+                                        </td>
+                                        <td class="product-qty-cell">
+                                            <input type="number" min="0" class="qty-input" name="SKU: 1785_qty" placeholder="0" aria-label="Quantity for Jin Xin Premium Rice Stick">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <!-- Example of the new two-row format:
+                <div id="meat" class="tab-pane active">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Product Details</th>
+                                    <th rowspan="2">QTY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="product-row-group">
+                                    <td rowspan="2" style="width: 70%;">
+                                        <div class="product-row-1">
+                                            <div class="product-description" data-full-description="King's Chicken Premium Quality - SKU 7003">King's Chicken</div>
+                                            <div class="product-unit">EA</div>
+                                        </div>
+                                        <div class="product-row-2">
+                                            <span class="product-retail">$28.76</span>
+                                            <span class="product-price">$20.54</span>
+                                        </div>
+                                    </td>
+                                    <td rowspan="2" class="product-qty-cell">
+                                        <input type="number" min="0" class="qty-input" name="SKU_7003_qty" placeholder="0" aria-label="Quantity for King's Chicken">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                -->
                 </div>
             <div class="table-wrapper" id="total-qty-footer-wrapper" style="border-top: 2px solid var(--header-bg-color); margin-top: 10px; border-bottom: none; border-left:none; border-right:none; border-radius:0;">
                 <table>
                     <tfoot>
                         <tr>
-                            <td class="name" style="border-bottom: none; visibility: hidden;"></td>
-                            <td class="description" style="border-bottom: none; visibility: hidden;"></td>
-                            <td class="num-box" style="border-bottom: none; visibility: hidden;"></td>
-                            <td class="price" style="border-bottom: none; font-weight: 700; text-align: right;">TOTAL QTY:</td>
-                            <td class="qty-cell" style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em;" id="table-total-qty">0</td>
+                            <td style="border-bottom: none; text-align: right; font-weight: 700;">TOTAL QTY:</td>
+                            <td style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em; text-align: center; width: 120px;" id="table-total-qty">0</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -978,6 +1455,13 @@
         <div class="footer-contact">
             Call: <strong>Tops Supermarket - 403-276-8889</strong>
         </div>
+    </div>
+
+    <!-- Description popup overlay -->
+    <div class="description-overlay" id="descriptionOverlay"></div>
+    <div class="description-expanded" id="descriptionPopup">
+        <span class="description-close" id="descriptionClose">&times;</span>
+        <div id="descriptionContent"></div>
     </div>
 
 <script>
@@ -1398,6 +1882,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const pickupDateInput = document.getElementById('pickupDate');
     const tableTotalQtyElement = document.getElementById('table-total-qty');
     const pickupTimeHidden = document.getElementById('pickup_time_slot_hidden');
+    
+    // Description popup elements
+    const descriptionOverlay = document.getElementById('descriptionOverlay');
+    const descriptionPopup = document.getElementById('descriptionPopup');
+    const descriptionContent = document.getElementById('descriptionContent');
+    const descriptionClose = document.getElementById('descriptionClose');
 
     // Add icons to tab buttons based on their text content
     function addTabIcons() {
@@ -1470,82 +1960,79 @@ document.addEventListener('DOMContentLoaded', function() {
         generateOrderSummary();
     }
 
-        function generateOrderSummary() {
-            const tbody = document.querySelector('#orderSummaryTable tbody');
-            tbody.innerHTML = '';
-            let subtotal = 0;
-            const orderLines = [];
+    function generateOrderSummary() {
+        const tbody = document.querySelector('#orderSummaryTable tbody');
+        tbody.innerHTML = '';
+        let subtotal = 0;
+        const orderLines = [];
 
-            // Get all quantity inputs
-            const allInputs = document.querySelectorAll('.qty-input');
+        // Get all quantity inputs
+        const allInputs = document.querySelectorAll('.qty-input');
+        
+        allInputs.forEach((input, index) => {
+            const qty = parseInt(input.value, 10) || 0;
             
-            allInputs.forEach((input, index) => {
-                const qty = parseInt(input.value, 10) || 0;
+            if (qty > 0) {                    
+                // Get the product info from the same row group
+                const rowGroup = input.closest('.product-row-group, tr');
+                let productName = '';
+                let productPrice = '';
                 
-                if (qty > 0) {                    
-                    // Get the product info from the same row
-                    const row = input.closest('tr');
-                    let productName = '';
-                    let productPrice = '';
-                    
-                    if (row) {
-                        // Get the description from the same row
-                        const descCell = row.querySelector('td.description');
-                        if (descCell) {
-                            productName = descCell.textContent.trim();
-                        }
-                        
-                        // Get the price from the same row
-                        const priceCell = row.querySelector('td.price');
-                        if (priceCell) {
-                            productPrice = priceCell.textContent.trim();
-                        }
+                if (rowGroup) {
+                    // Get the description
+                    const descElement = rowGroup.querySelector('.product-description');
+                    if (descElement) {
+                        productName = descElement.textContent.trim();
                     }
                     
-                    // Parse price
-                    const priceNum = parseFloat(productPrice.replace(/[^0-9.\-]+/g, ''));
-                    if (!isNaN(priceNum)) {
-                        const amount = qty * priceNum;
-                        subtotal += amount;
-
-                        // Create table row
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${productName}</td>
-                            <td>${qty}</td>
-                            <td>$${amount.toFixed(2)}</td>
-                        `;
-                        tbody.appendChild(tr);
-                        
-                        // Add to order lines
-                        orderLines.push(`${productName}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
-                    } else {
+                    // Get the price
+                    const priceElement = rowGroup.querySelector('.product-price');
+                    if (priceElement) {
+                        productPrice = priceElement.textContent.trim();
                     }
                 }
-            });
+                
+                // Parse price
+                const priceNum = parseFloat(productPrice.replace(/[^0-9.\-]+/g, ''));
+                if (!isNaN(priceNum)) {
+                    const amount = qty * priceNum;
+                    subtotal += amount;
 
-            // Show empty message if no items
-            if (tbody.children.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
+                    // Create table row
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${productName}</td>
+                        <td>${qty}</td>
+                        <td>$${amount.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                    
+                    // Add to order lines
+                    orderLines.push(`${productName}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
+                }
             }
+        });
 
-            // Update subtotal
-            document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+        // Show empty message if no items
+        if (tbody.children.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
+        }
 
-            // Update hidden order summary
-            const orderSummaryInput = document.getElementById('order_summary');
-            if (orderSummaryInput) {
-                if (orderLines.length > 0) {
-                    orderSummaryInput.value = orderLines.join('\n') + '\n\nTotal: $' + subtotal.toFixed(2);
-                } else {
-                    orderSummaryInput.value = '';
-                }
+        // Update subtotal
+        document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+
+        // Update hidden order summary
+        if (orderSummaryInput) {
+            if (orderLines.length > 0) {
+                orderSummaryInput.value = orderLines.join('\n') + '\n\nTotal: $' + subtotal.toFixed(2);
+            } else {
+                orderSummaryInput.value = '';
             }
         }
+    }
 
     // Wait for VBA to generate inputs, then add quantity controls
     setTimeout(function() {
-
         // Add plus/minus buttons to quantity inputs
         document.querySelectorAll('.qty-input').forEach((input, index) => {
             // Store the original name attribute
@@ -1597,94 +2084,39 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTotalQuantity();
     }, 100);
 
-    // Add after the VBA generates the content
+    // Handle description click - now with popup
     setTimeout(function() {
-        // Handle description cell expansion - make ALL description cells expandable
-        document.querySelectorAll('td.description').forEach((td) => {
-            // Store the original text content
-            const originalText = td.textContent.trim();
-            
-            td.addEventListener('click', function(e) {
+        document.querySelectorAll('.product-description').forEach((desc) => {
+            desc.addEventListener('click', function(e) {
                 e.stopPropagation();
                 
-                // Close any other expanded descriptions
-                document.querySelectorAll('tr.description-expanded').forEach(tr => {
-                    tr.classList.remove('description-expanded');
-                    // Restore original text for all other cells
-                    const otherTd = tr.querySelector('td.description');
-                    if (otherTd && otherTd.dataset.originalText) {
-                        otherTd.textContent = otherTd.dataset.originalText;
-                    }
-                });
+                // Get full description from data attribute or productsData
+                let fullDescription = this.getAttribute('data-full-description') || this.textContent;
                 
-                // Toggle this description
-                const row = this.closest('tr');
-                if (!row.classList.contains('description-expanded')) {
-                    row.classList.add('description-expanded');
-                    
-                    // Store original text if not already stored
-                    if (!this.dataset.originalText) {
-                        this.dataset.originalText = originalText;
+                // Try to get more details from productsData if available
+                if (typeof productsData !== 'undefined') {
+                    const productName = this.textContent.trim();
+                    const product = productsData.find(p => p.description && p.description.includes(productName));
+                    if (product && product.description) {
+                        fullDescription = product.description;
                     }
-                    
-                    // Try to find the matching product by using the quantity input name in this row
-                    let fullText = originalText;
-                    if (typeof productsData !== 'undefined') {
-                        // Find the quantity input in this row
-                        const qtyInput = row.querySelector('.qty-input');
-                        if (qtyInput && qtyInput.name) {
-                            // Extract SKU from the input name (e.g., "SKU: 801_qty" -> "801")
-                            const skuMatch = qtyInput.name.match(/SKU:\s*(.+?)_qty/);
-                            if (skuMatch) {
-                                const sku = skuMatch[1].trim();
-                                
-                                // Find the product with matching SKU in the data
-                                const matchingProduct = productsData.find(product => {
-                                    if (!product.description) return false;
-                                    
-                                    // First try exact match with originalName field
-                                    if (product.originalName && product.originalName === sku) {
-                                        return true;
-                                    }
-                                    
-                                    // For products with SKU codes in description, be more specific
-                                    // Check if the description ends with " - SKU" pattern
-                                    const descriptionEndsWithSku = product.description.match(/\s-\s(\d+)$/);
-                                    if (descriptionEndsWithSku && descriptionEndsWithSku[1] === sku) {
-                                        return true;
-                                    }
-                                    
-                                    // Fallback: check if description contains the SKU but be more careful
-                                    // Only match if it's the exact SKU and not part of a longer number
-                                    const skuPattern = new RegExp(`\\b${sku}\\b`);
-                                    return skuPattern.test(product.description);
-                                });
-                                
-                                if (matchingProduct && matchingProduct.description) {
-                                    fullText = matchingProduct.description;
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Show full text during expansion (fallback to original if no match found)
-                    this.textContent = fullText;
-                    
-                    // Close when clicking outside
-                    setTimeout(() => {
-                        const closeHandler = (event) => {
-                            if (!row.contains(event.target)) {
-                                row.classList.remove('description-expanded');
-                                // Restore original text
-                                this.textContent = this.dataset.originalText;
-                                document.removeEventListener('click', closeHandler);
-                            }
-                        };
-                        document.addEventListener('click', closeHandler);
-                    }, 100);
                 }
+                
+                // Show popup
+                descriptionContent.innerHTML = `<h3>${this.textContent}</h3><p>${fullDescription}</p>`;
+                descriptionOverlay.classList.add('active');
+                descriptionPopup.classList.add('active');
             });
         });
+        
+        // Close popup handlers
+        descriptionClose.addEventListener('click', closeDescriptionPopup);
+        descriptionOverlay.addEventListener('click', closeDescriptionPopup);
+        
+        function closeDescriptionPopup() {
+            descriptionOverlay.classList.remove('active');
+            descriptionPopup.classList.remove('active');
+        }
     }, 200);
 
     // Tab switching
