@@ -51,7 +51,7 @@
         }
 
         .swipe-indicator {
-            width: 90%;
+            width: 95%;
             max-width: 920px;
             text-align: center;
             padding: 8px 12px;
@@ -74,13 +74,13 @@
         }
 
         .container {
-            width: 90%;
+            width: 95%; /* Increased from 90% */
             max-width: 920px;
             background-color: var(--card-bg-color);
-            padding: 20px 25px 25px 25px;
+            padding: 15px 15px 20px 15px; /* Reduced from 20px 25px 25px 25px */
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* Reduced from 15px */
         }
 
         .main-title-container {
@@ -183,6 +183,8 @@
             border-radius: 10px; 
             -webkit-overflow-scrolling: touch;
             margin-top: 10px; 
+            position: relative;
+            overflow: visible;
         }
         .tab-pane > .table-wrapper {
              margin-bottom: 0; 
@@ -214,7 +216,88 @@
         }
 
         td.name { text-align: left; }
-        td.description { text-align: left; min-width: 80; } 
+        td.description {
+            text-align: left;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Expanded description styles */
+        tr.description-expanded td.description {
+            position: absolute;
+            left: 0;
+            right: 0;
+            max-width: none;
+            white-space: normal;
+            background: white;
+            color: var(--text-color-primary);
+            padding: 12px;
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100;
+            font-weight: 600;
+            text-overflow: initial;
+            overflow: visible;
+            text-align: left;
+            width: calc(100% - 2px);
+            box-sizing: border-box;
+        }
+
+        /* Ensure the expanded row has proper positioning context and contains the expansion */
+        tr.description-expanded {
+            position: relative;
+        }
+
+        /* Adjust for mobile */
+        @media (max-width: 768px) {
+            .table-wrapper {
+                margin: 0 -5px; /* Negative margin to extend to edges */
+                border-radius: 0; /* Remove border radius on mobile for full width */
+                border-left: none;
+                border-right: none;
+            }
+            td.description {
+                max-width: 80px;
+            }
+                body {
+            padding: 5px; /* Reduced from 10px */
+            }
+            .container {
+                width: 98%; /* Use almost full width on mobile */
+                padding: 10px; /* Even less padding on mobile */
+                border-radius: 12px;
+            }
+            .swipe-indicator {
+                width: 98%;
+                padding: 6px 10px; /* Slightly reduce padding */
+                font-size: 0.8em; /* Slightly smaller text */
+                margin-bottom: 10px; /* Reduced from 15px */
+            }
+            .tabs-container {
+                padding: 5px; /* Reduced from 10px */
+            }
+            
+            .pickup-address-details {
+                padding: 8px; /* Reduced from 10px */
+                margin-bottom: 15px; /* Reduced from 25px */
+            }
+            
+            #visibleOrderSummaryContainer,
+            .customer-info-section {
+                padding: 12px; /* Reduced from 20px */
+                margin-top: 10px; /* Reduced from 15px */
+            }
+            
+            .tab-content {
+                padding: 5px; /* Reduced from default */
+            }
+        }
         td.num-box { text-align: right; }
         td.price { 
             text-align: right;
@@ -1468,6 +1551,96 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize
         updateTotalQuantity();
     }, 100);
+
+    // Add after the VBA generates the content
+    setTimeout(function() {
+        // Handle description cell expansion - make ALL description cells expandable
+        document.querySelectorAll('td.description').forEach((td) => {
+            // Store the original text content
+            const originalText = td.textContent.trim();
+            
+            td.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Close any other expanded descriptions
+                document.querySelectorAll('tr.description-expanded').forEach(tr => {
+                    tr.classList.remove('description-expanded');
+                    // Restore original text for all other cells
+                    const otherTd = tr.querySelector('td.description');
+                    if (otherTd && otherTd.dataset.originalText) {
+                        otherTd.textContent = otherTd.dataset.originalText;
+                    }
+                });
+                
+                // Toggle this description
+                const row = this.closest('tr');
+                if (!row.classList.contains('description-expanded')) {
+                    row.classList.add('description-expanded');
+                    
+                    // Store original text if not already stored
+                    if (!this.dataset.originalText) {
+                        this.dataset.originalText = originalText;
+                    }
+                    
+                    // Try to find the matching product by using the quantity input name in this row
+                    let fullText = originalText;
+                    if (typeof productsData !== 'undefined') {
+                        // Find the quantity input in this row
+                        const qtyInput = row.querySelector('.qty-input');
+                        if (qtyInput && qtyInput.name) {
+                            // Extract SKU from the input name (e.g., "SKU: 801_qty" -> "801")
+                            const skuMatch = qtyInput.name.match(/SKU:\s*(.+?)_qty/);
+                            if (skuMatch) {
+                                const sku = skuMatch[1].trim();
+                                
+                                // Find the product with matching SKU in the data
+                                const matchingProduct = productsData.find(product => {
+                                    if (!product.description) return false;
+                                    
+                                    // First try exact match with originalName field
+                                    if (product.originalName && product.originalName === sku) {
+                                        return true;
+                                    }
+                                    
+                                    // For products with SKU codes in description, be more specific
+                                    // Check if the description ends with " - SKU" pattern
+                                    const descriptionEndsWithSku = product.description.match(/\s-\s(\d+)$/);
+                                    if (descriptionEndsWithSku && descriptionEndsWithSku[1] === sku) {
+                                        return true;
+                                    }
+                                    
+                                    // Fallback: check if description contains the SKU but be more careful
+                                    // Only match if it's the exact SKU and not part of a longer number
+                                    const skuPattern = new RegExp(`\\b${sku}\\b`);
+                                    return skuPattern.test(product.description);
+                                });
+                                
+                                if (matchingProduct && matchingProduct.description) {
+                                    fullText = matchingProduct.description;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Show full text during expansion (fallback to original if no match found)
+                    this.textContent = fullText;
+                    
+                    // Close when clicking outside
+                    setTimeout(() => {
+                        const closeHandler = (event) => {
+                            if (!row.contains(event.target)) {
+                                row.classList.remove('description-expanded');
+                                // Restore original text
+                                this.textContent = this.dataset.originalText;
+                                document.removeEventListener('click', closeHandler);
+                            }
+                        };
+                        document.addEventListener('click', closeHandler);
+                    }, 100);
+                }
+            });
+        });
+    }, 200);
 
     // Tab switching
     const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
