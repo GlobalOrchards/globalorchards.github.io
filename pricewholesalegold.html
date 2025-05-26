@@ -25,10 +25,6 @@
             --button-hover-bg-color: #4338ca;
             --button-text-color: #ffffff;
             --form-section-bg: #f9fafb;
-            --calc-btn-bg: #e9ecef;
-            --calc-btn-hover-bg: #ced4da;
-            --calc-operator-bg: #ffc107;
-            --calc-operator-hover-bg: #e0a800;
             /* Added from your previous version, ensure these are defined if used for tabs */
             --tab-active-border: var(--accent-color);
             --tab-text-color: var(--text-color-secondary);
@@ -217,7 +213,7 @@
         }
 
         td.name { text-align: left; }
-        td.description { text-align: left; min-width: 100; } 
+        td.description { text-align: left; min-width: 80; } 
         td.num-box { text-align: right; }
         td.price { text-align: right; }
         td.qty-cell { text-align: center; }
@@ -270,18 +266,6 @@
         .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="tel"]:focus, .form-group input[type="date"]:focus, .form-group select:focus {            
             border-color: var(--input-focus-border); outline: 0; box-shadow: 0 0 0 0.2rem var(--input-focus-shadow);
         }
-        
-        .calculator-section { margin-top: 15px; margin-bottom: 15px; padding: 15px; border: 1px solid var(--border-color); border-radius: 10px; background-color: var(--form-section-bg); }
-        .calculator-toggle-button { background-color: var(--calc-btn-bg); color: var(--text-color-primary); border: 1px solid #cbd5e1; padding: 8px 15px; font-size: 0.9em; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background-color 0.15s ease-in-out; display: block; width: 100%; margin-bottom: 10px; }
-        .calculator-toggle-button:hover { background-color: var(--calc-btn-hover-bg); }
-        .calculator-container { border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .calculator-display { width: 100%; padding: 8px; font-size: 1.2em; text-align: right; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 10px; box-sizing: border-box; background-color: #f8f9fa; }
-        .calculator-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-        .calc-btn { padding: 10px; font-size: 1em; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--calc-btn-bg); cursor: pointer; transition: background-color 0.1s ease; }
-        .calc-btn:hover { background-color: var(--calc-btn-hover-bg); }
-        .calc-btn.operator { background-color: var(--calc-operator-bg); color: #fff; }
-        .calc-btn.operator:hover { background-color: var(--calc-operator-hover-bg); }
-        .calc-btn.wide { grid-column: span 2; }
         
         .form-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; align-items: center; gap: 15px; }
         .submit-button { background-color: var(--button-bg-color); color: var(--button-text-color); border: none; padding: 10px 20px; font-size: 1em; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 3px 8px rgba(79, 70, 229, 0.15); }
@@ -340,174 +324,356 @@
             
             <div class="tabs-container">
             <div class="tab-navigation">
-                    <button type="button" class="tab-button active" data-tab="fruits">Fruits</button>
-                    <button type="button" class="tab-button" data-tab="veggies">Veggies</button>
-                    <button type="button" class="tab-button" data-tab="leafy">Leafy</button>
-                    <button type="button" class="tab-button" data-tab="cindy">Cindy</button>
+                    <button type="button" class="tab-button active" data-tab="meat">Meat</button>
+                    <button type="button" class="tab-button" data-tab="vegetable">Vegetable</button>
+                    <button type="button" class="tab-button" data-tab="fruit">Fruit</button>
+                    <button type="button" class="tab-button" data-tab="seafood">Seafood</button>
+                    <button type="button" class="tab-button" data-tab="grocery">Grocery</button>
                 </div>
             <div class="tab-content">
-                    <div id="fruits" class="tab-pane active">
+                    <div id="meat" class="tab-pane active">
                         <div class="table-wrapper"><table><thead><tr>
                             <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="retail strike-red">$26.00</td>
-                            <td class="description">Tomato</td>
-                            <td class="num-box">20 lbs</td>
-                            <td class="price">$20.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="12342312_qty" placeholder="0" aria-label="Quantity for Tomato"></td>
+                            <td class="retail strike-red">$28.76</td>
+                            <td class="description">King's Chicken -7003</td>
+                            <td class="num-box">EA</td>
+                            <td class="price">$20.54</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 7003_qty" placeholder="0" aria-label="Quantity for King's Chicken -7003"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$55.90</td>
-                            <td class="description">Banana</td>
-                            <td class="num-box">15 kg</td>
-                            <td class="price">$43.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232342_qty" placeholder="0" aria-label="Quantity for Banana"></td>
+                            <td class="retail strike-red">$1.40</td>
+                            <td class="description">Chicken</td>
+                            <td class="num-box">EA</td>
+                            <td class="price">$1.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 802_qty" placeholder="0" aria-label="Quantity for Chicken"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$32.50</td>
-                            <td class="description">Lettuce Stem1</td>
-                            <td class="num-box">10 kg</td>
-                            <td class="price">$25.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4092822.81464383_qty" placeholder="0" aria-label="Quantity for Lettuce Stem1"></td>
+                            <td class="retail strike-red">$4.53</td>
+                            <td class="description">Pork Front Feet</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.24</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5027_qty" placeholder="0" aria-label="Quantity for Pork Front Feet"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$39.00</td>
-                            <td class="description">Thin Chili Peppers</td>
-                            <td class="num-box">6 kg</td>
-                            <td class="price">$30.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="428686.657250172_qty" placeholder="0" aria-label="Quantity for Thin Chili Peppers"></td>
+                            <td class="retail strike-red">$7.18</td>
+                            <td class="description">Pork Belly Boneless</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$5.13</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5010_qty" placeholder="0" aria-label="Quantity for Pork Belly Boneless"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$33.80</td>
-                            <td class="description">Napa Cabbage</td>
-                            <td class="num-box">10 kg</td>
-                            <td class="price">$26.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8810810.19323174_qty" placeholder="0" aria-label="Quantity for Napa Cabbage"></td>
+                            <td class="retail strike-red">$8.77</td>
+                            <td class="description">Utility Silkie Chicken</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$6.26</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 337_qty" placeholder="0" aria-label="Quantity for Utility Silkie Chicken"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$65.00</td>
-                            <td class="description">Taiwan Cauliflower</td>
-                            <td class="num-box">10 kg</td>
-                            <td class="price">$50.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6370162.29273092_qty" placeholder="0" aria-label="Quantity for Taiwan Cauliflower"></td>
+                            <td class="retail strike-red">$11.85</td>
+                            <td class="description">AAA Beef Fingermeat</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$8.47</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 60111_qty" placeholder="0" aria-label="Quantity for AAA Beef Fingermeat"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$12.02</td>
+                            <td class="description">AAA Beef Short Rib</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$8.59</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 6008_qty" placeholder="0" aria-label="Quantity for AAA Beef Short Rib"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$7.52</td>
+                            <td class="description">WW Chinese Style Pork Sausage</td>
+                            <td class="num-box">375g</td>
+                            <td class="price">$5.37</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 66736676889_qty" placeholder="0" aria-label="Quantity for WW Chinese Style Pork Sausage"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$12.05</td>
+                            <td class="description">Beef Heel Muscle(Digital)</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$8.61</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 6004_qty" placeholder="0" aria-label="Quantity for Beef Heel Muscle(Digital)"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$4.66</td>
+                            <td class="description">Chicken Feet-Jumbo</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.33</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 70071_qty" placeholder="0" aria-label="Quantity for Chicken Feet-Jumbo"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$1.40</td>
+                            <td class="description">Pork</td>
+                            <td class="num-box">EA</td>
+                            <td class="price">$1.00</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Pork"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$12.59</td>
+                            <td class="description">Watson Cooked Smoked - Roasted Bonless Young Duck</td>
+                            <td class="num-box">500g</td>
+                            <td class="price">$8.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 800794301297_qty" placeholder="0" aria-label="Quantity for Watson Cooked Smoked - Roasted Bonless Young Duck"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$6.20</td>
+                            <td class="description">Pork Shoulder Butt</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$4.43</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 5001_qty" placeholder="0" aria-label="Quantity for Pork Shoulder Butt"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
-                    <div id="veggies" class="tab-pane">
+                    <div id="vegetable" class="tab-pane">
                         <div class="table-wrapper"><table><thead><tr>
                             <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="retail strike-red">$19.50</td>
-                            <td class="description">Cucumber</td>
-                            <td class="num-box">15 lbs</td>
-                            <td class="price">$15.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="2342342_qty" placeholder="0" aria-label="Quantity for Cucumber"></td>
+                            <td class="retail strike-red">$3.01</td>
+                            <td class="description">Yu Choy £®Red£© - 421</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.15</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 421_qty" placeholder="0" aria-label="Quantity for Yu Choy £®Red£© - 421"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$65.00</td>
-                            <td class="description">Envy Apple</td>
-                            <td class="num-box">40 lbs</td>
-                            <td class="price">$50.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="232332_qty" placeholder="0" aria-label="Quantity for Envy Apple"></td>
+                            <td class="retail strike-red">$1.28</td>
+                            <td class="description">Lo Bok - 450</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$0.91</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 450_qty" placeholder="0" aria-label="Quantity for Lo Bok - 450"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$26.00</td>
-                            <td class="description">Fennel</td>
-                            <td class="num-box">5 kg</td>
-                            <td class="price">$20.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4863163.02054017_qty" placeholder="0" aria-label="Quantity for Fennel"></td>
+                            <td class="retail strike-red">$2.01</td>
+                            <td class="description">Short Nappa - 046</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.44</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 46_qty" placeholder="0" aria-label="Quantity for Short Nappa - 046"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$20.80</td>
-                            <td class="description">Sugar Snap Peas</td>
-                            <td class="num-box">4.5 kg</td>
-                            <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="357856.408655375_qty" placeholder="0" aria-label="Quantity for Sugar Snap Peas"></td>
+                            <td class="retail strike-red">$4.49</td>
+                            <td class="description">Green Chives -105</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.21</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 105_qty" placeholder="0" aria-label="Quantity for Green Chives -105"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$20.80</td>
-                            <td class="description">Snow Peas</td>
-                            <td class="num-box">4.5 kg</td>
-                            <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="3633133.26855952_qty" placeholder="0" aria-label="Quantity for Snow Peas"></td>
+                            <td class="retail strike-red">$4.42</td>
+                            <td class="description">Yu Choy Mui - 460</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.16</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 460_qty" placeholder="0" aria-label="Quantity for Yu Choy Mui - 460"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$32.50</td>
-                            <td class="description">Garlic Leek</td>
-                            <td class="num-box">10 kg</td>
-                            <td class="price">$25.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8966611.99765101_qty" placeholder="0" aria-label="Quantity for Garlic Leek"></td>
+                            <td class="retail strike-red">$2.45</td>
+                            <td class="description">Shang Hai Bok Choy - 033</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.75</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 33_qty" placeholder="0" aria-label="Quantity for Shang Hai Bok Choy - 033"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$2.97</td>
+                            <td class="description">Chinese Eggplant  - 102</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.12</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 102_qty" placeholder="0" aria-label="Quantity for Chinese Eggplant  - 102"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$3.78</td>
+                            <td class="description">Shanghai Choy Mui - 0991</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.70</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 991_qty" placeholder="0" aria-label="Quantity for Shanghai Choy Mui - 0991"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$2.56</td>
+                            <td class="description">Baby Bok Choy - 007</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.83</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 7_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy - 007"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$3.65</td>
+                            <td class="description">Gailan (Red) 0981</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.61</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 981_qty" placeholder="0" aria-label="Quantity for Gailan (Red) 0981"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$2.41</td>
+                            <td class="description">Broccoli - 0361</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.72</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 361_qty" placeholder="0" aria-label="Quantity for Broccoli - 0361"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$1.58</td>
+                            <td class="description">Cabbage - 0381</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.13</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 381_qty" placeholder="0" aria-label="Quantity for Cabbage - 0381"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$3.56</td>
+                            <td class="description">A Choy -119</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.55</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 119_qty" placeholder="0" aria-label="Quantity for A Choy -119"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$3.55</td>
+                            <td class="description">Ginger - 004</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.54</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4_qty" placeholder="0" aria-label="Quantity for Ginger - 004"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
-                    <div id="leafy" class="tab-pane">
+                    <div id="fruit" class="tab-pane">
                         <div class="table-wrapper"><table><thead><tr>
                             <th class="name">Retail</th><th class="description">Description</th>
                             <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
                         </tr></thead><tbody>
                         <tr>
-                            <td class="retail strike-red">$43.55</td>
-                            <td class="description">Baby Bok Choy</td>
-                            <td class="num-box">15 kg</td>
-                            <td class="price">$33.50</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="5535344_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                            <td class="retail strike-red">$20.25</td>
+                            <td class="description">Golden Logan box - 0801</td>
+                            <td class="num-box">CS</td>
+                            <td class="price">$14.46</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 801_qty" placeholder="0" aria-label="Quantity for Golden Logan box - 0801"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$30.42</td>
-                            <td class="description">Cabbage</td>
-                            <td class="num-box">10 lbs</td>
-                            <td class="price">$23.40</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="sadfasdf_qty" placeholder="0" aria-label="Quantity for Cabbage"></td>
+                            <td class="retail strike-red">$7.78</td>
+                            <td class="description">Peruvian Mango</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$5.56</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4173_qty" placeholder="0" aria-label="Quantity for Peruvian Mango"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$28.86</td>
-                            <td class="description">Lettuce</td>
-                            <td class="num-box">10 lbs</td>
-                            <td class="price">$22.20</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="dasfsdf_qty" placeholder="0" aria-label="Quantity for Lettuce"></td>
+                            <td class="retail strike-red">$2.36</td>
+                            <td class="description">Blue Jay Oranges - 4013</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$1.69</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 4013_qty" placeholder="0" aria-label="Quantity for Blue Jay Oranges - 4013"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$39.00</td>
-                            <td class="description">Baby Bok Choy</td>
-                            <td class="num-box">15 kg</td>
-                            <td class="price">$30.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="4124856.02125503_qty" placeholder="0" aria-label="Quantity for Baby Bok Choy"></td>
+                            <td class="retail strike-red">$2.92</td>
+                            <td class="description">Sweet Tangerine - 075</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$2.09</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 75_qty" placeholder="0" aria-label="Quantity for Sweet Tangerine - 075"></td>
+                        </tr>
+                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                    <div id="seafood" class="tab-pane">
+                        <div class="table-wrapper"><table><thead><tr>
+                            <th class="name">Retail</th><th class="description">Description</th>
+                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
+                        </tr></thead><tbody>
+                        <tr>
+                            <td class="retail strike-red">$9.79</td>
+                            <td class="description">Searay White Shrimp 31/40</td>
+                            <td class="num-box">1LB</td>
+                            <td class="price">$6.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510001866_qty" placeholder="0" aria-label="Quantity for Searay White Shrimp 31/40"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$20.80</td>
-                            <td class="description">Spinach1</td>
-                            <td class="num-box">4 kg</td>
-                            <td class="price">$16.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6568915.22487705_qty" placeholder="0" aria-label="Quantity for Spinach1"></td>
+                            <td class="retail strike-red">$10.35</td>
+                            <td class="description">FRZ Marinated Asian Seabass</td>
+                            <td class="num-box">EA</td>
+                            <td class="price">$7.39</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718009859_qty" placeholder="0" aria-label="Quantity for FRZ Marinated Asian Seabass"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$16.90</td>
-                            <td class="description">A Choy</td>
-                            <td class="num-box">4 kg</td>
+                            <td class="retail strike-red">$6.99</td>
+                            <td class="description">Searay China Yellow Croaker</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$4.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510000197_qty" placeholder="0" aria-label="Quantity for Searay China Yellow Croaker"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$4.42</td>
+                            <td class="description">Vs Basa Filt 12/14 3PC</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.15</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 871392003173_qty" placeholder="0" aria-label="Quantity for Vs Basa Filt 12/14 3PC"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$12.29</td>
+                            <td class="description">Greenland Turbot Halibut Steak</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$8.78</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510000340_qty" placeholder="0" aria-label="Quantity for Greenland Turbot Halibut Steak"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$5.59</td>
+                            <td class="description">Gold Label Golden Pompano</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$3.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510050055_qty" placeholder="0" aria-label="Quantity for Gold Label Golden Pompano"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$6.99</td>
+                            <td class="description">3Fish FRZ Snakehead Fish Slice</td>
+                            <td class="num-box">250g </td>
+                            <td class="price">$4.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718005875_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Snakehead Fish Slice"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$11.19</td>
+                            <td class="description">Searay Greenland Turbot</td>
+                            <td class="num-box">LB</td>
+                            <td class="price">$7.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 82751000018_qty" placeholder="0" aria-label="Quantity for Searay Greenland Turbot"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$6.99</td>
+                            <td class="description">Searay Fish Shaomai</td>
+                            <td class="num-box">500G</td>
+                            <td class="price">$4.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510006144_qty" placeholder="0" aria-label="Quantity for Searay Fish Shaomai"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$11.19</td>
+                            <td class="description">3Fish FRZ Grass Carp Slice</td>
+                            <td class="num-box">250g </td>
+                            <td class="price">$7.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 874718005868_qty" placeholder="0" aria-label="Quantity for 3Fish FRZ Grass Carp Slice"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$9.79</td>
+                            <td class="description">Searay Abalone with Shell</td>
+                            <td class="num-box">220G</td>
+                            <td class="price">$6.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 827510004676_qty" placeholder="0" aria-label="Quantity for Searay Abalone with Shell"></td>
+                        </tr>
+                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
+                    <div id="grocery" class="tab-pane">
+                        <div class="table-wrapper"><table><thead><tr>
+                            <th class="name">Retail</th><th class="description">Description</th>
+                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
+                        </tr></thead><tbody>
+                        <tr>
+                            <td class="retail strike-red">$5.69</td>
+                            <td class="description">CC Salted Duck Eggs</td>
+                            <td class="num-box">6PCS</td>
+                            <td class="price">$4.06</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 20616992827_qty" placeholder="0" aria-label="Quantity for CC Salted Duck Eggs"></td>
+                        </tr>
+                        <tr>
+                            <td class="retail strike-red">$18.20</td>
+                            <td class="description">CC Peanut With Skin</td>
+                            <td class="num-box">5LB </td>
                             <td class="price">$13.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="8103788.03793428_qty" placeholder="0" aria-label="Quantity for A Choy"></td>
-                        </tr>
-                        </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
-                    <div id="cindy" class="tab-pane">
-                        <div class="table-wrapper"><table><thead><tr>
-                            <th class="name">Retail</th><th class="description">Description</th>
-                            <th class="num-box"># Box</th><th class="price">Price</th><th class="qty">Qty</th>
-                        </tr></thead><tbody>
-                        <tr>
-                            <td class="retail strike-red">$45.50</td>
-                            <td class="description">Water Chestnuts</td>
-                            <td class="num-box">10 kg</td>
-                            <td class="price">$35.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="7846911.7058129_qty" placeholder="0" aria-label="Quantity for Water Chestnuts"></td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 613269006524_qty" placeholder="0" aria-label="Quantity for CC Peanut With Skin"></td>
                         </tr>
                         <tr>
-                            <td class="retail strike-red">$16.90</td>
-                            <td class="description">Kobocha Pumpkin</td>
-                            <td class="num-box">2.1 kg</td>
-                            <td class="price">$13.00</td>
-                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="6309085.44498875_qty" placeholder="0" aria-label="Quantity for Kobocha Pumpkin"></td>
+                            <td class="retail strike-red">$8.39</td>
+                            <td class="description">Jin Xin Premium Rice Stick£®LaiFen£©</td>
+                            <td class="num-box"></td>
+                            <td class="price">$5.99</td>
+                            <td class="qty-cell"><input type="number" min="0" class="qty-input" name="SKU: 1785_qty" placeholder="0" aria-label="Quantity for Jin Xin Premium Rice Stick£®LaiFen£©"></td>
                         </tr>
                         </tbody><tfoot><tr><td colspan="5" style="border-bottom: none; padding: 3px;"></td></tr></tfoot></table></div></div>
                 </div>
@@ -585,38 +751,6 @@
                 </div>
             </div>
 
-            <div class="calculator-section">
-                <button type="button" id="toggleCalculatorBtn" class="calculator-toggle-button">Show/Hide Calculator</button>
-                <div id="calculator" class="calculator-container" style="display: none;">
-                    <input type="text" id="calcDisplay" readonly class="calculator-display">
-                    <div class="calculator-keys">
-                        <button type="button" class="calc-btn operator" data-value="clear">AC</button>
-                        <button type="button" class="calc-btn operator" data-value="del">DEL</button>
-                        <button type="button" class="calc-btn operator" data-value="%">%</button>
-                        <button type="button" class="calc-btn operator" data-value="/">√∑</button>
-
-                        <button type="button" class="calc-btn" data-value="7">7</button>
-                        <button type="button" class="calc-btn" data-value="8">8</button>
-                        <button type="button" class="calc-btn" data-value="9">9</button>
-                        <button type="button" class="calc-btn operator" data-value="*">√ó</button>
-
-                        <button type="button" class="calc-btn" data-value="4">4</button>
-                        <button type="button" class="calc-btn" data-value="5">5</button>
-                        <button type="button" class="calc-btn" data-value="6">6</button>
-                        <button type="button" class="calc-btn operator" data-value="-">-</button>
-
-                        <button type="button" class="calc-btn" data-value="1">1</button>
-                        <button type="button" class="calc-btn" data-value="2">2</button>
-                        <button type="button" class="calc-btn" data-value="3">3</button>
-                        <button type="button" class="calc-btn operator" data-value="+">+</button>
-
-                        <button type="button" class="calc-btn wide" data-value="0">0</button>
-                        <button type="button" class="calc-btn" data-value=".">.</button>
-                        <button type="button" class="calc-btn operator" data-value="=">=</button>
-                    </div>
-                </div>
-            </div>
-
             <div class="form-summary">
                 <button type="submit" class="submit-button">Place Order</button>
             </div>
@@ -635,395 +769,629 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
             const productsData = [
                 {
-                    retail: "26.00 (Tomato)",
-                    price: "$20.00",
-                    box: "20 lbs",
-                    originalName: "26.00",
-                    description: "Tomato",
-                    category: "Fruits"
+                    retail: "28.76 (King\'s Chicken -7003)",
+                    price: "$20.54",
+                    box: "EA",
+                    originalName: "28.76",
+                    description: "King\'s Chicken -7003",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "19.50 (Cucumber)",
-                    price: "$15.00",
-                    box: "15 lbs",
-                    originalName: "19.50",
-                    description: "Cucumber",
-                    category: "Veggies"
+                    retail: "1.40 (Chicken)",
+                    price: "$1.00",
+                    box: "EA",
+                    originalName: "1.40",
+                    description: "Chicken",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "43.55 (Baby Bok Choy)",
-                    price: "$33.50",
-                    box: "15 kg",
-                    originalName: "43.55",
-                    description: "Baby Bok Choy",
-                    category: "Leafy"
+                    retail: "3.01 (Yu Choy £®Red£© - 421)",
+                    price: "$2.15",
+                    box: "LB",
+                    originalName: "3.01",
+                    description: "Yu Choy £®Red£© - 421",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "55.90 (Banana)",
-                    price: "$43.00",
-                    box: "15 kg",
-                    originalName: "55.90",
-                    description: "Banana",
-                    category: "Fruits"
+                    retail: "20.25 (Golden Logan box - 0801)",
+                    price: "$14.46",
+                    box: "CS",
+                    originalName: "20.25",
+                    description: "Golden Logan box - 0801",
+                    category: "Fruit"
                 }
 ,
                 {
-                    retail: "65.00 (Envy Apple)",
-                    price: "$50.00",
-                    box: "40 lbs",
-                    originalName: "65.00",
-                    description: "Envy Apple",
-                    category: "Veggies"
+                    retail: "1.28 (Lo Bok - 450)",
+                    price: "$0.91",
+                    box: "LB",
+                    originalName: "1.28",
+                    description: "Lo Bok - 450",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "30.42 (Cabbage)",
-                    price: "$23.40",
-                    box: "10 lbs",
-                    originalName: "30.42",
-                    description: "Cabbage",
-                    category: "Leafy"
+                    retail: "2.01 (Short Nappa - 046)",
+                    price: "$1.44",
+                    box: "LB",
+                    originalName: "2.01",
+                    description: "Short Nappa - 046",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "28.86 (Lettuce)",
-                    price: "$22.20",
-                    box: "10 lbs",
-                    originalName: "28.86",
-                    description: "Lettuce",
-                    category: "Leafy"
+                    retail: "7.78 (Peruvian Mango)",
+                    price: "$5.56",
+                    box: "LB",
+                    originalName: "7.78",
+                    description: "Peruvian Mango",
+                    category: "Fruit"
                 }
 ,
                 {
-                    retail: "39.00 (Baby Bok Choy)",
-                    price: "$30.00",
-                    box: "15 kg",
-                    originalName: "39.00",
-                    description: "Baby Bok Choy",
-                    category: "Leafy"
+                    retail: "4.53 (Pork Front Feet)",
+                    price: "$3.24",
+                    box: "LB",
+                    originalName: "4.53",
+                    description: "Pork Front Feet",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "20.80 (Spinach1)",
-                    price: "$16.00",
-                    box: "4 kg",
-                    originalName: "20.80",
-                    description: "Spinach1",
-                    category: "Leafy"
+                    retail: "4.49 (Green Chives -105)",
+                    price: "$3.21",
+                    box: "LB",
+                    originalName: "4.49",
+                    description: "Green Chives -105",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "16.90 (A Choy)",
+                    retail: "2.36 (Blue Jay Oranges - 4013)",
+                    price: "$1.69",
+                    box: "LB",
+                    originalName: "2.36",
+                    description: "Blue Jay Oranges - 4013",
+                    category: "Fruit"
+                }
+,
+                {
+                    retail: "9.79 (Searay White Shrimp 31/40)",
+                    price: "$6.99",
+                    box: "1LB",
+                    originalName: "9.79",
+                    description: "Searay White Shrimp 31/40",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "4.42 (Yu Choy Mui - 460)",
+                    price: "$3.16",
+                    box: "LB",
+                    originalName: "4.42",
+                    description: "Yu Choy Mui - 460",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "7.18 (Pork Belly Boneless)",
+                    price: "$5.13",
+                    box: "LB",
+                    originalName: "7.18",
+                    description: "Pork Belly Boneless",
+                    category: "Meat"
+                }
+,
+                {
+                    retail: "8.77 (Utility Silkie Chicken)",
+                    price: "$6.26",
+                    box: "LB",
+                    originalName: "8.77",
+                    description: "Utility Silkie Chicken",
+                    category: "Meat"
+                }
+,
+                {
+                    retail: "2.92 (Sweet Tangerine - 075)",
+                    price: "$2.09",
+                    box: "LB",
+                    originalName: "2.92",
+                    description: "Sweet Tangerine - 075",
+                    category: "Fruit"
+                }
+,
+                {
+                    retail: "2.45 (Shang Hai Bok Choy - 033)",
+                    price: "$1.75",
+                    box: "LB",
+                    originalName: "2.45",
+                    description: "Shang Hai Bok Choy - 033",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "10.35 (FRZ Marinated Asian Seabass)",
+                    price: "$7.39",
+                    box: "EA",
+                    originalName: "10.35",
+                    description: "FRZ Marinated Asian Seabass",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "6.99 (Searay China Yellow Croaker)",
+                    price: "$4.99",
+                    box: "LB",
+                    originalName: "6.99",
+                    description: "Searay China Yellow Croaker",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "4.42 (Vs Basa Filt 12/14 3PC)",
+                    price: "$3.15",
+                    box: "LB",
+                    originalName: "4.42",
+                    description: "Vs Basa Filt 12/14 3PC",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "12.29 (Greenland Turbot Halibut Steak)",
+                    price: "$8.78",
+                    box: "LB",
+                    originalName: "12.29",
+                    description: "Greenland Turbot Halibut Steak",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "5.69 (CC Salted Duck Eggs)",
+                    price: "$4.06",
+                    box: "6PCS",
+                    originalName: "5.69",
+                    description: "CC Salted Duck Eggs",
+                    category: "Grocery"
+                }
+,
+                {
+                    retail: "18.20 (CC Peanut With Skin)",
                     price: "$13.00",
-                    box: "4 kg",
-                    originalName: "16.90",
-                    description: "A Choy",
-                    category: "Leafy"
+                    box: "5LB ",
+                    originalName: "18.20",
+                    description: "CC Peanut With Skin",
+                    category: "Grocery"
                 }
 ,
                 {
-                    retail: "26.00 (Fennel)",
-                    price: "$20.00",
-                    box: "5 kg",
-                    originalName: "26.00",
-                    description: "Fennel",
-                    category: "Veggies"
+                    retail: "11.85 (AAA Beef Fingermeat)",
+                    price: "$8.47",
+                    box: "LB",
+                    originalName: "11.85",
+                    description: "AAA Beef Fingermeat",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "20.80 (Sugar Snap Peas)",
-                    price: "$16.00",
-                    box: "4.5 kg",
-                    originalName: "20.80",
-                    description: "Sugar Snap Peas",
-                    category: "Veggies"
+                    retail: "12.02 (AAA Beef Short Rib)",
+                    price: "$8.59",
+                    box: "LB",
+                    originalName: "12.02",
+                    description: "AAA Beef Short Rib",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "20.80 (Snow Peas)",
-                    price: "$16.00",
-                    box: "4.5 kg",
-                    originalName: "20.80",
-                    description: "Snow Peas",
-                    category: "Veggies"
+                    retail: "2.97 (Chinese Eggplant  - 102)",
+                    price: "$2.12",
+                    box: "LB",
+                    originalName: "2.97",
+                    description: "Chinese Eggplant  - 102",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "32.50 (Garlic Leek)",
-                    price: "$25.00",
-                    box: "10 kg",
-                    originalName: "32.50",
-                    description: "Garlic Leek",
-                    category: "Veggies"
+                    retail: "7.52 (WW Chinese Style Pork Sausage)",
+                    price: "$5.37",
+                    box: "375g",
+                    originalName: "7.52",
+                    description: "WW Chinese Style Pork Sausage",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "32.50 (Lettuce Stem1)",
-                    price: "$25.00",
-                    box: "10 kg",
-                    originalName: "32.50",
-                    description: "Lettuce Stem1",
-                    category: "Fruits"
+                    retail: "12.05 (Beef Heel Muscle(Digital))",
+                    price: "$8.61",
+                    box: "LB",
+                    originalName: "12.05",
+                    description: "Beef Heel Muscle(Digital)",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "39.00 (Thin Chili Peppers)",
-                    price: "$30.00",
-                    box: "6 kg",
-                    originalName: "39.00",
-                    description: "Thin Chili Peppers",
-                    category: "Fruits"
+                    retail: "5.59 (Gold Label Golden Pompano)",
+                    price: "$3.99",
+                    box: "LB",
+                    originalName: "5.59",
+                    description: "Gold Label Golden Pompano",
+                    category: "Seafood"
                 }
 ,
                 {
-                    retail: "33.80 (Napa Cabbage)",
-                    price: "$26.00",
-                    box: "10 kg",
-                    originalName: "33.80",
-                    description: "Napa Cabbage",
-                    category: "Fruits"
+                    retail: "6.99 (3Fish FRZ Snakehead Fish Slice)",
+                    price: "$4.99",
+                    box: "250g ",
+                    originalName: "6.99",
+                    description: "3Fish FRZ Snakehead Fish Slice",
+                    category: "Seafood"
                 }
 ,
                 {
-                    retail: "65.00 (Taiwan Cauliflower)",
-                    price: "$50.00",
-                    box: "10 kg",
-                    originalName: "65.00",
-                    description: "Taiwan Cauliflower",
-                    category: "Fruits"
+                    retail: "4.66 (Chicken Feet-Jumbo)",
+                    price: "$3.33",
+                    box: "LB",
+                    originalName: "4.66",
+                    description: "Chicken Feet-Jumbo",
+                    category: "Meat"
                 }
 ,
                 {
-                    retail: "45.50 (Water Chestnuts)",
-                    price: "$35.00",
-                    box: "10 kg",
-                    originalName: "45.50",
-                    description: "Water Chestnuts",
-                    category: "Cindy"
+                    retail: "3.78 (Shanghai Choy Mui - 0991)",
+                    price: "$2.70",
+                    box: "LB",
+                    originalName: "3.78",
+                    description: "Shanghai Choy Mui - 0991",
+                    category: "Vegetable"
                 }
 ,
                 {
-                    retail: "16.90 (Kobocha Pumpkin)",
-                    price: "$13.00",
-                    box: "2.1 kg",
-                    originalName: "16.90",
-                    description: "Kobocha Pumpkin",
-                    category: "Cindy"
+                    retail: "2.56 (Baby Bok Choy - 007)",
+                    price: "$1.83",
+                    box: "LB",
+                    originalName: "2.56",
+                    description: "Baby Bok Choy - 007",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "11.19 (Searay Greenland Turbot)",
+                    price: "$7.99",
+                    box: "LB",
+                    originalName: "11.19",
+                    description: "Searay Greenland Turbot",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "3.65 (Gailan (Red) 0981)",
+                    price: "$2.61",
+                    box: "LB",
+                    originalName: "3.65",
+                    description: "Gailan (Red) 0981",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "6.99 (Searay Fish Shaomai)",
+                    price: "$4.99",
+                    box: "500G",
+                    originalName: "6.99",
+                    description: "Searay Fish Shaomai",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "2.41 (Broccoli - 0361)",
+                    price: "$1.72",
+                    box: "LB",
+                    originalName: "2.41",
+                    description: "Broccoli - 0361",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "1.40 (Pork)",
+                    price: "$1.00",
+                    box: "EA",
+                    originalName: "1.40",
+                    description: "Pork",
+                    category: "Meat"
+                }
+,
+                {
+                    retail: "11.19 (3Fish FRZ Grass Carp Slice)",
+                    price: "$7.99",
+                    box: "250g ",
+                    originalName: "11.19",
+                    description: "3Fish FRZ Grass Carp Slice",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "1.58 (Cabbage - 0381)",
+                    price: "$1.13",
+                    box: "LB",
+                    originalName: "1.58",
+                    description: "Cabbage - 0381",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "9.79 (Searay Abalone with Shell)",
+                    price: "$6.99",
+                    box: "220G",
+                    originalName: "9.79",
+                    description: "Searay Abalone with Shell",
+                    category: "Seafood"
+                }
+,
+                {
+                    retail: "12.59 (Watson Cooked Smoked - Roasted Bonless Young Duck)",
+                    price: "$8.99",
+                    box: "500g",
+                    originalName: "12.59",
+                    description: "Watson Cooked Smoked - Roasted Bonless Young Duck",
+                    category: "Meat"
+                }
+,
+                {
+                    retail: "3.56 (A Choy -119)",
+                    price: "$2.55",
+                    box: "LB",
+                    originalName: "3.56",
+                    description: "A Choy -119",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "6.20 (Pork Shoulder Butt)",
+                    price: "$4.43",
+                    box: "LB",
+                    originalName: "6.20",
+                    description: "Pork Shoulder Butt",
+                    category: "Meat"
+                }
+,
+                {
+                    retail: "3.55 (Ginger - 004)",
+                    price: "$2.54",
+                    box: "LB",
+                    originalName: "3.55",
+                    description: "Ginger - 004",
+                    category: "Vegetable"
+                }
+,
+                {
+                    retail: "8.39 (Jin Xin Premium Rice Stick£®LaiFen£©)",
+                    price: "$5.99",
+                    box: "",
+                    originalName: "8.39",
+                    description: "Jin Xin Premium Rice Stick£®LaiFen£©",
+                    category: "Grocery"
                 }
             ];
 
-            const qtyInputs = document.querySelectorAll('.qty-input'); // Will select all after VBA generation
-            const tableTotalQtyElement = document.getElementById('table-total-qty');
-            const orderForm = document.getElementById('orderForm');
-            const submitButton = document.querySelector('.submit-button');
-            const successMessage = document.getElementById('success-message');
-            const errorMessage = document.getElementById('error-message');
-            const lineItemsDisplay = document.getElementById('lineItemsDisplay');
-            const orderSummaryInput = document.getElementById('order_summary');
-            const totalQuantityHiddenInput = document.getElementById('total_quantity_hidden');
-            const pickupDateInput = document.getElementById('pickupDate');
+    const orderForm = document.getElementById('orderForm');
+    const submitButton = document.querySelector('.submit-button');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    const orderSummaryInput = document.getElementById('order_summary');
+    const totalQuantityHiddenInput = document.getElementById('total_quantity_hidden');
+    const pickupDateInput = document.getElementById('pickupDate');
+    const tableTotalQtyElement = document.getElementById('table-total-qty');
 
-            if (pickupDateInput) {
-                const today = new Date().toISOString().split('T')[0];
-                pickupDateInput.setAttribute('min', today);
+    // Add icons to tab buttons based on their text content
+    function addTabIcons() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+            const buttonText = button.textContent.toLowerCase().trim();
+            let icon = '';
+            
+            // Match category names and add appropriate icons
+            if (buttonText.includes('vegetable') || buttonText.includes('veggies')) {
+                icon = 'ü•ï ';
+            } else if (buttonText.includes('meat')) {
+                icon = 'ü•© ';
+            } else if (buttonText.includes('fruit')) {
+                icon = 'üçé ';
+            } else if (buttonText.includes('grocery')) {
+                icon = 'üõí ';
+            } else if (buttonText.includes('seafood')) {
+                icon = 'ü¶ê ';
+            } else {
+                // Default icon for any other categories
+                icon = 'üì¶ ';
             }
             
-            // Note: The 'products' array from your original static HTML is removed.
-            // The VBA macro will inject 'productsData' above this script.
-            // All functions below need to use 'productsData' which is now globally available in this scope.
+            // Prepend icon to button text
+            button.innerHTML = icon + button.textContent;
+        });
+    }
 
-            function updateTotalQuantity() {
-                let currentTotal = 0;
-                // Re-query qtyInputs inside function if they could be added/removed dynamically by other means,
-                // but since VBA generates them once on load, the initial querySelectorAll should be fine.
-                document.querySelectorAll('.qty-input').forEach(input => { 
-                    currentTotal += parseInt(input.value, 10) || 0;
-                });
-                
-                if(tableTotalQtyElement) tableTotalQtyElement.textContent = currentTotal;
-                
-                // If you had a separate #total-qty-value display outside the table:
-                const totalQtyValueElement = document.getElementById('total-qty-value');
-                if(totalQtyValueElement) totalQtyValueElement.textContent = currentTotal;
+    // Call the function to add icons
+    addTabIcons();
 
-                if(totalQuantityHiddenInput) totalQuantityHiddenInput.value = currentTotal;
-                
-                generateOrderSummary();
-            }
+    // Set minimum date
+    if (pickupDateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        pickupDateInput.setAttribute('min', today);
+    }
 
-            function generateOrderSummary() {
-            const tbody = document.querySelector('#orderSummaryTable tbody');
-            tbody.innerHTML = '';              // wipe old rows
-            let subtotal = 0;
+    function updateTotalQuantity() {
+        let currentTotal = 0;
+        
+        // Calculate total from all quantity inputs
+        document.querySelectorAll('.qty-input').forEach(input => {
+            currentTotal += parseInt(input.value, 10) || 0;
+        });
+        
+        // Update visible total
+        if(tableTotalQtyElement) {
+            tableTotalQtyElement.textContent = currentTotal;
+        }
+        
+        // Update hidden total
+        if(totalQuantityHiddenInput) {
+            totalQuantityHiddenInput.value = currentTotal;
+        }
+        
+        // Update order summary
+        generateOrderSummary();
+    }
 
-            document.querySelectorAll('.qty-input').forEach((input, i) => {
-                const qty = parseInt(input.value, 10) || 0;
-                const prod = productsData[i];
-                if (qty > 0 && prod) {
-                // parse out just the numeric part of price, e.g. "$12.30" ‚Üí 12.30
+    function generateOrderSummary() {
+        const tbody = document.querySelector('#orderSummaryTable tbody');
+        tbody.innerHTML = '';
+        let subtotal = 0;
+        const orderLines = [];
+
+        document.querySelectorAll('.qty-input').forEach((input, i) => {
+            const qty = parseInt(input.value, 10) || 0;
+            const prod = productsData[i];
+            
+            if (qty > 0 && prod) {
+                // Parse price - remove $ and any other non-numeric chars
                 const priceNum = parseFloat(prod.price.replace(/[^0-9.\-]+/g, ''));
-                const amount  = qty * priceNum;
+                const amount = qty * priceNum;
                 subtotal += amount;
 
-                // build a <tr>
+                // Create table row
                 const tr = document.createElement('tr');
-                const tdName = document.createElement('td');
-                tdName.textContent = prod.description || prod.name;
-                const tdQty  = document.createElement('td');
-                tdQty.textContent = qty;
-                const tdAmt  = document.createElement('td');
-                tdAmt.textContent = '$' + amount.toFixed(2);
-
-                tr.append(tdName, tdQty, tdAmt);
+                tr.innerHTML = `
+                    <td>${prod.description || prod.name}</td>
+                    <td>${qty}</td>
+                    <td>$${amount.toFixed(2)}</td>
+                `;
                 tbody.appendChild(tr);
-                }
-            });
-
-            // If nothing was added, show the ‚Äúno items‚Äù row again
-            if (tbody.children.length === 0) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = '<td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td>';
-                tbody.appendChild(tr);
+                
+                // Add to order lines with newlines
+                orderLines.push(`${prod.description}: ${qty} @ $${priceNum.toFixed(2)} = $${amount.toFixed(2)}`);
             }
-
-            // write subtotal
-            document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
-
-            // also update your hidden textarea/input for Formspree
-            const summaryInput = document.getElementById('order_summary');
-            if (summaryInput) {
-                const lines = [];
-                tbody.querySelectorAll('tr').forEach(tr => {
-                const [item, qty, amt] = tr.querySelectorAll('td');
-                if (qty && parseInt(qty.textContent, 10) > 0) {
-                    lines.push(`${item.textContent}: ${qty.textContent} x ${amt.textContent}`);
-                }
-                });
-                summaryInput.value = lines.join('\n');
-            }
-            }
-
-            // And make sure your updateTotalQuantity still calls it:
-            function updateTotalQuantity() {
-            let total = 0;
-            document.querySelectorAll('.qty-input').forEach(i => total += parseInt(i.value,10) || 0);
-            document.getElementById('table-total-qty').textContent = total;
-            generateOrderSummary();
-            }
-
-            // ‚Ä¶and that you attach listeners once on page load:
-            document.querySelectorAll('.qty-input').forEach(input => {
-            input.addEventListener('input', updateTotalQuantity);
-            });
-            
-            // Attach listeners to qty inputs after VBA has rendered them
-             document.querySelectorAll('.qty-input').forEach(input => {
-                input.addEventListener('input', updateTotalQuantity);
-            });
-
-            // Tab switching logic
-            const tabButtons = document.querySelectorAll('.tab-navigation .tab-button'); // Selects buttons generated by VBA
-            const tabPanes = document.querySelectorAll('.tab-content .tab-pane'); // Selects panes generated by VBA
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    const targetTab = button.dataset.tab;
-                    tabPanes.forEach(pane => {
-                        pane.id === targetTab ? pane.classList.add('active') : pane.classList.remove('active');
-                    });
-                });
-            });
-
-            // Call once on load to initialize summary if any default quantities are set (currently not)
-            // and to ensure qtyInputs listeners are active if any inputs were already there.
-            // However, since VBA generates inputs, updateTotalQuantity will be called correctly
-            // after this setup. The first call if no inputs are filled will show "No items selected".
-            updateTotalQuantity(); 
-
-
-            // Formspree Submission Logic (from your original HTML)
-            if (orderForm) {
-                orderForm.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    
-                    const customerName = document.getElementById('customerName').value.trim();
-                    const customerPhone = document.getElementById('customerPhone').value.trim();
-                    const pickupDateVal = document.getElementById('pickupDate').value;
-                    const pickupTimeVal = document.getElementById('pickupTime').value;
-                    const totalQty = parseInt(totalQuantityHiddenInput.value, 10) || 0;
-
-                    if(successMessage) successMessage.style.display = 'none';
-                    if(errorMessage) errorMessage.style.display = 'none';
-
-                    if (!customerName || !customerPhone || !pickupDateVal || !pickupTimeVal) {
-                        alert('Please fill in all required fields (Name, Phone, Pickup Date, and Pickup Time).');
-                        return;
-                    }
-
-                    if (totalQty === 0) {
-                        alert('Please select at least one item to order.');
-                        return;
-                    }
-
-                    if(submitButton) {
-                        submitButton.disabled = true;
-                        submitButton.textContent = 'Submitting...';
-                    }
-
-                    const formData = new FormData(orderForm);
-
-                    fetch(orderForm.action, { 
-                        method: 'POST',
-                        body: formData,
-                        headers: { 'Accept': 'application/json' }
-                    }).then(response => {
-                        if (response.ok) {
-                            if(successMessage) successMessage.style.display = 'block';
-                            orderForm.reset(); // Reset form fields
-                            updateTotalQuantity(); // Update summaries and totals to 0
-                            if (pickupDateInput) { // Set min date again after reset
-                               const today = new Date().toISOString().split('T')[0];
-                               pickupDateInput.setAttribute('min', today);
-                            }
-                            if(successMessage) successMessage.scrollIntoView({ behavior: 'smooth' });
-                        } else {
-                            response.json().then(data => {
-                                if (data.errors && errorMessage) {
-                                    errorMessage.textContent = data.errors.map(error => error.message).join(", ");
-                                } else if (errorMessage) {
-                                    errorMessage.textContent = 'Form submission failed. Please try again.';
-                                }
-                            }).catch(() => { 
-                                 if (errorMessage) errorMessage.textContent = 'Form submission failed. Status: ' + response.status;
-                            });
-                            throw new Error('Form submission failed'); // Ensure it goes to outer catch
-                        }
-                    }).catch(error => {
-                        console.error('Error:', error);
-                        if(errorMessage && errorMessage.style.display !== 'block') {
-                           errorMessage.textContent = 'Sorry, there was an error submitting your order. Please try again or call us directly.';
-                           errorMessage.style.display = 'block';
-                        }
-                        if(errorMessage) errorMessage.scrollIntoView({ behavior: 'smooth' });
-                    }).finally(() => {
-                        if(submitButton) {
-                            submitButton.disabled = false;
-                            submitButton.textContent = 'Place Order';
-                        }
-                    });
-                });
-            }
-
         });
-    </script>
+
+        // Show empty message if no items
+        if (tbody.children.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--text-color-secondary);">No items selected yet.</td></tr>';
+        }
+
+        // Update subtotal
+        document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+
+        // Update hidden order summary - use newlines for better formatting
+        if (orderSummaryInput) {
+            if (orderLines.length > 0) {
+                orderSummaryInput.value = orderLines.join('\n') + '\n\nTotal: $' + subtotal.toFixed(2);
+            } else {
+                orderSummaryInput.value = '';
+            }
+        }
+    }
+
+    // Event delegation for quantity inputs
+    document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('qty-input')) {
+            updateTotalQuantity();
+        }
+    });
+
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
+    const tabPanes = document.querySelectorAll('.tab-content .tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            const targetTab = button.dataset.tab;
+            tabPanes.forEach(pane => {
+                if (pane.id === targetTab) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    // Form submission
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const pickupDateVal = document.getElementById('pickupDate').value;
+            const pickupTimeVal = document.getElementById('pickupTime').value;
+            const totalQty = parseInt(totalQuantityHiddenInput.value, 10) || 0;
+
+            // Hide messages
+            if(successMessage) successMessage.style.display = 'none';
+            if(errorMessage) errorMessage.style.display = 'none';
+
+            // Validate required fields
+            if (!customerName || !customerPhone || !pickupDateVal || !pickupTimeVal) {
+                alert('Please fill in all required fields (Name, Phone, Pickup Date, and Pickup Time).');
+                return;
+            }
+
+            // Check if items selected
+            if (totalQty === 0) {
+                alert('Please select at least one item to order.');
+                return;
+            }
+
+            // Disable submit button
+            if(submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+            }
+
+            // Submit form
+            const formData = new FormData(orderForm);
+            
+            fetch(orderForm.action, { 
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    if(successMessage) successMessage.style.display = 'block';
+                    orderForm.reset();
+                    updateTotalQuantity();
+                    if (pickupDateInput) {
+                        const today = new Date().toISOString().split('T')[0];
+                        pickupDateInput.setAttribute('min', today);
+                    }
+                    if(successMessage) successMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                if(errorMessage) {
+                    errorMessage.textContent = 'Sorry, there was an error submitting your order. Please try again or call us directly.';
+                    errorMessage.style.display = 'block';
+                    errorMessage.scrollIntoView({ behavior: 'smooth' });
+                }
+            }).finally(() => {
+                if(submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Place Order';
+                }
+            });
+        });
+    }
+
+    // Initialize on load
+    updateTotalQuantity();
+});
+</script>
 </body>
 </html>

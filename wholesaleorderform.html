@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tops Supermarket - Order Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #10b981;
+            --primary-lighter: #34d399;
+            --primary-lightest: #6ee7b7;
+            --primary-pale: #d1fae5;
+            --secondary: #6b7280;
+            --success: #059669;
+            --danger: #dc2626;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Swipe indicator */
+        .swipe-indicator {
+            display: none;
+            background: var(--primary-pale);
+            color: var(--primary-dark);
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .swipe-indicator {
+                display: block;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .effective-date {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Store info */
+        .store-info {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        /* Main form */
+        .form-wrapper {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Tabs */
+        .tabs-nav {
+            display: flex;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--gray-900);
+            background: var(--primary-pale);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary);
+            background: var(--primary-pale);
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+            padding: 1rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Product table */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .product-table {
+            width: 100%;
+            min-width: 500px;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .product-table th {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 2px solid var(--gray-200);
+            color: var(--gray-700);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .product-table th:last-child {
+            text-align: center;
+        }
+
+        .product-table td {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+
+        .product-table tr:hover td {
+            background: var(--primary-pale);
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .retail-price {
+            color: var(--danger);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+
+        .box-size {
+            color: var(--gray-600);
+        }
+
+        .our-price {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Quantity controls */
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+        }
+
+        .qty-btn {
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            color: var(--gray-700);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            font-size: 0.875rem;
+        }
+
+        .qty-btn.plus {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .qty-btn.plus:hover:not(:disabled) {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .qty-btn.minus {
+            background: var(--danger);
+            color: var(--white);
+            border-color: var(--danger);
+        }
+
+        .qty-btn.minus:hover:not(:disabled) {
+            background: #b91c1c;
+            border-color: #b91c1c;
+        }
+
+        .qty-btn:disabled {
+            background: var(--gray-200);
+            color: var(--gray-400);
+            border-color: var(--gray-200);
+            cursor: not-allowed;
+        }
+
+        .qty-input {
+            width: 40px;
+            height: 24px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .qty-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Total section */
+        .total-section {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .total-value {
+            font-size: 1.125rem;
+        }
+
+        /* Order summary */
+        .order-summary {
+            margin: 1.5rem 0;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .order-summary h2 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-lightest);
+            padding-bottom: 0.5rem;
+        }
+
+        .order-items {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.875rem;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-empty {
+            text-align: center;
+            color: var(--gray-500);
+            padding: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .order-total {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 2px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .order-total-amount {
+            color: var(--primary);
+        }
+
+        /* Customer info */
+        .customer-section {
+            margin: 1.5rem 0;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .customer-section h2 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-lightest);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        .form-input {
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: border-color 0.15s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Submit button */
+        .submit-section {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-400);
+            cursor: not-allowed;
+        }
+
+        /* Messages */
+        .message {
+            margin: 1rem 0;
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.875rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .footer strong {
+            color: var(--gray-900);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                text-align: center;
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                width: 120px;
+            }
+
+            .tab-btn {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .tab-content {
+                padding: 0.5rem;
+            }
+
+            .product-table {
+                font-size: 0.75rem;
+            }
+
+            .product-table th,
+            .product-table td {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .qty-controls {
+                gap: 0.25rem;
+            }
+
+            .store-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        .order-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .order-items::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 3px;
+        }
+
+        .order-items::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 3px;
+        }
+
+        .order-items::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="images/TopsLogoCrop.png" alt="Tops Supermarket" class="logo">
+                    <h1>Price List Order Form</h1>
+                </div>
+                <div class="effective-date">
+                    Effective: May 21, 2025
+                </div>
+            </div>
+        </div>
+
+        <!-- Store Info -->
+        <div class="store-info">
+            <div class="info-item">
+                <span class="info-label">Pickup Location:</span>
+                <span>1623 Centre St NW, Calgary, AB T2E 2S3</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Phone:</span>
+                <span>403-276-8889</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Hours:</span>
+                <span>9:00 AM - 4:00 PM</span>
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <form id="orderForm" action="https://formspree.io/f/mnndygrk" method="POST">
+            <div class="form-wrapper">
+                <!-- Tabs -->
+                <div class="tabs-nav">
+                    <button type="button" class="tab-btn active" data-tab="fruits">
+                        <span>🍎</span>
+                        <span>Fruits</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="veggies">
+                        <span>🥕</span>
+                        <span>Veggies</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="leafy">
+                        <span>🥬</span>
+                        <span>Leafy</span>
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="cindy">
+                        <span>⭐</span>
+                        <span>Cindy</span>
+                    </button>
+                </div>
+
+                <!-- Fruits Tab -->
+                <div class="tab-content active" id="fruits">
+                    <div class="swipe-indicator">
+                        👉 Swipe right to see all columns ➡️
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Retail $</th>
+                                <th>Weight</th>
+                                <th>Price $</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-name">Tomato</td>
+                                <td class="retail-price">$26.00</td>
+                                <td class="box-size">20 lbs</td>
+                                <td class="our-price">$20.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="0">−</button>
+                                        <input type="number" class="qty-input" name="tomato_qty" value="0" min="0" data-index="0" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="0">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Banana</td>
+                                <td class="retail-price">$55.90</td>
+                                <td class="box-size">15 kg</td>
+                                <td class="our-price">$43.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="1">−</button>
+                                        <input type="number" class="qty-input" name="banana_qty" value="0" min="0" data-index="1" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="1">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Lettuce Stem</td>
+                                <td class="retail-price">$32.50</td>
+                                <td class="box-size">10 kg</td>
+                                <td class="our-price">$25.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="2">−</button>
+                                        <input type="number" class="qty-input" name="lettuce_stem_qty" value="0" min="0" data-index="2" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="2">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Thin Chili Peppers</td>
+                                <td class="retail-price">$39.00</td>
+                                <td class="box-size">6 kg</td>
+                                <td class="our-price">$30.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="3">−</button>
+                                        <input type="number" class="qty-input" name="thin_chili_qty" value="0" min="0" data-index="3" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="3">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Napa Cabbage</td>
+                                <td class="retail-price">$33.80</td>
+                                <td class="box-size">10 kg</td>
+                                <td class="our-price">$26.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="4">−</button>
+                                        <input type="number" class="qty-input" name="napa_cabbage_qty" value="0" min="0" data-index="4" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="4">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Taiwan Cauliflower</td>
+                                <td class="retail-price">$65.00</td>
+                                <td class="box-size">10 kg</td>
+                                <td class="our-price">$50.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="5">−</button>
+                                        <input type="number" class="qty-input" name="taiwan_cauliflower_qty" value="0" min="0" data-index="5" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="5">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Veggies Tab -->
+                <div class="tab-content" id="veggies">
+                    <div class="swipe-indicator">
+                        👉 Swipe right to see all columns ➡️
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Retail $</th>
+                                <th>Weight</th>
+                                <th>Price $</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-name">Cucumber</td>
+                                <td class="retail-price">$19.50</td>
+                                <td class="box-size">15 lbs</td>
+                                <td class="our-price">$15.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="6">−</button>
+                                        <input type="number" class="qty-input" name="cucumber_qty" value="0" min="0" data-index="6" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="6">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Envy Apple</td>
+                                <td class="retail-price">$65.00</td>
+                                <td class="box-size">40 lbs</td>
+                                <td class="our-price">$50.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="7">−</button>
+                                        <input type="number" class="qty-input" name="envy_apple_qty" value="0" min="0" data-index="7" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="7">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Fennel</td>
+                                <td class="retail-price">$26.00</td>
+                                <td class="box-size">5 kg</td>
+                                <td class="our-price">$20.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="8">−</button>
+                                        <input type="number" class="qty-input" name="fennel_qty" value="0" min="0" data-index="8" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="8">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Sugar Snap Peas</td>
+                                <td class="retail-price">$20.80</td>
+                                <td class="box-size">4.5 kg</td>
+                                <td class="our-price">$16.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="9">−</button>
+                                        <input type="number" class="qty-input" name="sugar_snap_peas_qty" value="0" min="0" data-index="9" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="9">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Snow Peas</td>
+                                <td class="retail-price">$20.80</td>
+                                <td class="box-size">4.5 kg</td>
+                                <td class="our-price">$16.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="10">−</button>
+                                        <input type="number" class="qty-input" name="snow_peas_qty" value="0" min="0" data-index="10" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="10">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Garlic Leek</td>
+                                <td class="retail-price">$32.50</td>
+                                <td class="box-size">10 kg</td>
+                                <td class="our-price">$25.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="11">−</button>
+                                        <input type="number" class="qty-input" name="garlic_leek_qty" value="0" min="0" data-index="11" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="11">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Leafy Tab -->
+                <div class="tab-content" id="leafy">
+                    <div class="swipe-indicator">
+                        👉 Swipe right to see all columns ➡️
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Retail $</th>
+                                <th>Weight</th>
+                                <th>Price $</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-name">Baby Bok Choy</td>
+                                <td class="retail-price">$43.55</td>
+                                <td class="box-size">15 kg</td>
+                                <td class="our-price">$33.50</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="12">−</button>
+                                        <input type="number" class="qty-input" name="baby_bok_choy_qty" value="0" min="0" data-index="12" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="12">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Cabbage</td>
+                                <td class="retail-price">$30.42</td>
+                                <td class="box-size">10 lbs</td>
+                                <td class="our-price">$23.40</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="13">−</button>
+                                        <input type="number" class="qty-input" name="cabbage_qty" value="0" min="0" data-index="13" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="13">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Lettuce</td>
+                                <td class="retail-price">$28.86</td>
+                                <td class="box-size">10 lbs</td>
+                                <td class="our-price">$22.20</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="14">−</button>
+                                        <input type="number" class="qty-input" name="lettuce_qty" value="0" min="0" data-index="14" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="14">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Baby Bok Choy (Premium)</td>
+                                <td class="retail-price">$39.00</td>
+                                <td class="box-size">15 kg</td>
+                                <td class="our-price">$30.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="15">−</button>
+                                        <input type="number" class="qty-input" name="baby_bok_choy_premium_qty" value="0" min="0" data-index="15" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="15">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Spinach</td>
+                                <td class="retail-price">$20.80</td>
+                                <td class="box-size">4 kg</td>
+                                <td class="our-price">$16.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="16">−</button>
+                                        <input type="number" class="qty-input" name="spinach_qty" value="0" min="0" data-index="16" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="16">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">A Choy</td>
+                                <td class="retail-price">$16.90</td>
+                                <td class="box-size">4 kg</td>
+                                <td class="our-price">$13.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="17">−</button>
+                                        <input type="number" class="qty-input" name="a_choy_qty" value="0" min="0" data-index="17" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="17">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cindy Tab -->
+                <div class="tab-content" id="cindy">
+                    <div class="swipe-indicator">
+                        👉 Swipe right to see all columns ➡️
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Retail $</th>
+                                <th>Weight</th>
+                                <th>Price $</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-name">Water Chestnuts</td>
+                                <td class="retail-price">$45.50</td>
+                                <td class="box-size">10 kg</td>
+                                <td class="our-price">$35.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="18">−</button>
+                                        <input type="number" class="qty-input" name="water_chestnuts_qty" value="0" min="0" data-index="18" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="18">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-name">Kobocha Pumpkin</td>
+                                <td class="retail-price">$16.90</td>
+                                <td class="box-size">2.1 kg</td>
+                                <td class="our-price">$13.00</td>
+                                <td>
+                                    <div class="qty-controls">
+                                        <button type="button" class="qty-btn minus" data-index="19">−</button>
+                                        <input type="number" class="qty-input" name="kobocha_pumpkin_qty" value="0" min="0" data-index="19" readonly>
+                                        <button type="button" class="qty-btn plus" data-index="19">+</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Total -->
+                <div class="total-section">
+                    <span>Total Quantity:</span>
+                    <span class="total-value" id="totalQty">0</span>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="order-items" id="orderItems">
+                    <div class="order-empty">No items selected</div>
+                </div>
+            </div>
+
+            <input type="hidden" name="order_summary" id="orderSummary">
+            <input type="hidden" name="total_quantity" id="totalQuantityHidden">
+
+            <!-- Customer Information -->
+            <div class="customer-section">
+                <h2>Customer Information</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="customerName">
+                            Name <span class="required">*</span>
+                        </label>
+                        <input type="text" id="customerName" name="customer_name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customerEmail">
+                            Email (Optional)
+                        </label>
+                        <input type="email" id="customerEmail" name="customer_email" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customerPhone">
+                            Phone <span class="required">*</span>
+                        </label>
+                        <input type="tel" id="customerPhone" name="customer_phone" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pickupDate">
+                            Pickup Date <span class="required">*</span>
+                        </label>
+                        <input type="date" id="pickupDate" name="pickup_date" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="pickupTime">
+                            Pickup Time <span class="required">*</span>
+                        </label>
+                        <select id="pickupTime" name="pickup_time_slot" class="form-input" required>
+                            <option value="">-- Select Time --</option>
+                            <option value="9am-12pm">9:00 AM - 12:00 PM</option>
+                            <option value="12pm-4pm">12:00 PM - 4:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">Place Order</button>
+            </div>
+
+            <!-- Messages -->
+            <div class="message success-message" id="successMessage">
+                Order placed successfully! We'll contact you soon.
+            </div>
+            <div class="message error-message" id="errorMessage">
+                Error submitting order. Please try again or call us.
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="footer">
+            Call: <strong>Tops Supermarket - 403-276-8889</strong>
+        </div>
+    </div>
+
+    <script>
+        // Products data
+        const products = [
+            { name: "Tomato", price: 20.00 },
+            { name: "Banana", price: 43.00 },
+            { name: "Lettuce Stem", price: 25.00 },
+            { name: "Thin Chili Peppers", price: 30.00 },
+            { name: "Napa Cabbage", price: 26.00 },
+            { name: "Taiwan Cauliflower", price: 50.00 },
+            { name: "Cucumber", price: 15.00 },
+            { name: "Envy Apple", price: 50.00 },
+            { name: "Fennel", price: 20.00 },
+            { name: "Sugar Snap Peas", price: 16.00 },
+            { name: "Snow Peas", price: 16.00 },
+            { name: "Garlic Leek", price: 25.00 },
+            { name: "Baby Bok Choy", price: 33.50 },
+            { name: "Cabbage", price: 23.40 },
+            { name: "Lettuce", price: 22.20 },
+            { name: "Baby Bok Choy (Premium)", price: 30.00 },
+            { name: "Spinach", price: 16.00 },
+            { name: "A Choy", price: 13.00 },
+            { name: "Water Chestnuts", price: 35.00 },
+            { name: "Kobocha Pumpkin", price: 13.00 }
+        ];
+
+        // Tab switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.dataset.tab;
+                
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Quantity controls
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.index);
+                const input = document.querySelector(`.qty-input[data-index="${index}"]`);
+                const currentVal = parseInt(input.value) || 0;
+                const isPlus = btn.classList.contains('plus');
+                
+                if (isPlus) {
+                    input.value = currentVal + 1;
+                } else {
+                    input.value = Math.max(0, currentVal - 1);
+                }
+                
+                updateButtonStates(index);
+                updateOrderSummary();
+            });
+        });
+
+        // Update button states
+        function updateButtonStates(index) {
+            const input = document.querySelector(`.qty-input[data-index="${index}"]`);
+            const minusBtn = document.querySelector(`.qty-btn.minus[data-index="${index}"]`);
+            const value = parseInt(input.value) || 0;
+            
+            minusBtn.disabled = value === 0;
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            let totalQty = 0;
+            let totalAmount = 0;
+            const orderLines = [];
+            const orderItemsEl = document.getElementById('orderItems');
+
+            // Clear current items
+            orderItemsEl.innerHTML = '';
+
+            // Check all inputs
+            document.querySelectorAll('.qty-input').forEach((input, index) => {
+                const qty = parseInt(input.value) || 0;
+                if (qty > 0) {
+                    totalQty += qty;
+                    const product = products[index];
+                    const amount = qty * product.price;
+                    totalAmount += amount;
+
+                    // Add to display
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'order-item';
+                    itemDiv.innerHTML = `
+                        <span>${product.name} (${qty})</span>
+                        <span>$${amount.toFixed(2)}</span>
+                    `;
+                    orderItemsEl.appendChild(itemDiv);
+
+                    // Add to form data
+                    orderLines.push(`${product.name}: ${qty} x $${product.price.toFixed(2)} = $${amount.toFixed(2)}`);
+                }
+            });
+
+            // Show empty state or total
+            if (totalQty === 0) {
+                orderItemsEl.innerHTML = '<div class="order-empty">No items selected</div>';
+            } else {
+                // Add total
+                const totalDiv = document.createElement('div');
+                totalDiv.className = 'order-total';
+                totalDiv.innerHTML = `
+                    <span>Total:</span>
+                    <span class="order-total-amount">$${totalAmount.toFixed(2)}</span>
+                `;
+                orderItemsEl.appendChild(totalDiv);
+            }
+
+            // Update displays
+            document.getElementById('totalQty').textContent = totalQty;
+            document.getElementById('totalQuantityHidden').value = totalQty;
+            document.getElementById('orderSummary').value = orderLines.join('\n') + 
+                (totalQty > 0 ? `\n\nTotal: $${totalAmount.toFixed(2)}` : '');
+        }
+
+        // Set min date
+        const pickupDate = document.getElementById('pickupDate');
+        const today = new Date().toISOString().split('T')[0];
+        pickupDate.setAttribute('min', today);
+
+        // Form submission
+        const form = document.getElementById('orderForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMsg = document.getElementById('successMessage');
+        const errorMsg = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+
+            const totalQty = parseInt(document.getElementById('totalQuantityHidden').value) || 0;
+            if (totalQty === 0) {
+                alert('Please select at least one item to order.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    successMsg.style.display = 'block';
+                    form.reset();
+                    pickupDate.setAttribute('min', today);
+                    updateOrderSummary();
+                    successMsg.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                errorMsg.style.display = 'block';
+                errorMsg.scrollIntoView({ behavior: 'smooth' });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Place Order';
+            }
+        });
+
+        // Initialize
+        document.querySelectorAll('.qty-input').forEach((input, index) => {
+            updateButtonStates(index);
+        });
+        updateOrderSummary();
+    </script>
+</body>
+</html>
