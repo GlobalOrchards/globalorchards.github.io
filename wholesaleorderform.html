@@ -52,15 +52,15 @@
 
         .swipe-indicator {
             width: 95%;
-            max-width: 920px;
+            max-width: 750px; /* Reduced by ~10% from 830px */
             text-align: center;
-            padding: 8px 12px;
+            padding: 6px 10px; /* Reduced padding */
             background-color: var(--swipe-msg-bg);
             color: var(--swipe-msg-text);
             font-weight: 500;
-            font-size: 0.9em;
+            font-size: 0.85em; /* Smaller font */
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px; /* Reduced margin */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -75,9 +75,9 @@
 
         .container {
             width: 95%;
-            max-width: 920px;
+            max-width: 750px; /* Reduced by ~10% from 830px */
             background-color: var(--card-bg-color);
-            padding: 15px 15px 20px 15px;
+            padding: 12px 12px 18px 12px; /* Reduced padding */
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(60, 60, 90, 0.08), 0 3px 8px rgba(60, 60, 90, 0.06);
             margin-bottom: 10px;
@@ -209,7 +209,7 @@
             table-layout: fixed;
         }
 
-        /* Two-row product layout with fixed widths */
+        /* Two-row product layout */
         .product-row-group {
             border-bottom: 2px solid var(--border-color);
         }
@@ -218,40 +218,70 @@
             background-color: #f0f2f5;
         }
 
+        .product-row-group > td {
+            padding: 8px 10px;
+            position: relative;
+        }
+
         .product-row-1 {
-            border: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .product-row-2 {
-            border: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-
-        .product-row-1 td, .product-row-2 td {
-            padding: 4px 14px;
-            border: none;
+        
+        /* Product unit styling - wider and vertically centered */
+        .product-unit {
+            color: var(--text-color-secondary);
+            font-size: 0.9em;
+            font-weight: 700;
+            text-align: center;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            min-width: 45px !important; /* 30% wider than 35px */
+            width: 45px !important;
+            padding: 2px 8px !important;
+            border-left: 1px solid var(--border-color);
+            margin-left: 15px !important;
+            float: none !important;
+            position: absolute !important;
+            right: 10px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            height: calc(100% - 16px) !important;
+            background-color: transparent; /* Match parent background */
+        }
+        
+        /* Ensure unit has correct background on hover and even rows */
+        tbody tr:nth-child(even) .product-unit {
+            background-color: #f9fafb;
+        }
+        
+        tbody tr:hover .product-unit {
+            background-color: #f0f2f5;
         }
 
         /* Expanded product description with tooltip */
         .product-description {
             font-weight: 700;
-            font-size: 0.95em;
+            font-size: 0.85em;
             color: var(--text-color-primary);
             cursor: pointer;
             transition: color 0.2s;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: calc(100% - 50px); /* Expand to use almost all available space minus unit width */
+            max-width: calc(100% - 75px); /* Leave more space for wider unit */
             display: inline-block;
             position: relative;
-            flex: 1; /* Take up remaining space */
+            flex: 1;
         }
 
         .product-description:hover {
@@ -293,59 +323,44 @@
             display: block;
         }
 
-        .product-unit {
-            color: var(--text-color-secondary);
-            font-size: 1.05em;
-            font-weight: 700;
-            text-align: right;
-            display: block;
-            margin-left: 10px;
-            min-width: 30px;
-            flex-shrink: 0; /* Prevent unit from shrinking */
+        /* Adjust first column to have padding for unit positioning */
+        .product-row-group > td:first-child {
+            padding-right: 65px !important; /* Space for the positioned unit */
         }
 
         .product-retail {
             color: #ef4444;
             text-decoration: line-through;
-            font-size: 1.15em;
+            font-size: 0.95em; /* Reduced from 1em */
             font-weight: 700;
         }
 
         .product-price {
             color: var(--accent-color);
             font-weight: 800;
-            font-size: 1.15em;
-            padding-left: 10px;
-            margin-right: 15px;
-        }
-
-        .product-qty-cell {
-            text-align: center;
-            vertical-align: middle;
-            width: 120px;
-            position: relative;
+            font-size: 1em; /* Reduced from 1.05em */
+            padding-left: 6px; /* Reduced from 8px */
         }
 
         /* Set column widths for consistent layout */
-        .product-details-cell {
-            width: calc(100% - 120px); /* Take all space except qty column */
-            min-width: 200px;
-        }
-
         .product-qty-cell {
-            width: 120px;
-            min-width: 120px;
+            text-align: center;
+            vertical-align: middle;
+            width: 90px;
+            position: relative;
+            padding-left: 6px;
         }
 
+        /* Table header styles */
         th {
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.75px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             text-align: center;
-            padding: 10px 14px;
+            padding: 8px 10px;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -371,15 +386,18 @@
                 padding: 5px;
             }
             .container {
-                width: 95%;
-                max-width: 920px;
-                min-width: 300px;
+                width: 98%;
+                max-width: 750px;
+                min-width: 220px; /* Reduced by ~10% from 245px */
+                padding: 6px; /* Further reduced */
             }
 
             .swipe-indicator {
-                width: 95%;
-                max-width: 920px;
-                min-width: 300px;
+                width: 98%;
+                max-width: 750px;
+                min-width: 220px; /* Reduced by ~10% from 245px */
+                font-size: 0.7em; /* Smaller text */
+                padding: 4px 6px; /* Reduced padding */
             }
             .tabs-container {
                 padding: 5px;
@@ -401,21 +419,46 @@
             }
             
             .product-description {
-                font-size: 0.9em;
-                max-width: calc(100% - 40px); /* Even more space on mobile */
+                font-size: 0.8em;
+                max-width: calc(100% - 60px); /* Adjusted for mobile with wider unit */
             }
             
             .product-price {
-                font-size: 1.05em;
+                font-size: 0.9em;
             }
             
             .product-retail {
-                font-size: 1.05em;
+                font-size: 0.9em;
             }
             
             .product-unit {
-                font-size: 0.95em;
-                min-width: 25px;
+                font-size: 0.8em;
+                min-width: 38px !important; /* 30% wider on mobile too */
+                width: 38px !important;
+                padding: 1px 5px !important;
+                right: 5px !important;
+            }
+            
+            .product-row-group > td:first-child {
+                padding-right: 50px !important; /* Less space needed on mobile */
+            }
+            
+            .product-qty-cell {
+                width: 80px;
+                min-width: 80px;
+                padding-left: 3px;
+            }
+            
+            .qty-btn {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+            
+            .qty-input {
+                width: 30px;
+                font-size: 0.75em;
+                padding: 2px;
             }
         }
 
@@ -1389,7 +1432,7 @@
                             </table>
                         </div>
                     </div>
-                <!-- Example of the new two-row format with expanded width:
+                <!-- Example of the new two-row format with centered unit:
                 <div id="meat" class="tab-pane active">
                     <div class="table-wrapper">
                         <table>
@@ -1402,16 +1445,20 @@
                             <tbody>
                                 <tr class="product-row-group">
                                     <td class="product-details-cell">
-                                        <div class="product-row-1">
-                                            <div class="product-description" data-full-description="King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003">
-                                                King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free
-                                                <div class="product-description-tooltip">King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003</div>
-                                            </div>
+                                        <div class="product-unit-wrapper">
                                             <div class="product-unit">EA</div>
                                         </div>
-                                        <div class="product-row-2">
-                                            <span class="product-retail">$28.76</span>
-                                            <span class="product-price">$20.54</span>
+                                        <div class="product-rows-container">
+                                            <div class="product-row-1">
+                                                <div class="product-description" data-full-description="King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003">
+                                                    King's Chicken Premium Quality - Fresh Grade A Chicken
+                                                    <div class="product-description-tooltip">King's Chicken Premium Quality - Fresh Grade A Chicken, Farm Raised, Antibiotic Free - SKU 7003</div>
+                                                </div>
+                                            </div>
+                                            <div class="product-row-2">
+                                                <span class="product-retail">$28.76</span>
+                                                <span class="product-price">$20.54</span>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="product-qty-cell">
@@ -1429,7 +1476,7 @@
                     <tfoot>
                         <tr>
                             <td style="border-bottom: none; text-align: right; font-weight: 700;">TOTAL QTY:</td>
-                            <td style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em; text-align: center; width: 120px;" id="table-total-qty">0</td>
+                            <td style="border-bottom: none; font-weight: 700; color: var(--accent-color); font-size: 1.2em; text-align: center; width: 90px;" id="table-total-qty">0</td>
                         </tr>
                     </tfoot>
                 </table>
